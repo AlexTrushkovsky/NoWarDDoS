@@ -35,3 +35,14 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 <br />  macOS/Linux: python3 updater.py КІЛЬКІСТЬ_ПОТОКІВ
 <br />▪ Якщо не допомагає, обов'язково пишіть в тг!
 <br />**Слава Україні!**
+
+## Інструкця для запуску у `Docker`:
+1. Ставимо [докер](https://www.docker.com/)
+2. Білдимо імадж
+```shell
+docker build . -t nowarddos
+```
+3. Запускаємо
+```shell
+docker run --rm nowarddos 500
+```
