@@ -3,7 +3,8 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 <br />
 **❗️❗️❗️Якщо хтось може допомогти з десктопним застосунком mac/windows, велкам в телеграм❗️❗️❗️**
 <br />
-<br />▪ Встановлюємо Python 3.8+
+<br />▪ Встановлюємо Python 3.8+ (Обов'язково ставимо галку "Add to path")
+![alt text](https://miro.medium.com/max/1344/0*7nOyowsPsGI19pZT.png)
 <br />▪ Відкриваємо термінал(консоль), переходимо в корінь, куди розпакували нашу програму командою cd
 <br />▪ В корені вводимо наступну команду: 
 <br />  Windows: python attack.py КІЛЬКІСТЬ_ПОТОКІВ
