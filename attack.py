@@ -19,7 +19,7 @@ from urllib.request import urlopen
 import json
 import sys
 
-VERSION = 2
+VERSION = 3
 HOSTS = ["http://46.4.63.238/api.php"]
 MAX_REQUESTS = 5000
 disable_warnings()
@@ -44,7 +44,7 @@ def checkUpdate():
 			data = json.loads(content)
 			new_version = data["version"]
 			print(new_version)
-			if new_version < VERSION:
+			if int(new_version) > int(VERSION):
 				print("New version Available")
 				os.system("python updater.py " + str(threads))
 				os.system("python3 updater.py " + str(threads))
