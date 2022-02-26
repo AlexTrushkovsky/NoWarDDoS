@@ -1,5 +1,6 @@
 # NoWarDDoS
 <br />DDoS Russian websites to help Ukraine to win this hybrid war
+<br />**Якщо хтось може допомогти з десктопним застосунком mac/windows, велкам в телеграм**
 <br />
 <br />▪ Встановлюємо Python 3.8+
 <br />▪ Відкриваємо термінал(консоль), переходимо в корінь, куди розпакували нашу програму командою cd
@@ -20,8 +21,12 @@
 <br />▪ Якщо помітили в чаті оновлення яке я не виклав, повідомте в тг
 <br />
 <br />▪ Якщо вибиває помилку пов'язану з pip:
-<br />    python -m pip install --upgrade pip
-<br />    pip install -r requirements.txt
+<br />    Windows: python -m pip install --upgrade pip
+<br />             pip install -r requirements.txt
+<br />    macOS/Linux: python3 -m pip install --upgrade pip
+<br />                 pip3 install -r requirements.txt
+<br />
+<br />    macOS з ARM (M1) тимчасово не підтримується, очікуйте оновлення в найближчі години
 <br />
 <br />▪ Якщо щось зламалося вводимо наступну команду:
 <br />  Windows: python updater.py КІЛЬКІСТЬ_ПОТОКІВ
