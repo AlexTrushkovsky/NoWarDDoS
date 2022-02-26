@@ -20,7 +20,7 @@
 <br />▪ Якщо помітили в чаті оновлення яке я не виклав, повідомте в тг
 <br />
 <br />▪ Якщо вибиває помилку пов'язану з pip:
-<br />    python -m pip3 install --upgrade pip
+<br />    python -m pip install --upgrade pip
 <br />    pip install -r requirements.txt
 <br />
 <br />▪ Якщо щось зламалося вводимо наступну команду:
