@@ -1,6 +1,6 @@
 # NoWarDDoS
 \DDoS Russian websites to help Ukraine to win this hybrid war
-\
+<br />
 \▪ Встановлюэмо Python 3.8+
 \▪ Відкриваємо термінал(консоль), переходимо в корінь, куди розпакували нашу програму командою cd
 \▪ В корені вводимо наступну команду: 
