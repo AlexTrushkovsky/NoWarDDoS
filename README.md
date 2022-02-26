@@ -1,5 +1,5 @@
 # NoWarDDoS
-<br />DDoS Russian websites to help Ukraine to win this hybrid war
+DDoS Russian websites to help Ukraine to win this hybrid war
 <br />#**❗️❗️❗️Якщо хтось може допомогти з десктопним застосунком mac/windows, велкам в телеграм❗️❗️❗️**
 <br />
 <br />▪ Встановлюємо Python 3.8+
