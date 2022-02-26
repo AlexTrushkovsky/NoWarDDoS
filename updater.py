@@ -14,7 +14,7 @@ def update():
     r = requests.get(url, stream=True)
     if r.ok:
         print("saving to", os.path.abspath(file_path))
-        with open("file_path", 'wb') as f:
+        with open("attack.py", 'wb') as f:
             for chunk in r.iter_content(chunk_size=1024 * 8):
                 if chunk:
                     f.write(chunk)

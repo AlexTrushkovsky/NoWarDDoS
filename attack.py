@@ -82,6 +82,7 @@ def mainth():
 def cleaner():
 	while True:
 		sleep(60)
+		checkUpdate()
 		clear()
 		collect()
 
