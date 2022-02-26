@@ -34,7 +34,7 @@ def checkReq():
 	os.system("pip3 install -r requirements.txt")
 
 def checkUpdate():
-    url = "https://gist.githubusercontent.com/AlexTrushkovsky/041d6e2ee27472a69abcb1b2bf90ed4d/raw/5aeae274191130ee5b75209ce8afd883970f194b/nowarversion.json"
+    url = "https://gist.githubusercontent.com/AlexTrushkovsky/041d6e2ee27472a69abcb1b2bf90ed4d/raw/nowarversion.json"
     response = urlopen(url)
     data_json = json.loads(response.read())
     new_version = data_json["version"]
