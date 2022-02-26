@@ -21,7 +21,7 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 <br />▪ Програма оновлюється автоматично, вона сама оновиться та знову запустить атаку, оновленния перевіряються кожну хвилину
 <br />▪ Якщо помітили в чаті оновлення яке я не виклав, повідомте в тг
 <br />
-<br />▪ Якщо вибиває помилку пов'язану з pip:
+<br />▪ Якщо вибиває помилку пов'язану з ModuleNotFoundError aбо інші, спробуйте:
 <br />    Windows: python -m pip install --upgrade pip
 <br />             pip install -r requirements.txt
 <br />    macOS/Linux: python3 -m pip install --upgrade pip
