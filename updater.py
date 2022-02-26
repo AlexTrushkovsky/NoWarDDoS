@@ -1,49 +1,33 @@
-import cloudscraper
-import requests
-import os
-from bs4 import BeautifulSoup
-# from ctypes import windll
-from urllib.parse import unquote
-from gc import collect
-from loguru import logger
-from os import system
-from requests import get
-from sys import stderr
-from threading import Thread
-from random import choice
-from time import sleep
-from urllib3 import disable_warnings
-from pyuseragents import random as random_useragent
-from json import loads
-
 from urllib.request import urlopen
-import json
 import sys
+import os
+import requests
 
-VERSION = 0
-HOSTS = ["http://46.4.63.238/api.php"]
-MAX_REQUESTS = 5000
-disable_warnings()
-def clear(): return system('cls')
-logger.remove()
-logger.add(stderr, format="<white>{time:HH:mm:ss}</white> | <level>{level: <8}</level> | <cyan>{line}</cyan> - <white>{message}</white>")
 threads = int(sys.argv[1])
 
 def update():
-    with open('a.txt') as f:
-        a = int(f.read())
-    with open('a.txt', 'w') as output:
-        output.write(str(a+1))
-    b = 1
-    print a+b
-    
+    url = "https://raw.githubusercontent.com/AlexTrushkovsky/NoWarDDoS/main/attack.py"
+
+    filename = url.split('/')[-1].replace(" ", "_")  # be careful with file names
+    file_path = os.path.join('', filename)
+
+    r = requests.get(url, stream=True)
+    if r.ok:
+        print("saving to", os.path.abspath(file_path))
+        with open("file_path", 'wb') as f:
+            for chunk in r.iter_content(chunk_size=1024 * 8):
+                if chunk:
+                    f.write(chunk)
+                    f.flush()
+                    os.fsync(f.fileno())
+    else:  # HTTP status code 4XX/5XX
+        print("Download failed: status code {}\n{}".format(r.status_code, r.text))
+    start_new()
+
 def start_new():
-    
+    print("Success update")
+    os.system("python attack.py " + str(threads))
+    os.system("python3 attack.py " + str(threads))
 
 if __name__ == '__main__':
-    clear()
-    checkReq()
-    checkUpdate()
-    for _ in range(threads):
-        Thread(target=mainth).start()
-    Thread(target=cleaner, daemon=True).start()
+    update()
