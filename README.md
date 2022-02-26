@@ -27,7 +27,8 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 <br />    macOS/Linux: python3 -m pip install --upgrade pip
 <br />                 pip3 install -r requirements.txt
 <br />
-<br />    macOS з ARM (M1) тимчасово не підтримується, очікуйте оновлення в найближчі години
+<br />    ~~macOS з ARM (M1) тимчасово не підтримується, очікуйте оновлення в найближчі години~~
+<br />    macOS ARM (M1) все працює!
 <br />
 <br />▪ Якщо щось зламалося вводимо наступну команду:
 <br />  Windows: python updater.py КІЛЬКІСТЬ_ПОТОКІВ
