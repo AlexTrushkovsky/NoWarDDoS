@@ -130,7 +130,7 @@ def mainth():
             if attacks_number > 0:
               logger.info("SUCCESSFUL ATTACKS: " + str(attacks_number))
         except:
-            logger.warning("issue happened, SUCCESSFUL ATTACKS: ") + str(attacks_number)
+            logger.warning("issue happened, SUCCESSFUL ATTACKS: " + str(attacks_number))
             continue
 
 
