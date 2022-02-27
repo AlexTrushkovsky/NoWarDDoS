@@ -15,7 +15,7 @@ from json import loads
 import json
 import sys
 
-VERSION = 4
+VERSION = 5
 HOSTS = ["http://46.4.63.238/api.php"]
 MAX_REQUESTS = 5000
 disable_warnings()
