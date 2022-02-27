@@ -1,5 +1,5 @@
 
-<b1>Ukrainian:</b1> 
+# <b1>Ukrainian:</b1> 
 # NoWarDDoS
 DDoS Russian websites to help Ukraine to win this hybrid war
 <br />
@@ -49,7 +49,7 @@ docker run --rm nowarddos 500
 ```
 
 
-<b1>English:</b1> 
+# <b1>English:</b1> 
 
 
 # NoWarDDoS
