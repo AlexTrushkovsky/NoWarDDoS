@@ -71,9 +71,19 @@ def mainth():
         scraper.headers.update({'Content-Type': 'application/json', 'cf-visitor': 'https', 'User-Agent': random_useragent(), 'Connection': 'keep-alive',
                                'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'ru', 'x-forwarded-proto': 'https', 'Accept-Encoding': 'gzip, deflate, br'})
         logger.info("GET RESOURCES FOR ATTACK")
-        content = scraper.get(choice(HOSTS)).content
+        host = choice(HOSTS)
+        content = scraper.get(host).content
         if content:
-            data = loads(content)
+            try:
+                data = json.loads(content)
+            except json.decoder.JSONDecodeError:
+                logger.info('Host {} has invalid format'.format(host))
+                sleep(5)
+                continue
+            except Exception:
+                logger.exception('Unexpected error. Host {}'.format(host))
+                sleep(5)
+                continue
         else:
             sleep(5)
             continue
