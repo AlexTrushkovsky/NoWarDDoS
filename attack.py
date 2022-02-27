@@ -10,9 +10,9 @@ from random import choice
 from time import sleep
 from urllib3 import disable_warnings
 from pyuseragents import random as random_useragent
-from json import loads
 from argparse import ArgumentParser
 import platform
+from requests.exceptions import ConnectionError
 
 import json
 import sys
@@ -25,6 +25,7 @@ SUPPORTED_PLATFORMS = {
 }
 
 disable_warnings()
+
 
 def clear():
     if platform.system() == "Linux":
