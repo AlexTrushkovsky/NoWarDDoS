@@ -47,11 +47,14 @@ else:
 parser = ArgumentParser()
 parser.add_argument("-v", "--verbose", dest="verbose", action='store_true')
 parser.add_argument("-n", "--no-clear", dest="no_clear", action='store_true')
+parser.add_argument("-p", "--proxy-view", dest="proxy_view", action='store_true')
 parser.set_defaults(verbose=False)
 parser.set_defaults(no_clear=False)
+parser.set_defaults(proxy_view=False)
 args, unknown = parser.parse_known_args()
 verbose = args.verbose
 no_clear = args.no_clear
+proxy_view = args.proxy_view
 
 def checkReq():
     os.system("python3 -m pip install -r requirements.txt")
@@ -127,6 +130,8 @@ def mainth():
 
             if attack.status_code >= 302:
                 for proxy in data['proxy']:
+                    if proxy_view:
+                        logger.info('USING PROXY:' + proxy["ip"] +" "+ proxy["auth"])
                     scraper.proxies.update(
                         {'http': f'{proxy["ip"]}://{proxy["auth"]}', 'https': f'{proxy["ip"]}://{proxy["auth"]}'})
                     response = scraper.get(site)
