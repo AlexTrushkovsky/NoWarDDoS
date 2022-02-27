@@ -139,13 +139,13 @@ def cleaner():
         sleep(60)
         checkUpdate()
 
-        if no_clear:
+        if not no_clear:
           clear()
         collect()
 
 
 if __name__ == '__main__':
-    if no_clear:
+    if not no_clear:
       clear()
     checkReq()
     checkUpdate()
