@@ -26,7 +26,7 @@ SUPPORTED_PLATFORMS = {
 
 disable_warnings()
 def clear():
-    if os.uname()[0] in SUPPORTED_PLATFORMS['linux']:
+    if os.name()[0] in SUPPORTED_PLATFORMS['linux']:
         return system('clear')
     else:
         return system('cls')
