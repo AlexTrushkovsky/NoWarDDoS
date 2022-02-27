@@ -20,12 +20,16 @@ import sys
 VERSION = 6
 HOSTS = ["http://46.4.63.238/api.php"]
 MAX_REQUESTS = 5000
+SUPPORTED_PLATFORMS = {
+    'linux': 'Linux'
+}
+
 disable_warnings()
 def clear():
-  if platform.system() == "Linux":
-    return system('clear')
-
-  return system('cls')
+    if os.uname()[0] in SUPPORTED_PLATFORMS['linux']:
+        return system('clear')
+    else:
+        return system('cls')
 
 
 logger.remove()
