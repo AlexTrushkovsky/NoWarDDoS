@@ -12,6 +12,7 @@ from urllib3 import disable_warnings
 from pyuseragents import random as random_useragent
 from json import loads
 from argparse import ArgumentParser
+import platform
 
 import json
 import sys
@@ -20,7 +21,11 @@ VERSION = 5
 HOSTS = ["http://46.4.63.238/api.php"]
 MAX_REQUESTS = 5000
 disable_warnings()
-def clear(): return system('cls')
+def clear():
+  if platform.system() == "Linux":
+    return system('clear')
+
+  return system('cls')
 
 
 logger.remove()
