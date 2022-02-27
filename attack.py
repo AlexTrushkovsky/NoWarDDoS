@@ -26,7 +26,7 @@ SUPPORTED_PLATFORMS = {
 
 disable_warnings()
 def clear():
-    if os.uname()[0] in SUPPORTED_PLATFORMS['linux']:
+    if os.name()[0] in SUPPORTED_PLATFORMS['linux']:
         return system('clear')
     else:
         return system('cls')
@@ -143,8 +143,10 @@ def mainth():
                       print('.', end ='')
             if attacks_number > 0:
               logger.info("SUCCESSFUL ATTACKS: " + str(attacks_number))
-        except:
-            logger.warning("issue happened, SUCCESSFUL ATTACKS: " + str(attacks_number))
+        except ConnectionError as exc:
+            logger.info(f"Site is down: {exc}")
+        except Exception as exc:
+            logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
             continue
 
 
@@ -162,7 +164,7 @@ if __name__ == '__main__':
     if not no_clear:
       clear()
     checkReq()
-    # checkUpdate()
+    checkUpdate()
     for _ in range(threads):
         Thread(target=mainth).start()
     Thread(target=cleaner, daemon=True).start()
