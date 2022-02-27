@@ -14,6 +14,7 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 <br />▪ Експерементуйте, обтирайте оптимальну кількість потоків, щоб проц в сотку довбився ))
 <br />▪ Можна додати флаг -v щоб бачити коди відповідей
 <br />▪ Можна додати флаг -n щоб логи не підтирало
+<br />▪ Можна додати флаг -p щоб показувало проксі
 <br />▪ Приклад: python3 attack.py 500 -v -n
 <br />
 #
@@ -66,6 +67,7 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 <br />▪ Best for 8 CPU and 16 RAM configuration is 500 threads . Proxy included and working automaticaly. 
 <br />▪ You can add the -v flag to see the answer codes
 <br />▪ You can add the -n flag so that logs are not clear
+<br />▪ You can add the -p flag to see proxy
 <br />▪ Example: python3 attack.py 500 -v -n
 <br />
 #
