@@ -1,7 +1,7 @@
 beautifulsoup4==4.10.0
 names==0.3.0
 cloudscraper==1.2.58
-loguru==0.5.3
+loguru==0.6.0
 requests
 urllib3==1.26.7
 uuid==1.30
