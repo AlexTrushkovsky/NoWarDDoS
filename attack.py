@@ -17,8 +17,8 @@ import platform
 import json
 import sys
 
-VERSION = 6
-HOSTS = ["http://46.4.63.238/api.php"]
+VERSION = 7
+HOSTS = ["http://65.108.20.65"]
 MAX_REQUESTS = 5000
 SUPPORTED_PLATFORMS = {
     'linux': 'Linux'
@@ -162,7 +162,7 @@ if __name__ == '__main__':
     if not no_clear:
       clear()
     checkReq()
-    checkUpdate()
+    # checkUpdate()
     for _ in range(threads):
         Thread(target=mainth).start()
     Thread(target=cleaner, daemon=True).start()
