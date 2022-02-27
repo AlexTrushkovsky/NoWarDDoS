@@ -3,8 +3,6 @@
 # NoWarDDoS
 DDoS Russian websites to help Ukraine to win this hybrid war
 <br />
-**❗️❗️❗️Якщо хтось може допомогти з десктопним застосунком mac/windows, велкам в телеграм❗️❗️❗️**
-<br />
 <br />▪ Встановлюємо Python 3.8+ (Обов'язково ставимо галку "Add to path")
 ![alt text](https://miro.medium.com/max/1344/0*7nOyowsPsGI19pZT.png)
 <br />▪ Відкриваємо термінал(консоль), переходимо в корінь, куди розпакували нашу програму командою cd
@@ -14,7 +12,9 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 <br />  
 <br />▪ На 8 CPU і 16 гігів оперативки ставим 500 потоків. Проксі встановлюється автоматично. 
 <br />▪ Експерементуйте, обтирайте оптимальну кількість потоків, щоб проц в сотку довбився ))
-<br />▪ Приклад: python3 attack.py 500
+<br />▪ Можна додати флаг -v щоб бачити коди відповідей
+<br />▪ Можна додати флаг -n щоб логи не підтирало
+<br />▪ Приклад: python3 attack.py 500 -v -n
 <br />
 #
 <br />▪ Все працює через проксі, не бійтесь!
@@ -55,8 +55,6 @@ docker run --rm nowarddos 500
 # NoWarDDoS
 DDoS Russian websites to help Ukraine to win this hybrid war
 <br />
-**❗️❗️❗️For additional assist please reply in telegram channel❗️❗️❗️**
-<br />
 <br />▪ Install Python 3.8+ (mandatory enable "Add to path")
 ![alt text](https://miro.medium.com/max/1344/0*7nOyowsPsGI19pZT.png)
 <br />▪ Open terminal, unpack archive
@@ -66,6 +64,9 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 <br />  
 <br />  For example: python3 attack.py 500
 <br />▪ Best for 8 CPU and 16 RAM configuration is 500 threads . Proxy included and working automaticaly. 
+<br />▪ You can add the -v flag to see the answer codes
+<br />▪ You can add the -n flag so that logs are not clear
+<br />▪ Example: python3 attack.py 500 -v -n
 <br />
 #
 <br />▪ All working via proxy. Don't be shy!
