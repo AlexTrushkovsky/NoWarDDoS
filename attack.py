@@ -35,7 +35,12 @@ def clear():
 logger.remove()
 logger.add(
     stderr, format="<white>{time:HH:mm:ss}</white> | <level>{level: <8}</level> | <cyan>{line}</cyan> - <white>{message}</white>")
-threads = int(sys.argv[1])
+
+if len(sys.argv) > 1:
+    threads = int(sys.argv[1])
+else:
+    threads = 500
+
 
 parser = ArgumentParser()
 parser.add_argument("-v", "--verbose", dest="verbose", action='store_true')
