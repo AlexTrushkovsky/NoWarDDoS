@@ -7,3 +7,4 @@ urllib3==1.26.7
 uuid==1.30
 PySocks==1.7.1
 pyuseragents==1.0.5
+argparse==1.4.0

