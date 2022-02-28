@@ -104,7 +104,12 @@ docker run --rm nowarddos 500
 ```shell
 docker-compose build
 ```
-2. Generate docker stack yml file.
+2. To test the image locally
+```shell
+docker-compose up
+```
+
+3. Generate docker stack yml file.
    1. Don't change the name of the `docker-compose.yml` file.
 ```shell
 docker-compose config > stack.yml
