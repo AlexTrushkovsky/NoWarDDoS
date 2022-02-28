@@ -92,6 +92,7 @@ def checkUpdate():
 
 
 def mainth():
+    result = 'processing'
     scraper = cloudscraper.create_scraper(
         browser={'browser': 'firefox', 'platform': 'android', 'mobile': True},)
     scraper.headers.update({'Content-Type': 'application/json', 'cf-visitor': 'https', 'User-Agent': random_useragent(), 'Connection': 'keep-alive',
@@ -153,8 +154,11 @@ def mainth():
         except ConnectionError as exc:
             logger.success(f"{site} is down: {exc}")
         except Exception as exc:
+            result = f"issue happened: {exc}"
             logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
             continue
+        finally:
+            return result, site
 
 
 def cleaner():
@@ -172,6 +176,10 @@ if __name__ == '__main__':
         clear()
     checkReq()
     checkUpdate()
-    for _ in range(threads):
-        Thread(target=mainth).start()
     Thread(target=cleaner, daemon=True).start()
+
+    with ThreadPoolExecutor(max_workers=threads) as executor:
+        future_tasks = [executor.submit(mainth) for _ in range(threads)]
+        for task in as_completed(future_tasks):
+            status, site = task.result()
+            logger.info(f"{status.upper()}: {site}")
