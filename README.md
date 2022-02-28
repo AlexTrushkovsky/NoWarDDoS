@@ -113,7 +113,7 @@ docker run --rm nowarddos 500
 ## How-to build `Kubernetes`:
 https://github.com/saladar/bellaciao
 
-# Список наших кібервійськ / List of our cyber troops
+# Армія наших кібервійськ / List of our cyber troops
 <br />Python Devs:
 <br />    ▪ https://t.me/aleeessioo
 <br />    ▪ https://t.me/dariy_vel
