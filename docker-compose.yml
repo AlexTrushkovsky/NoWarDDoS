@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  # Service name
+  nowar_ddos: 
+    # Build directory
+    build: .
+    # Image name
+    image: nowarddos
+    # Deploy options
+    deploy:
+      # Number of replicas to create
+      replicas: 1
+      # The restart policy
+      restart_policy:
+        condition: on-failure
+        # Max. number of restart
+        max_attempts: 3
+      # How the service should be updated => for rolling updates
+      update_config:
+        # How many containers to update at a time (0 = all at the same time)
+        parallelism: 0
+        # Delay between updating each container
+        delay: 0s

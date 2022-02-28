@@ -96,3 +96,18 @@ docker build . -t nowarddos
 ```shell
 docker run --rm nowarddos 500
 ```
+
+### Docker Swarm
+1. Build the image as instructed above.
+   1. You can change the number of instances by changing the `replicas: 1` in the `docker-compose.yml` file.
+2. Generate docker stack yml file.
+   1. Don't change the name of the `docker-compose.yml` file.
+```shell
+docker-compose config > stack.yml
+```
+3. Deploy the stack to swarm.
+   1. Make sure each swarm node has the image. For now you will have to build them individually on each node.
+   2. We might release standard images in the future, hosted on Github Image Registry.
+```shell
+docker stack deploy -c stack.yml nowarddos
+```
