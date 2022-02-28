@@ -9,7 +9,7 @@ services:
     # Environment variables
     environment:
       # No. of threads to use
-      - THREADS=1
+      - THREADS=500
     # Deploy options
     deploy:
       # Number of replicas to create

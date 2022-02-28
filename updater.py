@@ -5,7 +5,7 @@ import os
 import requests
 
 # Docker support
-if os.environ.get('THREADS'):
+if "THREADS" in os.environ:
     threads = int(os.environ.get('THREADS'))
 elif len(sys.argv) > 1:
     threads = int(sys.argv[1])
