@@ -112,3 +112,58 @@ docker run --rm nowarddos 500
 ```
 ## How-to build `Kubernetes`:
 https://github.com/saladar/bellaciao
+
+# Список наших кібервійськ / List of our cyber troops
+<br />Python Devs:
+    ```https://t.me/aleeessioo
+    https://t.me/dariy_vel
+    https://t.me/burya4ok
+    https://t.me/korpan_d_24 
+    https://t.me/EdwardBrave
+    https://t.me/Djmelyarik
+    https://t.me/nrslnvchhhhhh98
+    https://github.com/CrunchyMutt
+    https://github.com/RomanPryima
+    https://github.com/AdamDubnytskyy
+    https://github.com/sarah-0-connor
+    https://github.com/SterbenXIII
+    https://github.com/sprilukin
+    https://github.com/harentius
+    https://t.me/OlehPetryk```
+<br />GUI:
+    ```https://t.me/Va1b0rt```
+<br />Docker:
+    ```https://t.me/sergey_prilukin```
+<br />Kubernates:
+    ```https://github.com/saladar```
+<br />Backend Dev:
+    ```https://t.me/ivan_nnnnnnn```
+<br />Technical support:
+    ```https://t.me/Hazya
+    https://t.me/xm1ls
+    https://t.me/David_movs
+    https://t.me/korpan_d_24
+    https://t.me/adjeju
+    https://t.me/nichiporchuk_d
+    https://t.me/Djmelyarik
+    https://t.me/Rob1280
+    https://t.me/el_kuban
+    https://t.me/dariy_vel
+    https://t.me/OlexandrHorbatiuk```
+<br />Helped with servers:
+    ```https://t.me/geet_gud
+    https://t.me/OlexandrHorbatiuk
+    https://t.me/Hazya```
+<br />Helped with a proxy:
+    ```https://t.me/MSNNmusicName
+    https://t.me/korpan_d_24
+    https://t.me/Va1b0rt```
+<br />Crosspatform UA Shield:
+    ```https://github.com/opengs```
+
+<br />**Та ще батаго анонімних воїнів за свободу!**
+<br />And a bunch of anonymous warriors for freedom!
+<br />**100% когось забув. Не ображайтесь)**
+<br />100% forgot someone. Do not be offended)
+<br />**Дякую всім, без вас би нічого не було ❤️**
+<br />Thank you all, nothing would have happened without you ❤️
