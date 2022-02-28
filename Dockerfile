@@ -4,7 +4,6 @@ FROM python:3.7-slim AS compile-image
 # Update dependencies of the build environment
 RUN apt-get update && apt-get install -y --no-install-recommends build-essential gcc
 
-
 # Copy requirements.txt
 COPY requirements.txt ./
 
