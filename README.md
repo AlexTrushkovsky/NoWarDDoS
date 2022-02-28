@@ -162,8 +162,9 @@ https://github.com/saladar/bellaciao
 <br />    ▪ https://github.com/opengs
 <br />
 <br />**Та ще батаго анонімних воїнів за свободу!**
-<br />And a bunch of anonymous warriors for freedom!
 <br />**100% когось забув. Не ображайтесь)**
-<br />100% forgot someone. Do not be offended)
 <br />**Дякую всім, без вас би нічого не було ❤️**
-<br />Thank you all, nothing would have happened without you ❤️
+<br />
+<br />**And a bunch of anonymous warriors for freedom!**
+<br />**100% forgot someone. Do not be offended)**
+<br />**Thank you all, nothing would have happened without you ❤️**
