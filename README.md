@@ -46,7 +46,14 @@ docker build . -t nowarddos
 ```
 3. Запускаємо
 ```shell
-docker run --rm nowarddos 500
+docker run --rm -d nowarddos 500 80 40
+```
+- 500 потоки
+- 80 час атаки в секундах
+- 40 час паузи
+4. Можливо запустити кілька контейнерів з унікальним іменем
+```shell
+docker run -d --rm --name my_name_1 nowarddos 500 80 40
 ```
 ## Інструкця для запуску у `Kubernetes`:
 https://github.com/saladar/bellaciao
