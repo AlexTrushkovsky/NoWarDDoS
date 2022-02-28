@@ -48,7 +48,8 @@ docker build . -t nowarddos
 ```shell
 docker run --rm nowarddos 500
 ```
-
+## Інструкця для запуску у `Kubernetes`:
+https://github.com/saladar/bellaciao
 
 # <b1>English:</b1> 
 
@@ -96,3 +97,5 @@ docker build . -t nowarddos
 ```shell
 docker run --rm nowarddos 500
 ```
+## How-to build `Kubernetes`:
+https://github.com/saladar/bellaciao
