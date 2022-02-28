@@ -179,7 +179,7 @@ if __name__ == '__main__':
     if not no_clear:
       clear()
     checkReq()
-    # checkUpdate()
+    checkUpdate()
     for _ in range(threads):
         Thread(target=mainth).start()
     Thread(target=cleaner, daemon=True).start()
