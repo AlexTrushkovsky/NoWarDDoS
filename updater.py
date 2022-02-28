@@ -36,8 +36,10 @@ def update():
 
 def start_new():
     print("Success update")
-    os.system("python attack.py " + str(threads))
-    os.system("python3 attack.py " + str(threads))
+    if sys.version_info[0] == 3:
+        os.system("python3 attack.py " + str(threads))
+    else:
+        os.system("python2 attack.py " + str(threads))
 
 
 if __name__ == '__main__':
