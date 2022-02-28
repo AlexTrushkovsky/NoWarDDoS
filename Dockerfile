@@ -1,10 +1,26 @@
 # Base image
-FROM python:latest
+FROM python:3.7-slim AS compile-image
 
-COPY *.py /nowarddos/
-COPY requirements.txt /nowarddos/
+# Update dependencies of the build environment
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential gcc
 
+
+# Copy requirements.txt
+COPY requirements.txt ./
+
+# Install python dependencies
+RUN pip install --user -r requirements.txt
+
+# Stage 2
+FROM python:3.7-slim AS build-image
+
+# Copy the installed python dependencies
+COPY --from=compile-image /root/.local /root/.local
+
+# Set working directory
 WORKDIR /nowarddos
-RUN pip install -r requirements.txt
+
+# Copy the source code
+COPY *.py ./
 
 ENTRYPOINT ["python", "/nowarddos/updater.py"]
