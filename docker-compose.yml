@@ -6,6 +6,10 @@ services:
     build: .
     # Image name
     image: nowarddos
+    # Environment variables
+    environment:
+      # No. of threads to use
+      - THREADS=1
     # Deploy options
     deploy:
       # Number of replicas to create

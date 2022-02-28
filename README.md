@@ -98,8 +98,12 @@ docker run --rm nowarddos 500
 ```
 
 ### Docker Swarm
-1. Build the image as instructed above.
-   1. You can change the number of instances by changing the `replicas: 1` in the `docker-compose.yml` file.
+1. Build the image
+   1. You can change the number of instances tp deploy by changing the `replicas: 1` in the `docker-compose.yml` file.
+   2. You can change the number of threads to use by change the `THREADS` variable in the `environment` section in the `docker-compose.yml` file.
+```shell
+docker-compose build
+```
 2. Generate docker stack yml file.
    1. Don't change the name of the `docker-compose.yml` file.
 ```shell
