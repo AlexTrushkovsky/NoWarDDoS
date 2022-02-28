@@ -115,52 +115,52 @@ https://github.com/saladar/bellaciao
 
 # Список наших кібервійськ / List of our cyber troops
 <br />Python Devs:
-    ```https://t.me/aleeessioo
-    https://t.me/dariy_vel
-    https://t.me/burya4ok
-    https://t.me/korpan_d_24 
-    https://t.me/EdwardBrave
-    https://t.me/Djmelyarik
-    https://t.me/nrslnvchhhhhh98
-    https://github.com/CrunchyMutt
-    https://github.com/RomanPryima
-    https://github.com/AdamDubnytskyy
-    https://github.com/sarah-0-connor
-    https://github.com/SterbenXIII
-    https://github.com/sprilukin
-    https://github.com/harentius
-    https://t.me/OlehPetryk```
+<br />    ▪ https://t.me/aleeessioo
+<br />    ▪ https://t.me/dariy_vel
+<br />    ▪ https://t.me/burya4ok
+<br />    ▪ https://t.me/korpan_d_24 
+<br />    ▪ https://t.me/EdwardBrave
+<br />    ▪ https://t.me/Djmelyarik
+<br />    ▪ https://t.me/nrslnvchhhhhh98
+<br />    ▪ https://github.com/CrunchyMutt
+<br />    ▪ https://github.com/RomanPryima
+<br />    ▪ https://github.com/AdamDubnytskyy
+<br />    ▪ https://github.com/sarah-0-connor
+<br />    ▪ https://github.com/SterbenXIII
+<br />    ▪ https://github.com/sprilukin
+<br />    ▪ https://github.com/harentius
+<br />    ▪ https://t.me/OlehPetryk
 <br />GUI:
-    ```https://t.me/Va1b0rt```
+<br />    ▪ https://t.me/Va1b0rt
 <br />Docker:
-    ```https://t.me/sergey_prilukin```
+<br />    ▪ https://t.me/sergey_prilukin
 <br />Kubernates:
-    ```https://github.com/saladar```
+<br />    ▪ https://github.com/saladar
 <br />Backend Dev:
-    ```https://t.me/ivan_nnnnnnn```
+<br />    ▪ https://t.me/ivan_nnnnnnn
 <br />Technical support:
-    ```https://t.me/Hazya
-    https://t.me/xm1ls
-    https://t.me/David_movs
-    https://t.me/korpan_d_24
-    https://t.me/adjeju
-    https://t.me/nichiporchuk_d
-    https://t.me/Djmelyarik
-    https://t.me/Rob1280
-    https://t.me/el_kuban
-    https://t.me/dariy_vel
-    https://t.me/OlexandrHorbatiuk```
+<br />    ▪ https://t.me/Hazya
+<br />    ▪ https://t.me/xm1ls
+<br />    ▪ https://t.me/David_movs
+<br />    ▪ https://t.me/korpan_d_24
+<br />    ▪ https://t.me/adjeju
+<br />    ▪ https://t.me/nichiporchuk_d
+<br />    ▪ https://t.me/Djmelyarik
+<br />    ▪ https://t.me/Rob1280
+<br />    ▪ https://t.me/el_kuban
+<br />    ▪ https://t.me/dariy_vel
+<br />    ▪ https://t.me/OlexandrHorbatiuk
 <br />Helped with servers:
-    ```https://t.me/geet_gud
-    https://t.me/OlexandrHorbatiuk
-    https://t.me/Hazya```
+<br />    ▪ https://t.me/geet_gud
+<br />    ▪ https://t.me/OlexandrHorbatiuk
+<br />    ▪ https://t.me/Hazya
 <br />Helped with a proxy:
-    ```https://t.me/MSNNmusicName
-    https://t.me/korpan_d_24
-    https://t.me/Va1b0rt```
+<br />    ▪ https://t.me/MSNNmusicName
+<br />    ▪ https://t.me/korpan_d_24
+<br />    ▪ https://t.me/Va1b0rt
 <br />Crosspatform UA Shield:
-    ```https://github.com/opengs```
-
+<br />    ▪ https://github.com/opengs
+<br />
 <br />**Та ще батаго анонімних воїнів за свободу!**
 <br />And a bunch of anonymous warriors for freedom!
 <br />**100% когось забув. Не ображайтесь)**
