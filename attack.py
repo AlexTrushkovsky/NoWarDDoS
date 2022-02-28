@@ -48,6 +48,7 @@ parser = ArgumentParser()
 parser.add_argument("-v", "--verbose", dest="verbose", action='store_true')
 parser.add_argument("-n", "--no-clear", dest="no_clear", action='store_true')
 parser.add_argument("-p", "--proxy-view", dest="proxy_view", action='store_true')
+parser.add_argument("-t", "--targets", dest="targets", nargs='+', default=[])
 parser.set_defaults(verbose=False)
 parser.set_defaults(no_clear=False)
 parser.set_defaults(proxy_view=False)
@@ -55,6 +56,7 @@ args, unknown = parser.parse_known_args()
 verbose = args.verbose
 no_clear = args.no_clear
 proxy_view = args.proxy_view
+targets = args.targets
 
 def checkReq():
     os.system("python3 -m pip install -r requirements.txt")
@@ -115,8 +117,9 @@ def mainth():
         else:
             sleep(5)
             continue
-        logger.info("STARTING ATTACK TO " + data['site']['page'])
-        site = unquote(data['site']['page'])
+
+        site = unquote(choice(targets) if targets else data['site']['page'])
+        logger.info("STARTING ATTACK TO " + site)
         if site.startswith('http') == False:
             site = "https://" + site
 
@@ -176,7 +179,7 @@ if __name__ == '__main__':
     if not no_clear:
       clear()
     checkReq()
-    checkUpdate()
+    # checkUpdate()
     for _ in range(threads):
         Thread(target=mainth).start()
     Thread(target=cleaner, daemon=True).start()
