@@ -1,5 +1,11 @@
-
 # <b1>Ukrainian:</b1> 
+<br />🔥Новий кроссплатформний софт вже готовий до бою - github.com/opengs/uashield🔥
+<br />▪ Доступно на macOS, Linux, Windows
+<br />▪ Легко встановити на всі доступні платформи, ручаюсь за безпеку!
+<br />▪ Цілі координуюся адмінами основних чатів з DDoS
+<br />▪ Бажаючі допомогти з проксі, все ще можуть писати в telegram: @esen1n25
+<br />▪ Не забувайте ставити зірочки авторам за працю )
+
 # NoWarDDoS
 DDoS Russian websites to help Ukraine to win this hybrid war
 <br />
@@ -52,7 +58,12 @@ docker run --rm nowarddos 500
 https://github.com/saladar/bellaciao
 
 # <b1>English:</b1> 
-
+<br />🔥New cross-platform software ready for battle - github.com/opengs/uashield🔥
+<br /> ▪ Available on macOS, Linux, Windows
+<br /> ▪ Easy to install on all available platforms, I guarantee security!
+<br /> ▪ Goals are coordinated by the administrators of the main chats with DDoS
+<br /> ▪ Those who want to help with the proxy can still write in the telegram: @ esen1n25
+<br /> ▪ Don't forget to put stars for authors' work)
 
 # NoWarDDoS
 DDoS Russian websites to help Ukraine to win this hybrid war
