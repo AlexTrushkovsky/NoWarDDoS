@@ -58,31 +58,6 @@ def check_req():
     os.system("pip install -r requirements.txt")
     os.system("pip3 install -r requirements.txt")
 
-
-
-def check_update():
-    logger.info("Checking Updates...")
-    update_scraper = cloudscraper.create_scraper(
-        browser=settings.BROWSER, )
-    try:
-        content = update_scraper.get(settings.UPDATE_URL).content
-        if content:
-            data = json.loads(content)
-            new_version = data["version"]
-            logger.info("Version: ", new_version)
-            if int(new_version) > int(settings.VERSION):
-                logger.info("New version Available")
-                os.system("python updater.py " + str(threads))
-                os.system("python3 updater.py " + str(threads))
-                exit()
-        else:
-            sleep(5)
-            check_update()
-    except:
-        sleep(5)
-        check_update()
-
-
 def mainth():
     result = 'processing'
     scraper = cloudscraper.create_scraper(
@@ -150,7 +125,6 @@ def clear():
 def cleaner():
     while True:
         sleep(60)
-        check_update()
 
         if not no_clear:
             clear()
