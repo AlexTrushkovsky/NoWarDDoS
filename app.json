@@ -1,0 +1,12 @@
+{
+    "name": "NoWarDDoS",
+    "description": "DDoS Russian websites to help Ukraine to win this hybrid war",
+    "image": "heroku/python",
+    "repository": "https://github.com/AlexTrushkovsky/NoWarDDoS.git",
+    "keywords": ["python"],
+    "addons": [],
+    "env": {
+    },
+    "environments": {
+    }
+  }
