@@ -1,1 +1,1 @@
-web: ./run.sh
+web: python3 attack.py
