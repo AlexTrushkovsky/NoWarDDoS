@@ -1,4 +1,4 @@
-[English](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_en.md) | [Korean](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ko.md) | [French](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_fr.md)
+[English](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_en.md) | [Korean](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ko.md) | [French](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_fr.md) | [Russian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ru.md)
 
 # <b1>Ukrainian:</b1>
 
@@ -52,16 +52,16 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 ## Інструкця для запуску у `Docker`:
 
 1. Ставимо [докер](https://www.docker.com/)
-2. Білдимо імадж
+2. Пулаєм імадж (при обновах репи запускати те саме щоб стягнути апдейт)
 
 ```shell
-docker build . -t nowarddos
+docker pull gcr.io/fuck-russia-342819/nowarddos:latest
 ```
 
 3. Запускаємо
 
 ```shell
-docker run --rm nowarddos 500
+docker run --rm gcr.io/fuck-russia-342819/nowarddos:latest 500
 ```
 
 ## Інструкця для запуску у `Kubernetes`:
