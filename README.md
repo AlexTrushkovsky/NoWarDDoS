@@ -64,6 +64,25 @@ docker build . -t nowarddos
 docker run --rm nowarddos 500
 ```
 
+## Інструкця для запуску з `docker-compose`:
+
+1. Ставимо [докер](https://docs.docker.com/get-docker/)
+2. Ставимо [docker-compose](https://docs.docker.com/compose/install/)
+3. Запускаємо
+
+Це запустить у фоновому режимі:
+
+```shell
+docker-compose run -d attacker 500
+```
+
+Тобто, якщо це vpsб можна просто закрити консоль і воно працюватиме.
+Або щоб бачить аутпут в консолі і щоб працювало поки не закрити консоль:
+
+```shell
+docker-compose run -d attacker 500
+```
+
 ## Інструкця для запуску у `Kubernetes`:
 
 https://github.com/saladar/bellaciao
