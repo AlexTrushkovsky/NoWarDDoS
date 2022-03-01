@@ -110,7 +110,6 @@ def mainth():
         logger.success(f"{site} is down: {exc}")
         return result, site
     except Exception as exc:
-        result = f"issue happened: {exc}"
         logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
         return result, site
 
