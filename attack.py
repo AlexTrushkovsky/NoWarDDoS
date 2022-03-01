@@ -126,7 +126,12 @@ def mainth():
             sleep(5)
             continue
 
-        site = unquote(choice(targets) if targets else data['site']['page'])
+        try:
+            site = unquote(choice(targets) if targets else data['site']['page'])
+        except KeyError:
+            logger.info('Incorrect site, skipping')
+            continue
+
         logger.info("STARTING ATTACK TO " + site)
         logger.info("STARTING ATTACK ON " + data['site']['page'])
         site = unquote(data['site']['page'])
