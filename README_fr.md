@@ -14,7 +14,7 @@
 DDoS les sites russes pour aider l'Ukraine dans cette guerre hybride
 <br />
 <br />▪ Installe Python 3.8+ (obligatoire sous windows: "Add to path")
-![alt text](https://miro.medium.com/max/1344/0*7nOyowsPsGI19pZT.png)
+![Python setup in Windows](images/windows-python-install.png)
 <br />▪ Ouvre le terminal, unpack l'archive
 <br />▪ Dans le dossier root lance cette commande:
 <br /> Windows: python attack.py $NUM_THREAD

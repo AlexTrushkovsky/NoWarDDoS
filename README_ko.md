@@ -18,7 +18,7 @@
 우크라이나가 하이브리드 전쟁에서 승리할 수 있도록 돕는 디도스 러시아 웹사이트
 <br />
 <br />▪ 파이썬 3.8 이상을 설치 ("경로를 추가" 반드시 체크)
-![alt text](https://miro.medium.com/max/1344/0*7nOyowsPsGI19pZT.png)
+![Python setup in Windows](images/windows-python-install.png)
 <br />▪ 터미널을 열고, 압축 풀기
 <br />▪ 루트 디렉토리에서 다음 명령을 실행
 <br /> Windows: python attack.py $NUM_THREAD

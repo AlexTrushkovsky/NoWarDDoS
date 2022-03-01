@@ -15,7 +15,7 @@
 DDoS Russian websites to help Ukraine to win this hybrid war
 
 * Установите Python версии 3.8 или больше (обязательно отметить галочку "Add to path")
-![alt text](https://miro.medium.com/max/1344/0*7nOyowsPsGI19pZT.png)
+![Python setup in Windows](images/windows-python-install.png)
 * Октройте терминал (консоль), переходите в каталог, в которую распаковали нашу програму (с помощью cd)
 * В этом каталоге вводим команду:
 

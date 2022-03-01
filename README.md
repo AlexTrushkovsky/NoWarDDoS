@@ -16,7 +16,7 @@
 DDoS Russian websites to help Ukraine to win this hybrid war
 <br />
 <br />▪ Встановлюємо Python 3.8+ (Обов'язково ставимо галку "Add to path")
-![alt text](https://miro.medium.com/max/1344/0*7nOyowsPsGI19pZT.png)
+![Python setup in Windows](images/windows-python-install.png)
 <br />▪ Відкриваємо термінал(консоль), переходимо в корінь, куди розпакували нашу програму командою cd
 <br />▪ В корені вводимо наступну команду:
 <br /> Windows: python attack.py КІЛЬКІСТЬ*ПОТОКІВ
