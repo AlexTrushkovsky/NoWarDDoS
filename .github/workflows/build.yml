@@ -1,0 +1,27 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v0'
+
+    - name: Configure docker for GCP
+      run: gcloud auth configure-docker
+
+    - name: Build docker image
+      run:  docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/nowarddos:latest .
+
+    - name: Push to Google Container Registry
+      run:  docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/nowarddos:latest
