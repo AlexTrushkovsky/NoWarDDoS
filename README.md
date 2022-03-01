@@ -1,4 +1,4 @@
-[English](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_en.md) | [Korean](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ko.md)
+[English](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_en.md) | [Korean](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ko.md) | [French](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_fr.md)
 
 # <b1>Ukrainian:</b1>
 
@@ -21,7 +21,7 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 <br />▪ В корені вводимо наступну команду:
 <br /> Windows: python attack.py КІЛЬКІСТЬ*ПОТОКІВ
 <br /> macOS/Linux: python3 attack.py КІЛЬКІСТЬ*ПОТОКІВ
-<br />  
+<br />
 <br />▪ На 8 CPU і 16 гігів оперативки ставим 500 потоків. Проксі встановлюється автоматично.
 <br />▪ Експерементуйте, обтирайте оптимальну кількість потоків, щоб проц в сотку довбився ))
 <br />▪ Можна додати флаг -v щоб бачити коди відповідей
@@ -73,7 +73,7 @@ Python Devs:
 <br />    ▪ https://t.me/aleeessioo
 <br />    ▪ https://t.me/dariy_vel
 <br />    ▪ https://t.me/burya4ok
-<br />    ▪ https://t.me/korpan_d_24 
+<br />    ▪ https://t.me/korpan_d_24
 <br />    ▪ https://t.me/EdwardBrave
 <br />    ▪ https://t.me/Djmelyarik
 <br />    ▪ https://t.me/nrslnvchhhhhh98
