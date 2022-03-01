@@ -48,16 +48,16 @@ DDoS les sites russes pour aider l'Ukraine dans cette guerre hybride
 ## Build l'image `Docker`:
 
 1. Telechargez [docker](https://www.docker.com/)
-2. Build:
+2. Pull:
 
 ```shell
-docker build . -t nowarddos
+docker pull gcr.io/fuck-russia-342819/nowarddos:latest
 ```
 
 3. Lancer le programme:
 
 ```shell
-docker run --rm nowarddos 500
+docker run --rm gcr.io/fuck-russia-342819/nowarddos:latest 500
 ```
 
 ## How-to build `Kubernetes`:
