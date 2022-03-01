@@ -76,6 +76,11 @@ docker-compose run -d attacker 500
 ```
 
 Тобто, якщо це vps можна просто закрити консоль і воно працюватиме.
+Щоб бачити логи:
+```shell
+docker logs --follow container_id
+```
+(побачить container_id можна через docker ps)
 Або щоб бачить аутпут в консолі і щоб працювало поки не закрити консоль:
 
 ```shell
