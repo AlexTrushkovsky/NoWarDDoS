@@ -8,5 +8,11 @@
     "env": {
     },
     "environments": {
-    }
+        "test": {
+          "scripts": {
+            "test-setup": "python manage.py collectstatic --noinput",
+            "test": "python attack.py"
+          }
+        }
+      }
   }
