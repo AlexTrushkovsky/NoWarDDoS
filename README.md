@@ -46,9 +46,6 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 <br /> ~~macOS з ARM (M1) тимчасово не підтримується, очікуйте оновлення в найближчі години~~
 <br /> macOS ARM (M1) все працює!
 <br />
-<br />▪ Якщо щось зламалося вводимо наступну команду:
-<br /> Windows: python updater.py КІЛЬКІСТЬ*ПОТОКІВ
-<br /> macOS/Linux: python3 updater.py КІЛЬКІСТЬ*ПОТОКІВ
 <br />▪ Якщо не допомагає, обов'язково пишіть в тг!
 <br />**Слава Україні!**
 
