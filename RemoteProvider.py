@@ -1,9 +1,10 @@
-import time
 import json
-import cloudscraper
+import time
 from functools import lru_cache
 from random import choice
 from urllib.parse import unquote
+
+import cloudscraper
 
 import settings
 
@@ -53,7 +54,7 @@ class RemoteProvider:
         return self.sites
 
     @lru_cache()
-    def get_proxies(self, ttl_hash=_get_ttl_hash()):
+    def get_proxies(self, ttl_hash=_get_ttl_hash()) -> list[dict[str, str]]:
         del ttl_hash
         try:
             data = self._scrap_json(settings.PROXIES_HOSTS)
