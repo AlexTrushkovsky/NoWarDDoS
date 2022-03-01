@@ -135,7 +135,6 @@ if __name__ == '__main__':
     if not no_clear:
         clear()
     check_req()
-    check_update()
     Thread(target=cleaner, daemon=True).start()
 
     with ThreadPoolExecutor(max_workers=threads) as executor:
