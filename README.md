@@ -1,4 +1,6 @@
-[English](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_en.md) | [Korean](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ko.md)
+[English](README_en.md)
+| [Russian](README_ru.md)
+| [Korean](README_ko.md)
 
 # <b1>Ukrainian:</b1>
 
