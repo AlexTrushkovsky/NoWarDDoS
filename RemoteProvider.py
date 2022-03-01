@@ -34,7 +34,7 @@ class RemoteProvider:
         return round(time.time() / seconds)
 
     @lru_cache()
-    def get_target_site(self, ttl_hash=_get_ttl_hash()):
+    def get_target_sites(self, ttl_hash=_get_ttl_hash()):
         del ttl_hash
         if self.targets:
             self.sites = self.targets
@@ -50,7 +50,7 @@ class RemoteProvider:
             except Exception as e:
                 raise e
 
-        return choice(self.sites)
+        return self.sites
 
     @lru_cache()
     def get_proxies(self, ttl_hash=_get_ttl_hash()):
