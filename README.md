@@ -68,7 +68,6 @@ docker run --rm nowarddos 500
 
 1. Ставимо [докер](https://docs.docker.com/get-docker/)
 2. Ставимо [docker-compose](https://docs.docker.com/compose/install/)
-```
 3. Запускаємо
 Це запустить у фоновому режимі:
 
