@@ -80,7 +80,7 @@ docker-compose run -d attacker 500
 Або щоб бачить аутпут в консолі і щоб працювало поки не закрити консоль:
 
 ```shell
-docker-compose run -d attacker 500
+docker-compose run attacker 500
 ```
 
 ## Інструкця для запуску у `Kubernetes`:
