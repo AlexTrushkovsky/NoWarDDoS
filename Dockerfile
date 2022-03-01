@@ -7,4 +7,4 @@ COPY requirements.txt /nowarddos/
 WORKDIR /nowarddos
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["python", "/nowarddos/updater.py"]
+ENTRYPOINT ["python", "/nowarddos/attack.py"]
