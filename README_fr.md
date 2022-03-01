@@ -1,3 +1,5 @@
+[Ukrainian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README.md) | [Russian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ru.md) | [Korean](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ko.md) | [English](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_en.md)
+
 # <b1>Francais:</b1>
 
 # UA Cyber Shield
@@ -31,7 +33,7 @@ DDoS les sites russes pour aider l'Ukraine dans cette guerre hybride
 #
 
 <br />▪ Tout passe au travers d'un proxy. Ne soyez pas timide!
-<br />▪ Vous pouvez atteindre le support sur Telegram: https://t.me/+SP0EVc4cr4VjNjAy
+<br />▪ Vous pouvez atteindre le support sur Telegram: https://t.me/+wnvf4Dv8AQwxMjVi
 <br />▪ L´Application se met à jour automatiquement.
 <br />
 <br />▪ Si vous avez des erreurs comme ModuleNotFoundError etc. essayez:

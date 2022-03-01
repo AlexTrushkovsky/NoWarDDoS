@@ -1,6 +1,4 @@
-[English](README_en.md)
-| [Russian](README_ru.md)
-| [Ukrainian](README.md)
+[Ukrainian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README.md) | [Russian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ru.md) |   [French](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_fr.md) | [English](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_en.md)
 
 # <b1>Korean:</b1>
 
@@ -35,7 +33,7 @@
 #
 
 <br />▪ 모든 동작은 프록시를 통합니다. 겁내지 마세요!
-<br />▪ 텔레그램에서 지원을 받을 수 있습니다: https://t.me/+SP0EVc4cr4VjNjAy
+<br />▪ 텔레그램에서 지원을 받을 수 있습니다: https://t.me/+wnvf4Dv8AQwxMjVi
 <br />▪ 이 프로그램은 자동으로 업데이트하며 가장 최신 사이트 목록을 가져옵니다
 <br />
 <br />▪ ModuleNotFoundError 등등... 같은 에러를 보면 다음을 시도하세요:

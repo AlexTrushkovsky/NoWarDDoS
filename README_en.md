@@ -1,6 +1,4 @@
-[Ukrainian](README.md)
-| [Russian](README_ru.md)
-| [Korean](README_ko.md)
+[Ukrainian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README.md) | [Russian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ru.md) | [Korean](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ko.md) | [French](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_fr.md) 
 
 # <b1>English:</b1>
 
@@ -35,7 +33,7 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 #
 
 <br />▪ All working via proxy. Don't be shy!
-<br />▪ You can reach support in Telegram: https://t.me/+SP0EVc4cr4VjNjAy
+<br />▪ You can reach support in Telegram: https://t.me/+wnvf4Dv8AQwxMjVi
 <br />▪ Application updating automaticaly and will pull all last site list
 <br />
 <br />▪ If you have errors like ModuleNotFoundError etc. just try:

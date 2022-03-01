@@ -1,6 +1,4 @@
-[English](README_en.md)
-| [Korean](README_ko.md)
-| [Ukrainian](README.md)
+[Ukrainian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README.md) | [Korean](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ko.md) |   [French](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_fr.md) | [English](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_en.md)
 
 # UA Cyber Shield - инструкция на русском
 
@@ -34,7 +32,7 @@ macOS/Linux: `python3 attack.py количество_потоков`
 
 На бойтесь быть скомпроментированы, потому что все работает через прокси!
 
-В случае возникновения проблем обращайтесь в телеграм чат Telegram: https://t.me/+SP0EVc4cr4VjNjAy
+В случае возникновения проблем обращайтесь в телеграм чат Telegram: https://t.me/+wnvf4Dv8AQwxMjVi
 
 Программа обновляется автоматически, каждую минуту, снова запуская аттаку
 
