@@ -126,6 +126,10 @@ def mainth():
             sleep(5)
             continue
 
+        if 'site' not in data:
+            logger.info('Incorrect site data, skipping')
+            continue
+
         site = unquote(choice(targets) if targets else data['site']['page'])
         logger.info("STARTING ATTACK TO " + site)
         logger.info("STARTING ATTACK ON " + data['site']['page'])
