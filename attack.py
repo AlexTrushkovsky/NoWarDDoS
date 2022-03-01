@@ -112,6 +112,7 @@ def mainth():
     except Exception as exc:
         result = f"issue happened: {exc}"
         logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
+        return result, site
 
 
 def clear():
