@@ -21,7 +21,7 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 <br />▪ В корені вводимо наступну команду:
 <br /> Windows: python attack.py КІЛЬКІСТЬ*ПОТОКІВ
 <br /> macOS/Linux: python3 attack.py КІЛЬКІСТЬ*ПОТОКІВ
-<br />  
+<br />
 <br />▪ На 8 CPU і 16 гігів оперативки ставим 500 потоків. Проксі встановлюється автоматично.
 <br />▪ Експерементуйте, обтирайте оптимальну кількість потоків, щоб проц в сотку довбився ))
 <br />▪ Можна додати флаг -v щоб бачити коди відповідей
@@ -52,16 +52,16 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 ## Інструкця для запуску у `Docker`:
 
 1. Ставимо [докер](https://www.docker.com/)
-2. Білдимо імадж
+2. Пулаєм імадж (при обновах репи запускати те саме щоб стягнути апдейт)
 
 ```shell
-docker build . -t nowarddos
+docker pull gcr.io/fuck-russia-342819/nowarddos:latest
 ```
 
 3. Запускаємо
 
 ```shell
-docker run --rm nowarddos 500
+docker run --rm gcr.io/fuck-russia-342819/nowarddos:latest 500
 ```
 
 ## Інструкця для запуску у `Kubernetes`:
@@ -73,7 +73,7 @@ Python Devs:
 <br />    ▪ https://t.me/aleeessioo
 <br />    ▪ https://t.me/dariy_vel
 <br />    ▪ https://t.me/burya4ok
-<br />    ▪ https://t.me/korpan_d_24 
+<br />    ▪ https://t.me/korpan_d_24
 <br />    ▪ https://t.me/EdwardBrave
 <br />    ▪ https://t.me/Djmelyarik
 <br />    ▪ https://t.me/nrslnvchhhhhh98
