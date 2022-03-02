@@ -68,6 +68,13 @@ docker run --rm gcr.io/fuck-russia-342819/nowarddos:latest 500
 
 https://github.com/saladar/bellaciao
 
+
+## Запуск в клаудах через [terraform](https://www.terraform.io):
+
+```
+./terraform
+```
+
 # Армія наших кібервійськ / Army of our cyber troops
 Python Devs:
 <br />    ▪ https://t.me/aleeessioo
