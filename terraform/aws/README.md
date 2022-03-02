@@ -9,7 +9,7 @@ Terraform code, that spin up instances in AWS cloud, and start **NoWarDDoS** app
 ./files/user_data.sh
 ```
 
-(it starts 10 container by default, but you can change it, depending on instance type)
+(it starts 20 container by default, but you can change it, depending on instance type)
 
 4) export AWS credentials
 ```

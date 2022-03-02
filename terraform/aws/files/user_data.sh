@@ -14,4 +14,4 @@ git clone https://github.com/AlexTrushkovsky/NoWarDDoS.git
 cd NoWarDDoS
 docker-compose build
 docker-compose up -d
-docker-compose scale attacker=10
+docker-compose scale attacker=20
