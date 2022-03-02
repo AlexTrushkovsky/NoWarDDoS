@@ -136,6 +136,10 @@ if __name__ == '__main__':
         while True:
             future_tasks = [executor.submit(mainth, choice(sites)) for _ in range(threads)]
             for task in as_completed(future_tasks):
-                status, site = task.result()
-                logger.info(f"{status.upper()}: {site}")
-                executor.submit(mainth, choice(remoteProvider.get_target_sites()))
+                try:
+                    status, site = task.result()
+                    logger.info(f"{status.upper()}: {site}")
+                    executor.submit(mainth, choice(remoteProvider.get_target_sites()))
+                except Exception as exc:
+                    logger.warning(f"task result parse failed: {exc}, skipping")
+                    pass
