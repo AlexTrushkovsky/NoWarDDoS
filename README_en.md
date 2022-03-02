@@ -1,3 +1,5 @@
+[Ukrainian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README.md) | [Russian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ru.md) | [Korean](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ko.md) | [French](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_fr.md) 
+
 # <b1>English:</b1>
 
 # UA Cyber Shield
@@ -19,7 +21,7 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 <br />▪ In root directory run next command:
 <br /> Windows: python attack.py $NUM_THREAD
 <br /> macOS/Linux: python3 attack.py $NUM_THREAD
-<br />  
+<br />
 <br /> For example: python3 attack.py 500
 <br />▪ Best for 8 CPU and 16 RAM configuration is 500 threads . Proxy included and working automaticaly.
 <br />▪ You can add the -v flag to see the answer codes
@@ -31,7 +33,7 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 #
 
 <br />▪ All working via proxy. Don't be shy!
-<br />▪ You can reach support in Telegram: https://t.me/+SP0EVc4cr4VjNjAy
+<br />▪ You can reach support in Telegram: https://t.me/+wnvf4Dv8AQwxMjVi
 <br />▪ Application updating automaticaly and will pull all last site list
 <br />
 <br />▪ If you have errors like ModuleNotFoundError etc. just try:
@@ -40,7 +42,7 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 <br /> macOS/Linux: python3 -m pip install --upgrade pip
 <br /> pip3 install -r requirements.txt
 <br />
-<br />  
+<br />
 <br /> macOS ARM (M1) supporting!
 <br />
 <br />**Slava Ukraine!**
@@ -48,16 +50,16 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 ## How-to build `Docker` image:
 
 1. Download [docker](https://www.docker.com/)
-2. Run to build image:
+2. Pull image:
 
 ```shell
-docker build . -t nowarddos
+docker pull gcr.io/fuck-russia-342819/nowarddos:latest
 ```
 
 3. Run:
 
 ```shell
-docker run --rm nowarddos 500
+docker run --rm gcr.io/fuck-russia-342819/nowarddos:latest 500
 ```
 
 ## How-to build `Kubernetes`:
