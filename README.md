@@ -64,6 +64,16 @@ docker pull gcr.io/fuck-russia-342819/nowarddos:latest
 docker run --rm gcr.io/fuck-russia-342819/nowarddos:latest 500
 ```
 
+## Якщо ви запускаєте процес і він постійно падає, можна використати `supervisord`
+http://supervisord.org/
+Він постійно триматиме процес піднятим і перезапускатиме, якщо він впав
+Приклад конфігу supervisord.conf
+Можливо вам треба поправити у ньому шляхи до директорій
+Використання
+```shell
+supervisord -c supervisord.conf
+```
+
 ## Інструкця для запуску у `Kubernetes`:
 
 https://github.com/saladar/bellaciao
