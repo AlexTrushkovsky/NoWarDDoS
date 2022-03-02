@@ -4,3 +4,20 @@ venv/
 build/
 dist/
 __pycache__/
+
+
+# Module directory
+.terraform/
+*/.terraform/
+**/terraform.log
+*.tfstate
+*.swp*
+*/*.tfstate
+*.tfstate.backup
+*/*.tfstate.backup
+*.terragrunt-cache*
+*.idea*
+*.lock.hcl
+*.terraform.tfstate.lock.info
+**/*.lock.hcl
+**/index.zip
