@@ -1,5 +1,5 @@
 VERSION = 7
-SITES_HOSTS = ["https://raw.githubusercontent.com/opengs/uashieldtargets/master/sites.json"]
+SITES_HOSTS = ["https://raw.githubusercontent.com/opengs/uashieldtargets/master/sites.json", "https://raw.githubusercontent.com/AndriyGonda/uashieldtargets/master/sites.json"]
 PROXIES_HOSTS = ["https://raw.githubusercontent.com/opengs/uashieldtargets/master/proxy.json"]
 MAX_REQUESTS = 5000
 DEFAULT_THREADS = 500
