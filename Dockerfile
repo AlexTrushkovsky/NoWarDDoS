@@ -1,5 +1,5 @@
 # Base image
-FROM python:latest
+FROM python:alpine
 
 COPY *.py /nowarddos/
 COPY requirements.txt /nowarddos/

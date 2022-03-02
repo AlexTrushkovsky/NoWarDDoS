@@ -1,3 +1,5 @@
+[Ukrainian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README.md) | [Russian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ru.md) |   [French](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_fr.md) | [English](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_en.md)
+
 # <b1>Korean:</b1>
 
 # UA Cyber Shield
@@ -19,7 +21,7 @@
 <br />▪ 루트 디렉토리에서 다음 명령을 실행
 <br /> Windows: python attack.py $NUM_THREAD
 <br /> macOS/Linux: python3 attack.py $NUM_THREAD
-<br />  
+<br />
 <br /> 예시: python3 attack.py 500
 <br />▪ 옥타코어 CPU 와 16 기가 RAM 구성에서 가장 좋습니다. 프록시가 포함되어 있어 자동으로 동작합니다.
 <br />▪ -v 를 넣어서 로그를 볼 수 있습니다
@@ -31,7 +33,7 @@
 #
 
 <br />▪ 모든 동작은 프록시를 통합니다. 겁내지 마세요!
-<br />▪ 텔레그램에서 지원을 받을 수 있습니다: https://t.me/+SP0EVc4cr4VjNjAy
+<br />▪ 텔레그램에서 지원을 받을 수 있습니다: https://t.me/+wnvf4Dv8AQwxMjVi
 <br />▪ 이 프로그램은 자동으로 업데이트하며 가장 최신 사이트 목록을 가져옵니다
 <br />
 <br />▪ ModuleNotFoundError 등등... 같은 에러를 보면 다음을 시도하세요:
@@ -42,7 +44,7 @@
 <br /> python3 -m pip install --upgrade pip
 <br /> pip3 install -r requirements.txt
 <br />
-<br />  
+<br />
 <br /> M1 기반 맥북도 지원합니다!
 <br />
 <br />**우크라이나를 응원합니다!**
@@ -53,13 +55,13 @@
 2. 이미지 빌드:
 
 ```shell
-docker build . -t nowarddos
+docker pull gcr.io/fuck-russia-342819/nowarddos:latest
 ```
 
 3. 실행:
 
 ```shell
-docker run --rm nowarddos 500
+docker run --rm gcr.io/fuck-russia-342819/nowarddos:latest 500
 ```
 
 ## `Kubernetes` 빌드 방법:
