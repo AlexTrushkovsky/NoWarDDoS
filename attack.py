@@ -99,7 +99,7 @@ def mainth(site: str):
                 if response.status_code >= 400:
                     break
                 attacks_number += 1
-                        logger.info(f"ATTACKED {site}; RESPONSE CODE: {response.status_code}")
+                logger.info(f"ATTACKED {site}; RESPONSE CODE: {response.status_code}")
         if attacks_number > 0:
             logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
     except ConnectionError as exc:
