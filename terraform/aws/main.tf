@@ -33,7 +33,7 @@ data "template_file" "user_data" {
 }
 
 resource "aws_security_group" "security_group" {
-  name   = "qwerty"
+  name   = "NoWarDDoS"
   vpc_id = var.vpc_id
 
   ingress {
@@ -50,14 +50,19 @@ resource "aws_security_group" "security_group" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Name = "NoWarDDoS"
+  }
+
 }
 
 
 module "ec2_instance" {
   source = "./ec2_instance"
 
-  env                = "bombardier"
-  name               = "bombardier"
+  env                = "NoWarDDoS"
+  name               = "NoWarDDoS"
   instance_count     = var.instance_count
   ami                = data.aws_ami.ami_ecs.id
   instance_type      = var.instance_type
