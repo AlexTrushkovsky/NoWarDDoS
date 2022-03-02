@@ -40,7 +40,7 @@ proxy_view = args.proxy_view
 
 remoteProvider = RemoteProvider(args.targets)
 threads = int(args.threads)
-executor = ThreadPoolExecutor()
+executor = ThreadPoolExecutor(max_workers=threads * 2)
 
 logger.remove()
 logger.add(
