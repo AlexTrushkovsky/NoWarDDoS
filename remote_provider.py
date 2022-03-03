@@ -1,11 +1,12 @@
-import time
 import json
 import cloudscraper
-from functools import lru_cache
+import cachetools.func
 from random import choice
 from urllib.parse import unquote
 
-import settings
+from settings import get_settings
+
+settings = get_settings()
 
 
 class RemoteProvider:
@@ -29,13 +30,8 @@ class RemoteProvider:
         else:
             raise Exception('Unexpected error. Host {}'.format(host))
 
-    def _get_ttl_hash(seconds=settings.TARGET_UPDATE_RATE):
-        """Return the same value within `seconds` time period"""
-        return round(time.time() / seconds)
-
-    @lru_cache()
-    def get_target_sites(self, ttl_hash=_get_ttl_hash()):
-        del ttl_hash
+    @cachetools.func.ttl_cache(ttl=settings.TARGET_UPDATE_RATE)
+    def get_target_sites(self):
         if self.targets:
             self.sites = self.targets
         else:
@@ -52,9 +48,8 @@ class RemoteProvider:
 
         return self.sites
 
-    @lru_cache()
-    def get_proxies(self, ttl_hash=_get_ttl_hash()):
-        del ttl_hash
+    @cachetools.func.ttl_cache(ttl=settings.TARGET_UPDATE_RATE)
+    def get_proxies(self):
         try:
             data = self._scrap_json(settings.PROXIES_HOSTS)
             self._proxies = data
