@@ -1,4 +1,3 @@
-import json
 import os
 import platform
 
@@ -67,7 +66,6 @@ def check_req():
 
 
 def mainth(site: str):
-    result = 'processing'
     scraper = cloudscraper.create_scraper(
         browser=settings.BROWSER, )
     scraper.headers.update(
@@ -148,12 +146,13 @@ if __name__ == '__main__':
     # initially start as many tasks as configured threads
     for _ in range(threads):
         submitted_tasks.append(executor.submit(mainth, choice(remoteProvider.get_target_sites())))
+
     while True:
         currentRunningCount = runningTasksCount()
-        logger.info("Current running tasks:  " + currentRunningCount)
+        logger.info("Currently running tasks:  " + str(currentRunningCount))
 
-        while (currentRunningCount < threads):
+        while currentRunningCount < threads:
             submitted_tasks.append(executor.submit(mainth, choice(remoteProvider.get_target_sites())))
             currentRunningCount += 1
-        sleep(2)
+        sleep(1)
 
