@@ -40,8 +40,7 @@ proxy_view = args.proxy_view
 
 remoteProvider = RemoteProvider(args.targets)
 threads = int(args.threads)
-executor_init = ThreadPoolExecutor(max_workers=threads)
-executor_main = ThreadPoolExecutor(max_workers=threads)
+executor_main = ThreadPoolExecutor(max_workers=threads * 2)
 
 last_observed_total_attacks_count = 0
 total_attacks_count = 0
@@ -140,11 +139,11 @@ if __name__ == '__main__':
     sites = remoteProvider.get_target_sites()
     # initially start as many tasks as configured threads
     for _ in range(threads):
-        executor_init.submit(mainth, choice(remoteProvider.get_target_sites()))
+        executor_main.submit(mainth, choice(remoteProvider.get_target_sites()))
     while True:
-        sleep(60)
+        sleep(10)
         current_attacks_count = total_attacks_count
         delta_attacks_count = current_attacks_count - last_observed_total_attacks_count
-        logger.info(f"Performed a total of {delta_attacks_count} attacks in a minute")
+        logger.info(f"Performed a total of {delta_attacks_count} attacks in 10 seconds")
         last_observed_total_attacks_count = current_attacks_count
 
