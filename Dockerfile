@@ -1,5 +1,5 @@
 # Base image
-FROM python:alpine
+FROM python:3.8.2-alpine
 
 COPY *.py /nowarddos/
 COPY *.env /nowarddos/
