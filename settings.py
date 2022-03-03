@@ -5,7 +5,7 @@ from pydantic import BaseSettings
 from functools import lru_cache
 from pathlib import Path
 
-_DEFAULT_DOTENV_FILE = Path("./.env").resolve()
+_DEFAULT_DOTENV_FILE = Path(".env").resolve()
 _DEFAULT_SITES_HOSTS = ["https://raw.githubusercontent.com/opengs/uashieldtargets/master/sites.json"]
 _DEFAULT_PROXIES_HOSTS = ["https://raw.githubusercontent.com/opengs/uashieldtargets/master/proxy.json"]
 _UPDATE_URL = \
