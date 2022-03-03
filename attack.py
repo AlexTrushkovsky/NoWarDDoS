@@ -42,7 +42,7 @@ remoteProvider = RemoteProvider(args.targets)
 threads = int(args.threads)
 
 submitted_tasks = []
-executor = ThreadPoolExecutor()
+executor = ThreadPoolExecutor(max_workers=threads)
 
 last_observed_total_attacks_count = 0
 total_attacks_count = 0
@@ -150,6 +150,8 @@ if __name__ == '__main__':
         submitted_tasks.append(executor.submit(mainth, choice(remoteProvider.get_target_sites())))
     while True:
         currentRunningCount = runningTasksCount()
+        logger.info("Current running tasks:  " + currentRunningCount)
+
         while (currentRunningCount < threads):
             submitted_tasks.append(executor.submit(mainth, choice(remoteProvider.get_target_sites())))
             currentRunningCount += 1
