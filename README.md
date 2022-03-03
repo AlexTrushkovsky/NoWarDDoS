@@ -64,6 +64,29 @@ docker pull gcr.io/fuck-russia-342819/nowarddos:latest
 docker run --rm gcr.io/fuck-russia-342819/nowarddos:latest 500
 ```
 
+## Інструкця для запуску з `docker-compose`:
+
+1. Ставимо [докер](https://docs.docker.com/get-docker/)
+2. Ставимо [docker-compose](https://docs.docker.com/compose/install/)
+3. Запускаємо
+Це запустить у фоновому режимі:
+
+```shell
+docker-compose run -d attacker 500
+```
+
+Тобто, якщо це vps можна просто закрити консоль і воно працюватиме.
+Щоб бачити логи:
+```shell
+docker logs --follow container_id
+```
+(побачить container_id можна через docker ps)
+Або щоб бачить аутпут в консолі і щоб працювало поки не закрити консоль:
+
+```shell
+docker-compose run attacker 500
+```
+
 ## Інструкця для запуску у `Kubernetes`:
 
 https://github.com/saladar/bellaciao

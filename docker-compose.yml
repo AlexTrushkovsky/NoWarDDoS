@@ -2,4 +2,4 @@ version: "3"
 services:
   attacker:
     build: .
-    restart: on-failure
+    restart: always
