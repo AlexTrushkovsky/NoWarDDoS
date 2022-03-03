@@ -136,3 +136,4 @@ if __name__ == '__main__':
     # initially start as many tasks as configured threads
     for _ in range(threads):
         executor_init.submit(mainth, choice(remoteProvider.get_target_sites()))
+    executor_init.shutdown(wait=True)
