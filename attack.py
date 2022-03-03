@@ -55,10 +55,12 @@ logger.add(
 
 
 def check_req():
-    os.system("python3 -m pip install -r requirements.txt")
-    os.system("python -m pip install -r requirements.txt")
-    os.system("pip install -r requirements.txt")
-    os.system("pip3 install -r requirements.txt")
+    if platform.system() == "Windows":
+        os.system("python -m pip install -r requirements.txt")
+        os.system("pip install -r requirements.txt")
+    else:
+        os.system("python3 -m pip install -r requirements.txt")
+        os.system("pip3 install -r requirements.txt")
 
 
 def mainth(site: str):
