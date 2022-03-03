@@ -1,11 +1,10 @@
 import json
-from typing import Optional
-
-import cloudscraper
-import cachetools.func
 from random import choice
+from typing import Optional
 from urllib.parse import unquote
-from concurrent.futures import ThreadPoolExecutor
+
+import cachetools.func
+import cloudscraper
 
 from settings import get_settings
 
@@ -64,10 +63,15 @@ class RemoteProvider:
 
         return self.sites
 
+    def _parse_text(self, link):
+        host = choice(link)
+        content = self.scraper.get(host).content.decode('utf-8')
+        return content.split("\n")
+
     @cachetools.func.ttl_cache(ttl=settings.TARGET_UPDATE_RATE)
     def get_proxies(self):
         try:
-            data = self._scrap_json(settings.PROXIES_HOSTS)
+            data = self._parse_text(settings.PROXIES_HOSTS)
             self._proxies = data
         except Exception as e:
             raise e
