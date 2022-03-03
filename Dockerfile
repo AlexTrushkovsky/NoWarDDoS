@@ -2,6 +2,7 @@
 FROM python:alpine
 
 COPY *.py /nowarddos/
+COPY *.env /nowarddos/
 COPY requirements.txt /nowarddos/
 
 WORKDIR /nowarddos

