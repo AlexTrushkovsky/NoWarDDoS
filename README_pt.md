@@ -1,4 +1,4 @@
-[English](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_en.md) | [Korean](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ko.md) | [French](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_fr.md) | [Russian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ru.md) | [Portuguese](https://github.com/phmpg/NoWarDDoS/blob/main/README_pt.md) |
+[English](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_en.md) | [Korean](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ko.md) | [French](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_fr.md) | [Russian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ru.md) | [Portuguese](https://github.com/phmpg/NoWarDDoS/blob/main/README_pt.md) | [Japanese](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ja.md)
 # <b1>Português:</b1>
 
 # UA Cyber Shield
