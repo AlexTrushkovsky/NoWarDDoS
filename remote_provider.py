@@ -68,10 +68,7 @@ class RemoteProvider:
     def get_proxies(self):
         try:
             data = self._scrap_json(settings.PROXIES_HOSTS)
-            with ThreadPoolExecutor(max_workers=len(data)) as executor:
-                tasks = [executor.submit(check_proxy_task, proxy) for proxy in data]
-                proxies = [task.result() for task in tasks if task.result() is not None]
-                self._proxies = proxies
+            self._proxies = data
         except Exception as e:
             raise e
 
