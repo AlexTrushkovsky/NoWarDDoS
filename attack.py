@@ -150,7 +150,7 @@ if __name__ == '__main__':
         submitted_tasks.append(executor.submit(mainth, choice(remoteProvider.get_target_sites())))
     while True:
         currentRunningCount = runningTasksCount()
-        while (currentRunningCount < threads)
+        while (currentRunningCount < threads):
             submitted_tasks.append(executor.submit(mainth, choice(remoteProvider.get_target_sites())))
             currentRunningCount += 1
         sleep(2)
