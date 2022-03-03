@@ -83,7 +83,8 @@ def mainth(site: str):
                 if proxy_view:
                     logger.info('USING PROXY:' + proxy["ip"] + " " + proxy["auth"])
                 scraper.proxies.update(
-                    {'http': f'{proxy["ip"]}://{proxy["auth"]}', 'https': f'{proxy["ip"]}://{proxy["auth"]}'})
+                    {'http': f'http://{proxy["auth"]}@{proxy["ip"]}', 'https': f'https://{proxy["auth"]}@{proxy["ip"]}'})
+
                 response = scraper.get(site, timeout=10)
                 if 200 <= response.status_code <= 302:
                     while (count_attacks_for_current_site < settings.MAX_REQUESTS_TO_SITE):
