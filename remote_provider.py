@@ -1,12 +1,28 @@
 import json
+from typing import Optional
+
 import cloudscraper
 import cachetools.func
 from random import choice
 from urllib.parse import unquote
+from concurrent.futures import ThreadPoolExecutor
 
 from settings import get_settings
 
 settings = get_settings()
+
+
+def check_proxy_task(proxy: dict) -> Optional[dict]:
+    scraper = cloudscraper.create_scraper(browser=settings.BROWSER)
+    try:
+        scraper.proxies.update({
+            'http': f'http://{proxy["auth"]}@{proxy["ip"]}',
+            'https': f'https://{proxy["auth"]}@{proxy["ip"]}'
+        })
+        scraper.get("http://httpbin.org/ip", timeout=settings.READ_TIMEOUT)
+        return proxy
+    except Exception:
+        return None
 
 
 class RemoteProvider:
@@ -52,7 +68,10 @@ class RemoteProvider:
     def get_proxies(self):
         try:
             data = self._scrap_json(settings.PROXIES_HOSTS)
-            self._proxies = data
+            with ThreadPoolExecutor(max_workers=len(data)) as executor:
+                tasks = [executor.submit(check_proxy_task, proxy) for proxy in data]
+                proxies = [task.result() for task in tasks if task.result() is not None]
+            self._proxies = proxies
         except Exception as e:
             raise e
 
