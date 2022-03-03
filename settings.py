@@ -1,6 +1,6 @@
 from os import getenv
 from typing import List
-
+from distutils.util import strtobool
 from pydantic import BaseSettings
 from functools import lru_cache
 from pathlib import Path
@@ -19,6 +19,14 @@ class Settings(BaseSettings):
     MAX_REQUESTS_TO_SITE: int = int(getenv('MAX_REQUESTS_TO_SITE', 200))
     DEFAULT_THREADS: int = int(getenv('DEFAULT_THREADS', 500))
     TARGET_UPDATE_RATE: int = int(getenv('TARGET_UPDATE_RATE', 600))
+
+    # tor settings
+    ENABLE_TOR: bool = strtobool(getenv("ENABLE_TOR", "false"))
+    TOR_PORT: int = int(getenv("TOR_PORT", 9051))
+    TOR_PASSWORD: str = getenv("TOR_PASSWORD", None)
+    TOR_CONTROL_PORT: int = int(getenv("TOR_CONTROL_PORT", 9050))
+    TOR_HOST: str = getenv("TOR_HOST", "127.0.0.1")
+
     READ_TIMEOUT: int = 10
     SUPPORTED_PLATFORMS: dict = {
         'linux': 'Linux'

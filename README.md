@@ -48,8 +48,34 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 <br />
 <br />▪ Якщо не допомагає, обов'язково пишіть в тг!
 <br />**Слава Україні!**
-
-## Інструкця для запуску у `Docker`:
+## Інструкція для запуску з tor-проксі:
+1. На ubuntu/debian ставимо tor
+```shell
+sudo apt install tor
+```
+2. Налаштовуємо авторизацію через tor
+```shell
+tor --hash-password <your-password>
+Копіюємо хеш паролю, на вигляд приблизно такий:
+16:953351D7A4053B3B60EE6B7C1CA2C4264D5D6FD6C07A665FD2E3EB0407
+```
+3. Налаштовуємо torrc файл
+```shell
+cd /etc/tor/torrc
+sudo nano torrc
+Додати наступний рядок в кінець файлу (хеш підставте свій)
+HashedControlPassword 16:953351D7A4053B3B60EE6B7C1CA2C4264D5D6FD6C07A665FD2E3EB0407
+Ctrl+X натискаємо Y та натискаємо ентер щоб вийти
+```
+4. Перезапустити сервіс тора
+```shell
+sudo service tor restart
+```
+5. Налаштовуємо .env файл
+Cкопіювати вміст файлу з _`.env.example`_ в файл `.env`
+6. Обов'язково задати опцію `ENABLE_TOR=true` та `TOR_PASSWORD=<ваш пароль>`
+7. Додаткові опції описані в `.env.example`
+## Інструкція для запуску у `Docker`:
 
 1. Ставимо [докер](https://www.docker.com/)
 2. Пулаєм імадж (при обновах репи запускати те саме щоб стягнути апдейт)
