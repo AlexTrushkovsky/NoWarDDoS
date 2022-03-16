@@ -4,8 +4,6 @@
 # NoWarDDoS
 **Avertissement! Utiliser uniquement à des fins éducatives. Vous ne pouvez tenter une attaque DDOS que sur votre propre ressource.
 L'utilisation d'attaques DDOS sur d'autres sites est illégale et punie par la loi.**
-
-DDoS les sites russes pour aider l'Ukraine dans cette guerre hybride
 <br />
 <br />▪ Installe Python 3.8+ (obligatoire sous windows: "Add to path")
 ![alt text](https://miro.medium.com/max/1344/0*7nOyowsPsGI19pZT.png)
