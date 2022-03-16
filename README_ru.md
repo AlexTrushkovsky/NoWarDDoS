@@ -22,8 +22,7 @@ macOS/Linux: `python3 attack.py количество_потоков`
 * Пример: `python3 attack.py 500 -v -n`
 
 
-В случае возникновения проблем обращайтесь в телеграм чат Telegram: https://t.me/+wnvf4Dv8AQwxMjVi
-
+Если возникнут проблемы, я помогу вам, обращайтесь по Telegram: @esen1n25
 Если показывает ошибку ModuleNotFoundError или другие попробуйте запустить в каталоге программы:
 * Windows: `python -m pip install --upgrade pip`
 * Linux: `pip3 install -r requirements.txt`
