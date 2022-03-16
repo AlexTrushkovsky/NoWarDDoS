@@ -1,7 +1,7 @@
 [English](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_en.md) | [Korean](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ko.md) | [French](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_fr.md) | [Russian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ru.md) | [Portuguese](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_pt.md) |
 
 # <b1>Ukrainian:</b1>
-** Увага! Використовуйте тільки в навчальних цілях. Ви можете спробувати DDOS-атаку лише на власний ресурс. 
+**Увага! Використовуйте тільки в навчальних цілях. Ви можете спробувати DDOS-атаку лише на власний ресурс.<br/>
 Використання DDOS-атак на інші сайти є незаконним і карається законом.**
 <br />
 <br />▪ Встановлюємо Python 3.8+ (Обов'язково ставимо галку "Add to path")
