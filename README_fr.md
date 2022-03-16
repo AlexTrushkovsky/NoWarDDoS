@@ -1,17 +1,9 @@
 [Ukrainian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README.md) | [Russian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ru.md) | [Korean](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ko.md) | [English](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_en.md) | [Portuguese](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_pt.md) |
 
 # <b1>Francais:</b1>
-
-# UA Cyber Shield
-
-<br />🔥Nouveau programme cross-platform prêt à l'action - https://github.com/opengs/uashield 🔥
-<br /> ▪ Disponible sur macOS, Linux, et Windows
-<br /> ▪ Facile à installer sur toutes les platformes, je guarantee leur sécuritée!
-<br /> ▪ les objectifs de DDoS sont coordonnés par les administrateurs du chat principal.
-<br /> ▪ Ceux qui veulent aider avec le proxy peuvent écrire sur telegram: @ esen1n25
-<br /> ▪ N'oubliez pas de mettre un étoile our le travail des devs :)
-
 # NoWarDDoS
+**Avertissement! Utiliser uniquement à des fins éducatives. Vous ne pouvez tenter une attaque DDOS que sur votre propre ressource.
+L'utilisation d'attaques DDOS sur d'autres sites est illégale et punie par la loi.**
 
 DDoS les sites russes pour aider l'Ukraine dans cette guerre hybride
 <br />
@@ -32,7 +24,6 @@ DDoS les sites russes pour aider l'Ukraine dans cette guerre hybride
 
 #
 
-<br />▪ Tout passe au travers d'un proxy. Ne soyez pas timide!
 <br />▪ Vous pouvez atteindre le support sur Telegram: https://t.me/+wnvf4Dv8AQwxMjVi
 <br />▪ L´Application se met à jour automatiquement.
 <br />
@@ -41,9 +32,6 @@ DDoS les sites russes pour aider l'Ukraine dans cette guerre hybride
 <br /> pip install -r requirements.txt
 <br /> macOS/Linux: python3 -m pip install --upgrade pip
 <br /> pip3 install -r requirements.txt
-<br />
-<br />
-<br /> macOS ARM (M1) supporting!
 <br />
 <br />**Slava Ukraine!**
 
