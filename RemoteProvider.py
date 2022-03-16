@@ -1,11 +1,12 @@
-import time
 import json
-import cloudscraper
-from functools import lru_cache
-from random import choice
 from urllib.parse import unquote
 
-import settings
+import cachetools.func
+import cloudscraper
+
+from settings import get_settings
+
+settings = get_settings()
 
 
 class RemoteProvider:
@@ -13,52 +14,45 @@ class RemoteProvider:
         self.targets = [unquote(target) for target in targets] if targets else None
         self._proxies = []
         self.sites = []
-        self.scraper = cloudscraper.create_scraper(browser=settings.BROWSER, )
+        self.scraper = cloudscraper.create_scraper(
+            browser=settings.BROWSER,
+        )
 
     def _scrap_json(self, link):
-        host = choice(link)
-        content = self.scraper.get(host).content
-        if content:
-            try:
-                data = json.loads(content)
-                return data
-            except json.decoder.JSONDecodeError:
-                raise Exception('Host {} has invalid format'.format(host))
-            except Exception:
-                raise Exception('Unexpected error. Host {}'.format(host))
-        else:
-            raise Exception('Unexpected error. Host {}'.format(host))
+        content = self.scraper.get(link).content
+        try:
+            data = json.loads(content)
+            return data
+        except json.decoder.JSONDecodeError:
+            return []
 
-    def _get_ttl_hash(seconds=settings.TARGET_UPDATE_RATE):
-        """Return the same value within `seconds` time period"""
-        return round(time.time() / seconds)
-
-    @lru_cache()
-    def get_target_sites(self, ttl_hash=_get_ttl_hash()):
-        del ttl_hash
+    @cachetools.func.ttl_cache(ttl=settings.TARGET_UPDATE_RATE)
+    def get_target_sites(self):
         if self.targets:
             self.sites = self.targets
         else:
+            self.sites = []
+            for host in settings.SITES_HOSTS:
+                try:
+                    data = self._scrap_json(host)
+                    self.sites.extend([site.get("page") for site in data])
+                except Exception:
+                    pass
+        return list(set(self.sites))
+
+    def _parse_text(self, link):
+        content = self.scraper.get(link).content.decode("utf-8")
+        return content.split("\n")
+
+    @cachetools.func.ttl_cache(ttl=settings.TARGET_UPDATE_RATE)
+    def get_proxies(self):
+        for link in settings.PROXIES_HOSTS:
             try:
-                data = self._scrap_json(settings.SITES_HOSTS)
-                self.sites = []
-                for site in data:
-                    if 'attack' not in site or ('attack' in site and not site['attack'] == 0):
-                        if not site['page'].startswith('http'):
-                            site['page'] = "https://" + site['page']
-                        self.sites.append(unquote(site['page']))
+                self._proxies = self._scrap_json(link)
             except Exception as e:
                 raise e
+        return list(self._proxies)
 
-        return self.sites
-
-    @lru_cache()
-    def get_proxies(self, ttl_hash=_get_ttl_hash()):
-        del ttl_hash
-        try:
-            data = self._scrap_json(settings.PROXIES_HOSTS)
-            self._proxies = data
-        except Exception as e:
-            raise e
-
-        return self._proxies
+if __name__ == "__main__":
+    provider = RemoteProvider()
+    sites = provider.get_target_sites()

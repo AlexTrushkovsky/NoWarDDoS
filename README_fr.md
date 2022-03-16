@@ -8,46 +8,36 @@ L'utilisation d'attaques DDOS sur d'autres sites est illégale et punie par la l
 <br />▪ Installe Python 3.8+ (obligatoire sous windows: "Add to path")
 ![alt text](https://miro.medium.com/max/1344/0*7nOyowsPsGI19pZT.png)
 <br />▪ Ouvre le terminal, unpack l'archive
-<br />▪ Dans le dossier root lance cette commande:
-<br /> Windows: python attack.py $NUM_THREAD
-<br /> macOS/Linux: python3 attack.py $NUM_THREAD
-<br />
-<br /> Par exemple: python3 attack.py 500
-<br />▪ La meilleure config pour 8 CPU et 16 Gb de RAM est 500 threads. Le proxy est inclu et se lance automatiquement.
-<br />▪ Vous pouvez ajouter le flag -v pour voir les code de réponses
-<br />▪ Vous pouvez ajouter le flag -n flag pour ne pas effacer les prints dans le terminal
-<br />▪ Vous pouvez ajouter le flag -p flag pour voir le proxy
-<br />▪ Exemple: python3 attack.py 500 -v -n
-<br />
+<br />▪ A la racine, entrez les commandes disponibles:
+```
+1). run -> Lance des conteneurs. Exemple: ./flood.sh run 3 #Où '3' est le nombre de conteneurs
+2). status -> Affiche l'état du nombre de conteneurs en cours d'exécution. Exemple: ./flood.sh status
+3). log -> Affiche le journal du premier conteneur en cours d'exécution. Exemple: ./flood.sh logs
+4). net -> Affiche le trafic actuel via nload eth0. Exemple: ./flood.sh logs net
+5). stop -> Arrête l'exécution des conteneurs. Exemple: ./flood.sh stop
+```
+Les conteneurs seront lancés et automatiquement rechargés et mis à jour.
 
-#
+Remarque : la vitesse est très dépendante des objectifs actuels, plus les sites fonctionnent lentement, plus la vitesse sera lente.
+Plus ils mentent - la vitesse peut aussi être moindre
 
-<br />▪ Si vous rencontrez des problèmes, je vous aiderai, contactez-nous via Telegram : @ esen1n25
-<br />▪ L´Application se met à jour automatiquement.
-<br />
-<br />▪ Si vous avez des erreurs comme ModuleNotFoundError etc. essayez:
-<br /> Windows: python -m pip install --upgrade pip
-<br /> pip install -r requirements.txt
-<br /> macOS/Linux: python3 -m pip install --upgrade pip
-<br /> pip3 install -r requirements.txt
-<br />
-<br />**Slava Ukraine!**
-
-## Build l'image `Docker`:
-
-1. Telechargez [docker](https://www.docker.com/)
-2. Pull:
-
-```shell
-docker pull gcr.io/fuck-russia-342819/nowarddos:latest
+<br />S'il génère une erreur liée à **ModuleNotFoundError** ou autres, essayez :
+```
+Windows: python -m pip install --upgrade pip
+         pip install -r requirements.txt
+         
+macOS/Linux: python3 -m pip install --upgrade pip
+             pip3 install -r requirements.txt
 ```
 
-3. Lancer le programme:
-
+<br />Si vous rencontrez des problèmes, je vous aiderai, veuillez contacter via **Telegram:** @esen1n25
+## Image terminée `Docker`:
 ```shell
-docker run --rm gcr.io/fuck-russia-342819/nowarddos:latest 500
+docker pull registry.gitlab.com/a_gonda/nowarddos:latest
 ```
 
-## How-to build `Kubernetes`:
-
-https://github.com/saladar/bellaciao
+## Déployer sur une nouvelle instance dans le cloud:
+```shell
+https://gitlab.com/a_gonda/nowarddos.git && cd nowarddos/ && ./flood.sh run 3 
+#démarre 3 conteneurs avec mise à jour automatique et redémarrage automatique
+```

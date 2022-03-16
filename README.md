@@ -7,45 +7,37 @@
 <br />▪ Встановлюємо Python 3.8+ (Обов'язково ставимо галку "Add to path")
 ![alt text](https://miro.medium.com/max/1344/0*7nOyowsPsGI19pZT.png)
 <br />▪ Відкриваємо термінал(консоль), переходимо в корінь, куди розпакували нашу програму командою cd
-<br />▪ В корені вводимо наступну команду:
-<br /> Windows: python attack.py КІЛЬКІСТЬ*ПОТОКІВ
-<br /> macOS/Linux: python3 attack.py КІЛЬКІСТЬ*ПОТОКІВ
-<br />
-<br />▪ На 8 CPU і 16 гігів оперативки ставим 500 потоків. Проксі встановлюється автоматично.
-<br />▪ Експерементуйте, обтирайте оптимальну кількість потоків, щоб проц в сотку довбився ))
-<br />▪ Можна додати флаг -v щоб бачити коди відповідей
-<br />▪ Можна додати флаг -n щоб логи не підтирало
-<br />▪ Можна додати флаг -p щоб показувало проксі
-<br />▪ Приклад: python3 attack.py 500 -v -n
-<br />
+<br />▪ В корені вводимо доступні команди:
+```
+1). run -> Запускає контейнери. Приклад: ./flood.sh run 3  #Де '3' - Кількість контейнерів
+2). status -> Виводить статус, скільки контейнерів запущено. Приклад: ./flood.sh status
+3). log -> Виводить лог першого запущеного контейнера. Приклад: ./flood.sh logs
+4). net -> Показує поточний трафік через nload eth0. Приклад: ./flood.sh logs net
+5). stop -> Зупиняє запущені контейнери. Приклад: ./flood.sh stop
+```
+Контейнери буде запущено, та вони будуть автоматично перевантажуватися та оновлятися.
 
-#
+Примітка: швидкість дуже залежить від поточних таргетів, чим повільніше сайти працюють, тим швидкість буде меншою. 
+Чим більше їх лежить - тим швидкість теж може бути менше
 
-<br />▪ Якщо виникнуть проблеми, я допоможу вам, звертайтесь через Telegram: @esen1n25
-<br />
-<br />▪ Якщо вибиває помилку пов'язану з ModuleNotFoundError aбо інші, спробуйте:
-<br /> Windows: python -m pip install --upgrade pip
-<br /> pip install -r requirements.txt
-<br /> macOS/Linux: python3 -m pip install --upgrade pip
-<br /> pip3 install -r requirements.txt
-<br />
-<br />**Слава Україні!**
-
-## Інструкця для запуску у `Docker`:
-
-1. Ставимо [докер](https://www.docker.com/)
-2. Пулаєм імадж (при обновах репи запускати те саме щоб стягнути апдейт)
-
-```shell
-docker pull gcr.io/fuck-russia-342819/nowarddos:latest
+<br />Якщо вибиває помилку пов'язану з **ModuleNotFoundError** aбо інші, спробуйте:
+```
+Windows: python -m pip install --upgrade pip
+         pip install -r requirements.txt
+         
+macOS/Linux: python3 -m pip install --upgrade pip
+             pip3 install -r requirements.txt
 ```
 
-3. Запускаємо
+<br />Якщо виникнуть проблеми, я допоможу вам, звертайтесь через **Telegram:** @esen1n25
 
+## Готовий образ `Docker`:
 ```shell
-docker run --rm gcr.io/fuck-russia-342819/nowarddos:latest 500
+docker pull registry.gitlab.com/a_gonda/nowarddos:latest
 ```
 
-## Інструкця для запуску у `Kubernetes`:
-
-https://github.com/saladar/bellaciao
+## Розгортка на новому інстансі в хмарі:
+```shell
+https://gitlab.com/a_gonda/nowarddos.git && cd nowarddos/ && ./flood.sh run 3 
+#запускає 3 контейнери з автоапдейтом та авторестартом
+```

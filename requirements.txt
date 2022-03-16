@@ -8,3 +8,5 @@ uuid==1.30
 PySocks==1.7.1
 pyuseragents==1.0.5
 argparse==1.4.0
+pydantic==1.9.0
+cachetools==5.0.0

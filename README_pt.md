@@ -7,45 +7,37 @@ Usar ataques DDOS em outros sites é ilegal e punível por lei.**
 <br />▪ Instale o Python 3.8+ (Certifique-se de marcar a caixa "Add to path")
 ![alt text](https://miro.medium.com/max/1344/0*7nOyowsPsGI19pZT.png)
 <br />▪ Abra o terminal (console), vá até a raiz, onde descompactamos nosso programa com o comando cd
-<br />▪ Na raiz, digite o seguinte comando:
-<br /> Windows: python attack.py NÚMERO * DE FLUXOS
-<br /> macOS/Linux: python3 attack.py NÚMERO * DE FLUXOS
-<br />
-<br />▪ Em 8 CPU e 16 GB de RAM colocamos 500 threads. O proxy é instalado automaticamente.
-<br />▪ Experimente, limpe o número ideal de fluxos, para que a porcentagem por cem metros quadrados ))
-<br />▪ Você pode adicionar a flag -v para ver os códigos de resposta
-<br />▪ Você pode adicionar a flag -n para que os logs não sejam limpos
-<br />▪ Você pode adicionar a flag -p para ver o proxy
-<br />▪ Exemplo: python3 attack.py 500 -v -n
-<br />
-
-#
-
-<br />▪ Caso tenha algum problema, eu te ajudo, entre em contato conosco via Telegram: @esen1n25
-<br />▪ O programa é atualizado automaticamente, ele se atualizará e executará o ataque novamente, as atualizações são verificadas a cada minuto
-<br />▪ Atualização do aplicativo automaticamente e puxará toda a última lista de sites
-<br />
-<br />▪ Se você tiver erros como ModuleNotFoundError etc. tente:
-<br /> Windows: python -m pip install --upgrade pip
-<br /> pip install -r requirements.txt
-<br /> macOS/Linux: python3 -m pip install --upgrade pip
-<br /> pip3 install -r requirements.txt
-<br />
-<br />▪ Se não ajudar, não deixe de escrever em tg!!
-<br />**Glória à Ucrânia!**
-
-## Como criar uma imagem do Docker:
-
-1. Download [docker](https://www.docker.com/)
-2. Puxe a imagem:
-```shell
-docker pull gcr.io/fuck-russia-342819/nowarddos:latest
+<br />▪ Na raiz, digite os comandos disponíveis:
 ```
-3.	Rode:
-```shell
-docker run --rm gcr.io/fuck-russia-342819/nowarddos:latest 500
+1). run ->Lança contêineres. Exemplo: ./flood.sh run 3 #Onde '3' - Número de contêineres
+2). status -> Exibe o status de quantos contêineres estão em execução. Exemplo: ./flood.sh status
+3). log ->Exibe o log do primeiro contêiner em execução. Exemplo: ./flood.sh logs
+4). net -> Mostra o tráfego atual por meio de nload eth0. Exemplo: ./flood.sh logs net
+5). stop -> Interrompe a execução de contêineres. Exemplo: ./flood.sh stop
+```
+Os contêineres serão lançados e recarregados e atualizados automaticamente.
+
+Nota: a velocidade depende muito dos alvos atuais, quanto mais lentos os sites funcionarem, mais lenta será a velocidade.
+Quanto mais eles mentem - a velocidade também pode ser menor
+
+<br />Se lançar um erro relacionado a **ModuleNotFoundError** ou outros, tente:
+```
+Windows: python -m pip install --upgrade pip
+         pip install -r requirements.txt
+         
+macOS/Linux: python3 -m pip install --upgrade pip
+             pip3 install -r requirements.txt
 ```
 
-## Como construir o `Kubernetes`:
+<br />Se você tiver algum problema, eu te ajudarei, entre em contato via **Telegram:** @esen1n25
 
-https://github.com/saladar/bellaciao
+## Imagem finalizada `Docker`:
+```shell
+docker pull registry.gitlab.com/a_gonda/nowarddos:latest
+```
+
+## Implantar em uma nova instância na nuvem:
+```shell
+https://gitlab.com/a_gonda/nowarddos.git && cd nowarddos/ && ./flood.sh run 3 
+#starts 3 containers com atualização e reinicialização automáticas
+```
