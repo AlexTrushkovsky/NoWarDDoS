@@ -1,11 +1,9 @@
 [Ukrainian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README.md) | [Russian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ru.md) | [Korean](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ko.md) | [French](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_fr.md) 
 
 # <b1>English:</b1>
+# NoWarDDoS
 **Warning! Use only for educational purposes. You can try a DDOS attack only on your own resource.<br/>
 Using DDOS attacks on other sites is illegal and punishable by law.**
-# NoWarDDoS
-
-DDoS Russian websites to help Ukraine to win this hybrid war
 <br />
 <br />▪ Install Python 3.8+ (mandatory enable "Add to path")
 ![alt text](https://miro.medium.com/max/1344/0*7nOyowsPsGI19pZT.png)
@@ -24,9 +22,7 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 
 #
 
-<br />▪ All working via proxy. Don't be shy!
 <br />▪ You can reach support in Telegram: https://t.me/+wnvf4Dv8AQwxMjVi
-<br />▪ Application updating automaticaly and will pull all last site list
 <br />
 <br />▪ If you have errors like ModuleNotFoundError etc. just try:
 <br /> Windows: python -m pip install --upgrade pip
