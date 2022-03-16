@@ -21,7 +21,7 @@ Usar ataques DDOS em outros sites é ilegal e punível por lei.**
 
 #
 
-<br />▪ Se houver problemas, respondemos e coordenamos 24 horas por dia, 7 dias por semana, via chat do Telegram: https://t.me/+wnvf4Dv8AQwxMjVi
+<br />▪ Caso tenha algum problema, eu te ajudo, entre em contato conosco via Telegram: @esen1n25
 <br />▪ O programa é atualizado automaticamente, ele se atualizará e executará o ataque novamente, as atualizações são verificadas a cada minuto
 <br />▪ Atualização do aplicativo automaticamente e puxará toda a última lista de sites
 <br />
