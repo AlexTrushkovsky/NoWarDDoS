@@ -22,7 +22,7 @@ L'utilisation d'attaques DDOS sur d'autres sites est illégale et punie par la l
 
 #
 
-<br />▪ Vous pouvez atteindre le support sur Telegram: https://t.me/+wnvf4Dv8AQwxMjVi
+<br />▪ Si vous rencontrez des problèmes, je vous aiderai, contactez-nous via Telegram : @ esen1n25
 <br />▪ L´Application se met à jour automatiquement.
 <br />
 <br />▪ Si vous avez des erreurs comme ModuleNotFoundError etc. essayez:
