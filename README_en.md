@@ -1,16 +1,8 @@
 [Ukrainian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README.md) | [Russian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ru.md) | [Korean](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ko.md) | [French](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_fr.md) 
 
 # <b1>English:</b1>
-
-# UA Cyber Shield
-
-<br />🔥New cross-platform software ready for battle - https://github.com/opengs/uashield 🔥
-<br /> ▪ Available on macOS, Linux, Windows
-<br /> ▪ Easy to install on all available platforms, I guarantee security!
-<br /> ▪ Goals are coordinated by the administrators of the main chats with DDoS
-<br /> ▪ Those who want to help with the proxy can still write in the telegram: @ esen1n25
-<br /> ▪ Don't forget to put stars for authors' work)
-
+**Warning! Use only for educational purposes. You can try a DDOS attack only on your own resource.<br/>
+Using DDOS attacks on other sites is illegal and punishable by law.**
 # NoWarDDoS
 
 DDoS Russian websites to help Ukraine to win this hybrid war
@@ -42,11 +34,6 @@ DDoS Russian websites to help Ukraine to win this hybrid war
 <br /> macOS/Linux: python3 -m pip install --upgrade pip
 <br /> pip3 install -r requirements.txt
 <br />
-<br />
-<br /> macOS ARM (M1) supporting!
-<br />
-<br />**Slava Ukraine!**
-
 ## How-to build `Docker` image:
 
 1. Download [docker](https://www.docker.com/)
