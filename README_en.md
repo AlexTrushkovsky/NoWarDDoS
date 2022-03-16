@@ -22,7 +22,7 @@ Using DDOS attacks on other sites is illegal and punishable by law.**
 
 #
 
-<br />▪ You can reach support in Telegram: https://t.me/+wnvf4Dv8AQwxMjVi
+<br />▪ If you have any problems, I will help you, contact us via Telegram: @esen1n25
 <br />
 <br />▪ If you have errors like ModuleNotFoundError etc. just try:
 <br /> Windows: python -m pip install --upgrade pip
