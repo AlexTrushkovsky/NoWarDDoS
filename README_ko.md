@@ -1,17 +1,10 @@
 [Ukrainian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README.md) | [Russian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ru.md) |   [French](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_fr.md) | [English](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_en.md) | [Portuguese](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_pt.md) |
 
 # <b1>Korean:</b1>
-
-# UA Cyber Shield
-
-<br />🔥 새로운 크로스플랫폼 소프트웨어으로 준비합니다 - https://github.com/opengs/uashield 🔥
-<br /> ▪ 맥, 리눅스, 윈도우 운영체제에서 가능합니다
-<br /> ▪ 모든 이용 가능한 플랫폼에 설치가 간편하고, 보안은 보장됩니다!
-<br /> ▪ 목표는 DDoS와의 가장 중심이 되는 채팅 관리자가 조정합니다
-<br /> ▪ 텔레그램에서도 도움을 줄 수 있습니다 @ esen1n25
-<br /> ▪ 작성자들의 노고에 깃허브 별을 주는 것도 잊지마세요
-
 # NoWarDDoS
+
+**경고! 교육 목적으로만 사용하십시오. 자신의 리소스에 대해서만 DDOS 공격을 시도할 수 있습니다.
+다른 사이트에서 DDOS 공격을 사용하는 것은 불법이며 법으로 처벌받을 수 있습니다.**
 
 우크라이나가 하이브리드 전쟁에서 승리할 수 있도록 돕는 디도스 러시아 웹사이트
 <br />
@@ -32,7 +25,6 @@
 
 #
 
-<br />▪ 모든 동작은 프록시를 통합니다. 겁내지 마세요!
 <br />▪ 텔레그램에서 지원을 받을 수 있습니다: https://t.me/+wnvf4Dv8AQwxMjVi
 <br />▪ 이 프로그램은 자동으로 업데이트하며 가장 최신 사이트 목록을 가져옵니다
 <br />
@@ -43,9 +35,6 @@
 <br /> macOS/Linux:
 <br /> python3 -m pip install --upgrade pip
 <br /> pip3 install -r requirements.txt
-<br />
-<br />
-<br /> M1 기반 맥북도 지원합니다!
 <br />
 <br />**우크라이나를 응원합니다!**
 
