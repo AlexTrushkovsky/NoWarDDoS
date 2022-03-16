@@ -21,7 +21,7 @@
 
 #
 
-<br />▪ Якщо виникнуть проблеми, 24/7 відповідаємо та координуємо через чат Telegram: https://t.me/+wnvf4Dv8AQwxMjVi
+<br />▪ Якщо виникнуть проблеми, я допоможу вам, звертайтесь через Telegram: @esen1n25
 <br />
 <br />▪ Якщо вибиває помилку пов'язану з ModuleNotFoundError aбо інші, спробуйте:
 <br /> Windows: python -m pip install --upgrade pip
@@ -29,7 +29,6 @@
 <br /> macOS/Linux: python3 -m pip install --upgrade pip
 <br /> pip3 install -r requirements.txt
 <br />
-<br />▪ Якщо не допомагає, обов'язково пишіть в тг!
 <br />**Слава Україні!**
 
 ## Інструкця для запуску у `Docker`:
