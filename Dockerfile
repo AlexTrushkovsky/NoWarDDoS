@@ -1,5 +1,5 @@
 # Base image
-FROM python:alpine
+FROM python:3.8-alpine
 
 COPY *.py /nowarddos/
 COPY requirements.txt /nowarddos/
@@ -7,4 +7,4 @@ COPY requirements.txt /nowarddos/
 WORKDIR /nowarddos
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["python", "/nowarddos/attack.py"]
+ENTRYPOINT ["python3", "/nowarddos/main.py"]

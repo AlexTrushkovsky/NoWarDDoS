@@ -1,67 +1,43 @@
-[Ukrainian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README.md) | [Russian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ru.md) | [Korean](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ko.md) | [English](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_en.md) | [Japanese](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ja.md)
+[Ukrainian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README.md) | [Russian](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ru.md) | [Korean](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ko.md) | [English](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_en.md) | [Portuguese](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_pt.md) | [Japanese](https://github.com/AlexTrushkovsky/NoWarDDoS/blob/main/README_ja.md) |
 
 # <b1>Francais:</b1>
-
-# UA Cyber Shield
-
-<br />🔥Nouveau programme cross-platform prêt à l'action - https://github.com/opengs/uashield 🔥
-<br /> ▪ Disponible sur macOS, Linux, et Windows
-<br /> ▪ Facile à installer sur toutes les platformes, je guarantee leur sécuritée!
-<br /> ▪ les objectifs de DDoS sont coordonnés par les administrateurs du chat principal.
-<br /> ▪ Ceux qui veulent aider avec le proxy peuvent écrire sur telegram: @ esen1n25
-<br /> ▪ N'oubliez pas de mettre un étoile our le travail des devs :)
-
 # NoWarDDoS
-
-DDoS les sites russes pour aider l'Ukraine dans cette guerre hybride
+**Avertissement! Utiliser uniquement à des fins éducatives. Vous ne pouvez tenter une attaque DDOS que sur votre propre ressource.
+L'utilisation d'attaques DDOS sur d'autres sites est illégale et punie par la loi.**
 <br />
 <br />▪ Installe Python 3.8+ (obligatoire sous windows: "Add to path")
 ![alt text](https://miro.medium.com/max/1344/0*7nOyowsPsGI19pZT.png)
 <br />▪ Ouvre le terminal, unpack l'archive
-<br />▪ Dans le dossier root lance cette commande:
-<br /> Windows: python attack.py $NUM_THREAD
-<br /> macOS/Linux: python3 attack.py $NUM_THREAD
-<br />
-<br /> Par exemple: python3 attack.py 500
-<br />▪ La meilleure config pour 8 CPU et 16 Gb de RAM est 500 threads. Le proxy est inclu et se lance automatiquement.
-<br />▪ Vous pouvez ajouter le flag -v pour voir les code de réponses
-<br />▪ Vous pouvez ajouter le flag -n flag pour ne pas effacer les prints dans le terminal
-<br />▪ Vous pouvez ajouter le flag -p flag pour voir le proxy
-<br />▪ Exemple: python3 attack.py 500 -v -n
-<br />
+<br />▪ A la racine, entrez les commandes disponibles:
+```
+1). run -> Lance des conteneurs. Exemple: ./flood.sh run 3 #Où '3' est le nombre de conteneurs
+2). status -> Affiche l'état du nombre de conteneurs en cours d'exécution. Exemple: ./flood.sh status
+3). log -> Affiche le journal du premier conteneur en cours d'exécution. Exemple: ./flood.sh logs
+4). net -> Affiche le trafic actuel via nload eth0. Exemple: ./flood.sh logs net
+5). stop -> Arrête l'exécution des conteneurs. Exemple: ./flood.sh stop
+```
+Les conteneurs seront lancés et automatiquement rechargés et mis à jour.
 
-#
+Remarque : la vitesse est très dépendante des objectifs actuels, plus les sites fonctionnent lentement, plus la vitesse sera lente.
+Plus ils mentent - la vitesse peut aussi être moindre
 
-<br />▪ Tout passe au travers d'un proxy. Ne soyez pas timide!
-<br />▪ Vous pouvez atteindre le support sur Telegram: https://t.me/+wnvf4Dv8AQwxMjVi
-<br />▪ L´Application se met à jour automatiquement.
-<br />
-<br />▪ Si vous avez des erreurs comme ModuleNotFoundError etc. essayez:
-<br /> Windows: python -m pip install --upgrade pip
-<br /> pip install -r requirements.txt
-<br /> macOS/Linux: python3 -m pip install --upgrade pip
-<br /> pip3 install -r requirements.txt
-<br />
-<br />
-<br /> macOS ARM (M1) supporting!
-<br />
-<br />**Slava Ukraine!**
-
-## Build l'image `Docker`:
-
-1. Telechargez [docker](https://www.docker.com/)
-2. Pull:
-
-```shell
-docker pull gcr.io/fuck-russia-342819/nowarddos:latest
+<br />S'il génère une erreur liée à **ModuleNotFoundError** ou autres, essayez :
+```
+Windows: python -m pip install --upgrade pip
+         pip install -r requirements.txt
+         
+macOS/Linux: python3 -m pip install --upgrade pip
+             pip3 install -r requirements.txt
 ```
 
-3. Lancer le programme:
-
+<br />Si vous rencontrez des problèmes, je vous aiderai, veuillez contacter via **Telegram:** @esen1n25
+## Image terminée `Docker`:
 ```shell
-docker run --rm gcr.io/fuck-russia-342819/nowarddos:latest 500
+docker pull registry.gitlab.com/a_gonda/nowarddos:latest
 ```
 
-## How-to build `Kubernetes`:
-
-https://github.com/saladar/bellaciao
+## Déployer sur une nouvelle instance dans le cloud:
+```shell
+https://gitlab.com/a_gonda/nowarddos.git && cd nowarddos/ && ./flood.sh run 3 
+#démarre 3 conteneurs avec mise à jour automatique et redémarrage automatique
+```
