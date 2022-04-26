@@ -6,7 +6,7 @@
 Using DDOS attacks on other sites is illegal and punishable by law.**
 <br />
 <br />▪ Install Python 3.8+ (mandatory enable "Add to path")
-![alt text](https://miro.medium.com/max/1344/0*7nOyowsPsGI19pZT.png)
+![Python setup in Windows](images/windows-python-install.png)
 <br />▪ Open terminal, unpack archive
 <br />▪ In root directory run next command:
 ```

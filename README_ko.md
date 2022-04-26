@@ -7,7 +7,7 @@
 다른 사이트에서 DDOS 공격을 사용하는 것은 불법이며 법으로 처벌받을 수 있습니다.**
 <br />
 <br />▪ 파이썬 3.8 이상을 설치 ("경로를 추가" 반드시 체크)
-![alt text](https://miro.medium.com/max/1344/0*7nOyowsPsGI19pZT.png)
+![Python setup in Windows](images/windows-python-install.png)
 <br />▪ 터미널을 열고, 압축 풀기
 <br />▪ 루트에서 사용 가능한 명령을 입력합니다.
 ```

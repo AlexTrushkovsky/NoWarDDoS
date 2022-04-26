@@ -6,7 +6,7 @@
 L'utilisation d'attaques DDOS sur d'autres sites est illégale et punie par la loi.**
 <br />
 <br />▪ Installe Python 3.8+ (obligatoire sous windows: "Add to path")
-![alt text](https://miro.medium.com/max/1344/0*7nOyowsPsGI19pZT.png)
+![Python setup in Windows](images/windows-python-install.png)
 <br />▪ Ouvre le terminal, unpack l'archive
 <br />▪ A la racine, entrez les commandes disponibles:
 ```
